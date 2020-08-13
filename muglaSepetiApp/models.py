@@ -58,12 +58,28 @@ class Company(models.Model):
     phone = models.CharField(validators=[phone_regex], max_length=17, blank=True,
                              null=True)
     email = models.CharField(validators=[email_regex], max_length=50, blank=True)
+    open_at = models.TimeField(default=timezone.now)
+    closed_at = models.TimeField(default=timezone.now)
+    is_open = models.BooleanField(default=False)
     instagram = models.URLField(blank=True)
     facebook = models.URLField(blank=True)
     twitter = models.URLField(blank=True)
     tripadvisor = models.URLField(blank=True)
     youtube = models.URLField(blank=True)
     pinterest = models.URLField(blank=True)
+
+    def get_is_open(self):
+        curr_hour = timezone.now().hour
+        curr_minute = timezone.now().minute
+        open_hour = self.open_at.hour
+        open_minute = self.open_at.minute
+        close_hour = self.closed_at.hour
+        close_minute = self.closed_at.minute
+        if self.is_open:
+            if (curr_hour >= open_hour and curr_minute >= open_minute) and (
+                    curr_hour <= close_hour and curr_minute <= close_minute):
+                return True
+        return False
 
     def __str__(self):
         return self.name
