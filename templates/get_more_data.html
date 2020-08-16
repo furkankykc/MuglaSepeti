@@ -1,0 +1,12 @@
+{% for i in order %}
+    <tr>
+        {% if i.order_booked %}
+            <tr class="success">
+                {% else %}
+            <tr>
+        {% endif %}
+        <td>{{ i.delivery_note|upper }}</td>
+        <td>{{ i.company|capfirst }}</td>
+        <td>{{ i.pk|capfirst }}</td>
+        </tr>
+{% endfor %}

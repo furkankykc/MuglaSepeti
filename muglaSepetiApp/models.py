@@ -230,7 +230,6 @@ class Bucket(models.Model):
         obj.count = obj.count + count
         obj.save()
 
-    @property
     def get_borrow(self):
         sum = 0
         if self.order_list.exists():
@@ -243,5 +242,6 @@ class Bucket(models.Model):
                 )).aggregate(Sum('total_spent')).values())[0]
         return sum
 
+    get_borrow.short_description = 'Fiyat'
     def __str__(self):
         return 'Accounting user {}'.format(self.profile.user.username)

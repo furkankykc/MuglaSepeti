@@ -1,4 +1,7 @@
 from django.contrib import admin
+from django.urls import reverse
+from django.utils.safestring import mark_safe
+from liststyle import ListStyleAdminMixin
 
 from muglaSepetiApp.models import *
 
@@ -100,14 +103,14 @@ class MenuAdmin(DefaultAdminModel):
     # fields = ('name')
     filter_horizontal = ('entry_list',)
 
-    def count_of_entries(self, obj):
-        return obj.entry_list.count()
-
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if not request.user.is_superuser:
             if db_field.name == "entry_list":
                 kwargs["queryset"] = Entry.objects.filter(company__owner=request.user)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+    def count_of_entries(obj):
+        return obj.entry_list.count()
 
 
 @admin.register(FoodGroup)
@@ -153,16 +156,57 @@ make_cancel.short_description = "Mark selected orders as canceled"
 
 
 @admin.register(Bucket)
-class BucketAdmin(admin.ModelAdmin):
+class BucketAdmin(admin.ModelAdmin, ListStyleAdminMixin):
+    class Media:
+        js = ('admin/js/override_for_change_form.js',)
+        css = {
+            'all': ('admin/css/override_for_change_form.css',)
+        }
+
     exclude = ['is_checked', 'is_ordered', 'is_delivered', 'is_on_the_way', 'is_deleted', 'checked_at', 'delivered_at',
                'deleted_at', 'on_the_way_at']
-    list_display = ('get_products', 'delivery_note', 'order_address', 'order_phone', 'get_borrow', 'company')
+    list_display = ('get_products', 'get_borrow', 'delivery_note', 'order_address', 'order_phone', 'company', 'status')
     list_filter = ('company',)
     ordering = ['ordered_at']
     actions = [make_check, make_on_the_way, make_delivered, make_cancel]
 
+    change_list_template = 'admin/change_list_for_bucket.html'
+
+    def get_row_css(self, obj, index):
+
+        if obj.is_deleted:
+            return "red"
+        if obj.is_delivered:
+            return "green"
+        if obj.is_on_the_way:
+            return "brown"
+        if obj.is_checked:
+            return "orange"
+
+        return 'yellow'
+
+    def status(self, obj):
+        if obj.is_deleted:
+            return "Canceled"
+        elif not obj.is_checked:
+            return mark_safe(
+                '<a class="btn-chck button" title="Check selected Order " name="index" href="{}">Check</a>'.format(
+                    reverse('check', args=([obj.pk])))) + mark_safe(
+                '<a class="button btn-cancel" title="Delete selected Order " name="index" href="{}">Delete</a>'.format(
+                    reverse('cancel', args=([obj.pk]))))
+        elif not obj.is_on_the_way:
+            return mark_safe(
+                '<a class="button btn-prepare" title="is package On The Way " name="index" href="{}">On the way</a>'.format(
+                    reverse('on_the_way', args=([obj.pk]))))
+        elif not obj.is_delivered:
+            return mark_safe(
+                '<a class="button btn-delivered" title="is package Delivered" name="index" href="{}">Deliver</a>'.format(
+                    reverse('deliver', args=([obj.pk]))))
+        return "Delivered"
+
     def get_products(self, obj):
-        return ",".join([i.name for i in [p.entry for p in obj.order_list.all()]])
+        return mark_safe(
+            "</br>".join(["{}x {}".format(p.count, p.entry.name) for p in obj.order_list.all()]))
 
     def get_queryset(self, request):
         qs = super(BucketAdmin, self).get_queryset(request)
