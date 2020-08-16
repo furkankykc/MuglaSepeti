@@ -109,7 +109,7 @@ class MenuAdmin(DefaultAdminModel):
                 kwargs["queryset"] = Entry.objects.filter(company__owner=request.user)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
-    def count_of_entries(obj):
+    def count_of_entries(self,obj):
         return obj.entry_list.count()
 
 
