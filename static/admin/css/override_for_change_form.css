@@ -3,7 +3,7 @@ table {
     display: table;
     width: 100%;
     /*height: 400px; !* for demo only *!*/
-    border: 1px dotted blue;
+    /*border: 1px dotted blue;*/
 }
 
 td, th {

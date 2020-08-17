@@ -8,11 +8,13 @@ from django.dispatch import receiver
 from django.utils import timezone
 from django.db.models.signals import post_save
 from django.utils.text import slugify
+from django.utils.translation import ugettext_lazy as _
 
 phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$',
-                             message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
+                             message="{}: '+999999999'. {}.".format(_("Phone number must be entered in the format"),
+                                                                    _("Up to 15 digits allowed")))
 email_regex = RegexValidator(regex=r'^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$',
-                             message="Email address must be entered in the format: 'example@mail.com'.")
+                             message="{}: 'example@mail.com'.".format(_("Email address must be entered in the format")))
 
 
 # Create your models here.
@@ -21,21 +23,29 @@ def get_image_path(instance, filename):
 
 
 class Address(models.Model):
-    name = models.CharField(max_length=30)
-    location = models.CharField(max_length=500)
-    owner = models.ForeignKey('Profile', on_delete=models.CASCADE, related_name='owner')
+    class Meta:
+        verbose_name = _("Adress")
+        verbose_name_plural = _("Addresses")
+
+    name = models.CharField(max_length=30, verbose_name=_("name"))
+    location = models.CharField(max_length=500, verbose_name=_("location"))
+    owner = models.ForeignKey('Profile', on_delete=models.CASCADE, related_name='owner', verbose_name=_("owner"))
 
     def __str__(self):
         return self.name
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    address = models.ManyToManyField(Address, related_name='profile_address')
-    birth_date = models.DateField(null=True, blank=True)
+    class Meta:
+        verbose_name = _("Profile")
+        verbose_name_plural = _("Profiles")
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name=_("user"))
+    address = models.ManyToManyField(Address, related_name='profile_address', verbose_name=_("adress"))
+    birth_date = models.DateField(null=True, blank=True, verbose_name=_("birth date"))
     phone = models.CharField(validators=[phone_regex], max_length=17, blank=True,
-                             null=True)
-    email = models.CharField(validators=[email_regex], max_length=50, blank=True)
+                             null=True, verbose_name=_("phone number"))
+    email = models.CharField(validators=[email_regex], max_length=50, blank=True, verbose_name=_("email address"))
 
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):
@@ -51,32 +61,36 @@ class Profile(models.Model):
 
 
 class Company(models.Model):
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
-    name = models.CharField(max_length=20)
-    logo = models.ImageField(upload_to=get_image_path, blank=True, null=True)
-    slug = models.SlugField(blank=True)
+    class Meta:
+        verbose_name = _("Company")
+        verbose_name_plural = _("Companies")
+
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, verbose_name=_("owner"))
+    name = models.CharField(max_length=20, verbose_name=_("name"))
+    logo = models.ImageField(upload_to=get_image_path, blank=True, null=True, verbose_name=_("logo"))
+    slug = models.SlugField(blank=True, verbose_name=_("slug"))
     active_menu = models.ForeignKey('Menu', on_delete=models.CASCADE, blank=True, null=True,
-                                    related_name='comp_active_menu')
+                                    related_name='comp_active_menu', verbose_name=_("active menu"))
     phone = models.CharField(validators=[phone_regex], max_length=17, blank=True,
-                             null=True)
-    email = models.CharField(validators=[email_regex], max_length=50, blank=True)
-    address = models.CharField(max_length=500)
-    open_at = models.TimeField(default=timezone.now)
-    close_at = models.TimeField(default=timezone.now)
-    is_open = models.BooleanField(default=False)
-    instagram = models.URLField(blank=True)
-    facebook = models.URLField(blank=True)
-    twitter = models.URLField(blank=True)
-    tripadvisor = models.URLField(blank=True)
-    youtube = models.URLField(blank=True)
-    pinterest = models.URLField(blank=True)
+                             null=True, verbose_name=_("phone number"))
+    email = models.CharField(validators=[email_regex], max_length=50, blank=True, verbose_name=_("email adress"))
+    address = models.CharField(max_length=500, verbose_name=_("address"))
+    open_at = models.TimeField(default=timezone.now, verbose_name=_("open time"))
+    close_at = models.TimeField(default=timezone.now, verbose_name=_("close time"))
+    is_open = models.BooleanField(default=False, verbose_name=_("is Open"), help_text=_(
+        "if this box not checked your company wont open even if it currently open-hours"))
+    instagram = models.URLField(blank=True, verbose_name=_("instagram address"))
+    facebook = models.URLField(blank=True, verbose_name=_("facebook address"))
+    twitter = models.URLField(blank=True, verbose_name=_("twitter address"))
+    tripadvisor = models.URLField(blank=True, verbose_name=_("tripadvisor address"))
+    youtube = models.URLField(blank=True, verbose_name=_("youtube address"))
+    pinterest = models.URLField(blank=True, verbose_name=_("pinterest address"))
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         super(Company, self).save(*args, **kwargs)
 
     def get_is_open(self):
-
         curr_hour = timezone.now().hour
         curr_minute = timezone.now().minute
         open_hour = self.open_at.hour
@@ -89,17 +103,19 @@ class Company(models.Model):
                 return True
         return False
 
+    get_is_open.short_description = _("Company Status")
+
     def __str__(self):
         return self.name
 
 
 class FoodGroup(models.Model):
     class Meta:
-        verbose_name = 'Menü Grubu'
-        verbose_name_plural = 'Menü Grupları'
+        verbose_name = _('Product Group')
+        verbose_name_plural = _('Product Groups')
 
-    name = models.CharField(max_length=20, verbose_name='isim')
-    company = models.ForeignKey(Company, on_delete=models.SET_NULL, blank=True, null=True, verbose_name='sahip')
+    name = models.CharField(max_length=20, verbose_name=_("name"))
+    company = models.ForeignKey(Company, on_delete=models.SET_NULL, blank=True, null=True, verbose_name=_("company"))
 
     def __str__(self):
         return self.name
@@ -107,13 +123,13 @@ class FoodGroup(models.Model):
 
 class FoodCategory(models.Model):
     class Meta:
-        verbose_name = 'Menü Kategorisi'
-        verbose_name_plural = 'Menü Kategorileri'
+        verbose_name = _('Product Category')
+        verbose_name_plural = _('Product Categories')
 
-    name = models.CharField(max_length=20, verbose_name='isim')
-    image = models.ImageField(upload_to=get_image_path, blank=True, null=True, verbose_name='kapak fotoğrafı')
-    company = models.ForeignKey(Company, on_delete=models.SET_NULL, blank=True, null=True, verbose_name='sahip')
-    group = models.ForeignKey(FoodGroup, on_delete=models.SET_NULL, blank=True, null=True, verbose_name='grup')
+    name = models.CharField(max_length=20, verbose_name=_("name"))
+    image = models.ImageField(upload_to=get_image_path, blank=True, null=True, verbose_name=_("category image"))
+    company = models.ForeignKey(Company, on_delete=models.SET_NULL, blank=True, null=True, verbose_name=_("owner"))
+    group = models.ForeignKey(FoodGroup, on_delete=models.SET_NULL, blank=True, null=True, verbose_name=_("group"))
 
     def __str__(self):
         return self.name
@@ -125,15 +141,15 @@ class FoodCategory(models.Model):
 
 class Entry(models.Model):
     class Meta:
-        verbose_name = 'Menü Ürünü'
-        verbose_name_plural = 'Menü Ürünleri'
+        verbose_name = _('Product')
+        verbose_name_plural = _('Products')
 
-    name = models.CharField(max_length=30, verbose_name='isim')
-    detail = models.CharField(max_length=100, verbose_name='ürün detayı')
-    price = models.FloatField(verbose_name='fiyat')
-    image = models.ImageField(upload_to=get_image_path, blank=True, null=True, verbose_name='kapak fotoğrafı')
-    category = models.ForeignKey(FoodCategory, on_delete=models.CASCADE, verbose_name='Kategori')
-    company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='comp_entry', verbose_name='sirket')
+    name = models.CharField(max_length=30, verbose_name=_('name'))
+    detail = models.CharField(max_length=100, verbose_name=_('detail'))
+    price = models.FloatField(verbose_name=_('price'))
+    image = models.ImageField(upload_to=get_image_path, blank=True, null=True, verbose_name=_('product image'))
+    category = models.ForeignKey(FoodCategory, on_delete=models.CASCADE, verbose_name=_('category'))
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='comp_entry', verbose_name=_('company'))
 
     @property
     def get_image(self):
@@ -144,44 +160,56 @@ class Entry(models.Model):
 
 
 class Menu(models.Model):
-    name = models.CharField(max_length=50)
-    entry_list = models.ManyToManyField(Entry)
-    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    class Meta:
+        verbose_name = _('Menu')
+        verbose_name_plural = _("Menus")
+
+    name = models.CharField(max_length=50, verbose_name=_("name"))
+    entry_list = models.ManyToManyField(Entry, verbose_name=_("Entry list"))
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name=_("company"))
 
     def __str__(self):
         return self.name
 
 
 class BucketEntry(models.Model):
-    entry = models.ForeignKey(Entry, on_delete=models.CASCADE)
-    price = models.FloatField(default=0)
-    count = models.IntegerField(default=1)
+    class Meta:
+        verbose_name = _("Bucket Product")
+        verbose_name_plural = _("Bucket Products")
+
+    entry = models.ForeignKey(Entry, on_delete=models.CASCADE, verbose_name=_("Product"))
+    price = models.FloatField(default=0, verbose_name=_("Total Bucket Price"))
+    count = models.IntegerField(default=1, verbose_name=_("Count"))
 
     def __str__(self):
         return '{}x{}'.format(self.count, self.entry.name)
 
 
 class Bucket(models.Model):
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    company = models.ForeignKey(Company, on_delete=models.CASCADE)
-    delivery_note = models.CharField(max_length=500, blank=True)
-    order_list = models.ManyToManyField(BucketEntry, blank=True)
-    order_address = models.CharField(max_length=500)
-    order_phone = models.CharField(max_length=500)
-    checked_at = models.DateTimeField(blank=True, null=True)
-    ordered_at = models.DateTimeField(blank=True, null=True)
-    on_the_way_at = models.DateTimeField(blank=True, null=True)
-    delivered_at = models.DateTimeField(blank=True, null=True)
-    deleted_at = models.DateTimeField(blank=True, null=True)
-    is_ordered = models.BooleanField(default=False, )
-    is_checked = models.BooleanField(default=False)
-    is_on_the_way = models.BooleanField(default=False, )
-    is_delivered = models.BooleanField(default=False, blank=True)
-    is_deleted = models.BooleanField(default=False, blank=True)
+    class Meta:
+        verbose_name = _('Order')
+        verbose_name_plural = _('Orders')
+
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, verbose_name=_("profile"))
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name=_("company"))
+    delivery_note = models.CharField(max_length=500, blank=True, verbose_name=_("delivery note"))
+    order_list = models.ManyToManyField(BucketEntry, blank=True, verbose_name=_("order list"))
+    order_address = models.CharField(max_length=500, verbose_name=_("order address"))
+    order_phone = models.CharField(max_length=500, verbose_name=_("orderer's phone"))
+    checked_at = models.DateTimeField(blank=True, null=True, verbose_name=_("check time"))
+    ordered_at = models.DateTimeField(blank=True, null=True, verbose_name=_("order time"))
+    on_the_way_at = models.DateTimeField(blank=True, null=True, verbose_name=_("on the way time"))
+    delivered_at = models.DateTimeField(blank=True, null=True, verbose_name=_("deliver time"))
+    deleted_at = models.DateTimeField(blank=True, null=True, verbose_name=_("Cancel time"))
+    is_ordered = models.BooleanField(default=False, verbose_name=_("is ordered"))
+    is_checked = models.BooleanField(default=False, verbose_name=_("is checked"))
+    is_on_the_way = models.BooleanField(default=False, verbose_name=_("is on the way"))
+    is_delivered = models.BooleanField(default=False, blank=True, verbose_name=_("is delivered"))
+    is_deleted = models.BooleanField(default=False, blank=True, verbose_name=_("is deleted"))
 
     PAYMENT_OPTIONS = (
-        ('N', 'Nakit'),
-        ('K', 'Kredi Kartı'),
+        ('N', _("Cash")),
+        ('K', _('Credit Card')),
     )
     payment_type = models.CharField(max_length=1, choices=PAYMENT_OPTIONS)
 
@@ -242,6 +270,7 @@ class Bucket(models.Model):
                 )).aggregate(Sum('total_spent')).values())[0]
         return sum
 
-    get_borrow.short_description = 'Fiyat'
+    get_borrow.short_description = _('Price')
+
     def __str__(self):
         return 'Accounting user {}'.format(self.profile.user.username)

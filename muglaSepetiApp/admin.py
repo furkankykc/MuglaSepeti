@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 from liststyle import ListStyleAdminMixin
+from django.utils.translation import ugettext_lazy as _
 
 from muglaSepetiApp.models import *
 
@@ -36,10 +37,10 @@ class DefaultAdminModel(admin.ModelAdmin):
         form = super(DefaultAdminModel, self).get_form(request, obj, **kwargs)
         if 'slug' in form.base_fields:
             form.base_fields['slug'].disabled = True
-            form.base_fields['slug'].help_text = "This field is not editable"
+            form.base_fields['slug'].help_text = _("This field is not editable")
         # if 'owner' in form.base_fields:
         #     form.base_fields['owner'].disabled = True
-        #     form.base_fields['owner'].help_text = "This field is not editable"
+        #     form.base_fields['owner'].help_text = _("This field is not editable")
 
         return form
 
@@ -109,7 +110,7 @@ class MenuAdmin(DefaultAdminModel):
                 kwargs["queryset"] = Entry.objects.filter(company__owner=request.user)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
-    def count_of_entries(self,obj):
+    def count_of_entries(self, obj):
         return obj.entry_list.count()
 
 
@@ -149,10 +150,10 @@ def make_cancel(modeladmin, request, queryset):
         i.cancel_order()
 
 
-make_check.short_description = "Mark selected orders as checked"
-make_on_the_way.short_description = "Mark selected orders as on the way"
-make_delivered.short_description = "Mark selected orders as delivered"
-make_cancel.short_description = "Mark selected orders as canceled"
+make_check.short_description = _("Mark selected orders as checked")
+make_on_the_way.short_description = _("Mark selected orders as on the way")
+make_delivered.short_description = _("Mark selected orders as delivered")
+make_cancel.short_description = _("Mark selected orders as canceled")
 
 
 @admin.register(Bucket)
@@ -187,22 +188,22 @@ class BucketAdmin(admin.ModelAdmin, ListStyleAdminMixin):
 
     def status(self, obj):
         if obj.is_deleted:
-            return "Canceled"
+            return _("Canceled")
         elif not obj.is_checked:
             return mark_safe(
-                '<a class="btn-chck button" title="Check selected Order " name="index" href="{}">Check</a>'.format(
-                    reverse('check', args=([obj.pk])))) + mark_safe(
-                '<a class="button btn-cancel" title="Delete selected Order " name="index" href="{}">Delete</a>'.format(
-                    reverse('cancel', args=([obj.pk]))))
+                '<a class="btn-chck button" title="{}" name="index" href="{}">{}</a>'.format(
+                    _('Mark this order as checked'), reverse('check', args=([obj.pk])), _('Check'))) + mark_safe(
+                '<a class="button btn-cancel" title="{}" name="index" href="{}">{}</a>'.format(
+                    _('Mark this order as Canceled'), reverse('cancel', args=([obj.pk])), _('Cancel')))
         elif not obj.is_on_the_way:
             return mark_safe(
-                '<a class="button btn-prepare" title="is package On The Way " name="index" href="{}">On the way</a>'.format(
-                    reverse('on_the_way', args=([obj.pk]))))
+                '<a class="button btn-prepare" title="{}" name="index" href="{}">{}</a>'.format(
+                    _('Mark this order as on the way'), reverse('on_the_way', args=([obj.pk])), _('On the way')))
         elif not obj.is_delivered:
             return mark_safe(
-                '<a class="button btn-delivered" title="is package Delivered" name="index" href="{}">Deliver</a>'.format(
-                    reverse('deliver', args=([obj.pk]))))
-        return "Delivered"
+                '<a class="button btn-delivered" title="{}" name="index" href="{}">{}</a>'.format(
+                    _('Mark this order as delivered'), reverse('deliver', args=([obj.pk])), _('Delivered')))
+        return _("Delivered")
 
     def get_products(self, obj):
         return mark_safe(

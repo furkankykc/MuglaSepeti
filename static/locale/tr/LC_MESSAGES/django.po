@@ -1,0 +1,395 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-08-17 03:30+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: muglaSepeti/settings.py:104
+msgid "English"
+msgstr "İngilizce"
+
+#: muglaSepeti/settings.py:105
+msgid "Turkish"
+msgstr "Türkçe"
+
+#: muglaSepetiApp/admin.py:40
+msgid "This field is not editable"
+msgstr "Bu alan düzenlenebilir değil"
+
+#: muglaSepetiApp/admin.py:153
+msgid "Mark selected orders as checked"
+msgstr "Şeçilen siparişleri onayla"
+
+#: muglaSepetiApp/admin.py:154
+msgid "Mark selected orders as on the way"
+msgstr "Seçilen siparişleri yolda olarak işaretle"
+
+#: muglaSepetiApp/admin.py:155
+msgid "Mark selected orders as delivered"
+msgstr "Seçilen siparişleri teslim edildi olarak işaretle"
+
+#: muglaSepetiApp/admin.py:156
+msgid "Mark selected orders as canceled"
+msgstr "Seçilen siparişleri iptal edildi olarak işaretle"
+
+#: muglaSepetiApp/admin.py:191
+msgid "Canceled"
+msgstr "İptal Edildi"
+
+#: muglaSepetiApp/admin.py:195
+msgid "Mark this order as checked"
+msgstr "Bu siparişi onayla"
+
+#: muglaSepetiApp/admin.py:195
+msgid "Check"
+msgstr "Onayla"
+
+#: muglaSepetiApp/admin.py:197
+msgid "Mark this order as Canceled"
+msgstr "Bu siparişi iptal edildi olarak işaretle"
+
+#: muglaSepetiApp/admin.py:197
+msgid "Cancel"
+msgstr "İptal Et"
+
+#: muglaSepetiApp/admin.py:201
+msgid "Mark this order as on the way"
+msgstr "Bu siparişi yolda olarak işaretle"
+
+#: muglaSepetiApp/admin.py:201
+msgid "On the way"
+msgstr "Yolda"
+
+#: muglaSepetiApp/admin.py:205
+msgid "Mark this order as delivered"
+msgstr "Bu siparişi  teslim edildi olarak işaretle"
+
+#: muglaSepetiApp/admin.py:205 muglaSepetiApp/admin.py:206
+msgid "Delivered"
+msgstr "Tesilim Edildi"
+
+#: muglaSepetiApp/models.py:14
+msgid "Phone number must be entered in the format"
+msgstr "Telefon numarası doğru formatta girilmeli"
+
+#: muglaSepetiApp/models.py:15
+msgid "Up to 15 digits allowed"
+msgstr "15 karakter limiti vardır"
+
+#: muglaSepetiApp/models.py:17
+msgid "Email address must be entered in the format"
+msgstr "Email adresi doğru formatta girilmeli"
+
+#: muglaSepetiApp/models.py:27
+msgid "Adress"
+msgstr "adres"
+
+#: muglaSepetiApp/models.py:28
+msgid "Addresses"
+msgstr "adresler"
+
+#: muglaSepetiApp/models.py:30 muglaSepetiApp/models.py:69
+#: muglaSepetiApp/models.py:117 muglaSepetiApp/models.py:129
+#: muglaSepetiApp/models.py:147 muglaSepetiApp/models.py:167
+msgid "name"
+msgstr "İsim"
+
+#: muglaSepetiApp/models.py:31
+msgid "location"
+msgstr "konum"
+
+#: muglaSepetiApp/models.py:32 muglaSepetiApp/models.py:68
+#: muglaSepetiApp/models.py:131
+msgid "owner"
+msgstr "sahip"
+
+#: muglaSepetiApp/models.py:40
+msgid "Profile"
+msgstr "profil"
+
+#: muglaSepetiApp/models.py:41
+msgid "Profiles"
+msgstr "profiller"
+
+#: muglaSepetiApp/models.py:43
+msgid "user"
+msgstr "kullanıcı"
+
+#: muglaSepetiApp/models.py:44
+msgid "adress"
+msgstr "adres"
+
+#: muglaSepetiApp/models.py:45
+msgid "birth date"
+msgstr "doğum günü"
+
+#: muglaSepetiApp/models.py:47 muglaSepetiApp/models.py:75
+msgid "phone number"
+msgstr "telefon numarası"
+
+#: muglaSepetiApp/models.py:48
+msgid "email address"
+msgstr "email adresi"
+
+#: muglaSepetiApp/models.py:65
+msgid "Company"
+msgstr "şirket"
+
+#: muglaSepetiApp/models.py:66
+msgid "Companies"
+msgstr "şirketler"
+
+#: muglaSepetiApp/models.py:70
+msgid "logo"
+msgstr "logo"
+
+#: muglaSepetiApp/models.py:71
+msgid "slug"
+msgstr "slug"
+
+#: muglaSepetiApp/models.py:73
+msgid "active menu"
+msgstr "aktif menü"
+
+#: muglaSepetiApp/models.py:76
+msgid "email adress"
+msgstr "email adresi"
+
+#: muglaSepetiApp/models.py:77
+msgid "address"
+msgstr "adresler"
+
+#: muglaSepetiApp/models.py:78
+msgid "open time"
+msgstr "açılış saati"
+
+#: muglaSepetiApp/models.py:79
+msgid "close time"
+msgstr "kapanış saati"
+
+#: muglaSepetiApp/models.py:80
+msgid "is Open"
+msgstr "Açık mı"
+
+#: muglaSepetiApp/models.py:81
+msgid ""
+"if this box not checked your company wont open even if it currently open-"
+"hours"
+msgstr ""
+"Eğer bu kutu işaretli değilse açılış saatine bakmaksızın şirketiniz kapalı "
+"gözükecektir"
+
+#: muglaSepetiApp/models.py:82
+msgid "instagram address"
+msgstr "instagram adresi"
+
+#: muglaSepetiApp/models.py:83
+msgid "facebook address"
+msgstr "facebook adresi"
+
+#: muglaSepetiApp/models.py:84
+msgid "twitter address"
+msgstr "twitter adresi"
+
+#: muglaSepetiApp/models.py:85
+msgid "tripadvisor address"
+msgstr "tripadvisor adresi"
+
+#: muglaSepetiApp/models.py:86
+msgid "youtube address"
+msgstr "youtube adresi"
+
+#: muglaSepetiApp/models.py:87
+msgid "pinterest address"
+msgstr "pinterest adresi"
+
+#: muglaSepetiApp/models.py:106
+msgid "Company Status"
+msgstr "şirket durumu"
+
+#: muglaSepetiApp/models.py:114
+msgid "Product Group"
+msgstr "ürün grubu"
+
+#: muglaSepetiApp/models.py:115
+msgid "Product Groups"
+msgstr "ürün grupları"
+
+#: muglaSepetiApp/models.py:118 muglaSepetiApp/models.py:152
+#: muglaSepetiApp/models.py:169 muglaSepetiApp/models.py:194
+msgid "company"
+msgstr "şirket"
+
+#: muglaSepetiApp/models.py:126
+msgid "Product Category"
+msgstr "ürün kategorisi"
+
+#: muglaSepetiApp/models.py:127
+msgid "Product Categories"
+msgstr "ürün kategorileri"
+
+#: muglaSepetiApp/models.py:130
+msgid "category image"
+msgstr "kategori resmi"
+
+#: muglaSepetiApp/models.py:132
+msgid "group"
+msgstr "grup"
+
+#: muglaSepetiApp/models.py:144 muglaSepetiApp/models.py:180
+msgid "Product"
+msgstr "ürün"
+
+#: muglaSepetiApp/models.py:145
+msgid "Products"
+msgstr "ürünler"
+
+#: muglaSepetiApp/models.py:148
+msgid "detail"
+msgstr "detay"
+
+#: muglaSepetiApp/models.py:149
+msgid "price"
+msgstr "fiyat"
+
+#: muglaSepetiApp/models.py:150
+msgid "product image"
+msgstr "ürün resmi"
+
+#: muglaSepetiApp/models.py:151
+msgid "category"
+msgstr "kategori"
+
+#: muglaSepetiApp/models.py:164
+msgid "Menu"
+msgstr "menü"
+
+#: muglaSepetiApp/models.py:165
+msgid "Menus"
+msgstr "menüler"
+
+#: muglaSepetiApp/models.py:168
+#| msgid "order list"
+msgid "Entry list"
+msgstr "Ürün listesi"
+
+#: muglaSepetiApp/models.py:177
+msgid "Bucket Product"
+msgstr "Sepet ürünü"
+
+#: muglaSepetiApp/models.py:178
+msgid "Bucket Products"
+msgstr "Sepet ürünleri"
+
+#: muglaSepetiApp/models.py:181
+msgid "Total Bucket Price"
+msgstr "Sepet toplamı"
+
+#: muglaSepetiApp/models.py:182
+msgid "Count"
+msgstr "miktar"
+
+#: muglaSepetiApp/models.py:190
+msgid "Order"
+msgstr "sipariş"
+
+#: muglaSepetiApp/models.py:191
+msgid "Orders"
+msgstr "siparişler"
+
+#: muglaSepetiApp/models.py:193
+msgid "profile"
+msgstr "profil"
+
+#: muglaSepetiApp/models.py:195
+#| msgid "Delivered"
+msgid "delivery note"
+msgstr "Sipariş Notu"
+
+#: muglaSepetiApp/models.py:196
+msgid "order list"
+msgstr "sipariş listesi"
+
+#: muglaSepetiApp/models.py:197
+msgid "order address"
+msgstr "sipariş adresi"
+
+#: muglaSepetiApp/models.py:198
+msgid "orderer's phone"
+msgstr "Müşteri telefonu"
+
+#: muglaSepetiApp/models.py:199
+msgid "check time"
+msgstr "Onaylanma zamanı"
+
+#: muglaSepetiApp/models.py:200
+msgid "order time"
+msgstr "Sipariş Zamanı"
+
+#: muglaSepetiApp/models.py:201
+#, fuzzy
+#| msgid "On the way"
+msgid "on the way time"
+msgstr "Yola çıkma zamanı"
+
+#: muglaSepetiApp/models.py:202
+#, fuzzy
+#| msgid "Delivered"
+msgid "deliver time"
+msgstr "Tesilim edilme zamanı"
+
+#: muglaSepetiApp/models.py:203
+#, fuzzy
+#| msgid "Canceled"
+msgid "Cancel time"
+msgstr "İptal edilme zamanı"
+
+#: muglaSepetiApp/models.py:204
+msgid "is ordered"
+msgstr "sipariş edildi mi"
+
+#: muglaSepetiApp/models.py:205
+msgid "is checked"
+msgstr "Onaylandı mı"
+
+#: muglaSepetiApp/models.py:206
+#, fuzzy
+#| msgid "On the way"
+msgid "is on the way"
+msgstr "Yola çıktı mı"
+
+#: muglaSepetiApp/models.py:207
+#, fuzzy
+#| msgid "Delivered"
+msgid "is delivered"
+msgstr "Teslim edildi mi"
+
+#: muglaSepetiApp/models.py:208
+msgid "is deleted"
+msgstr "silindi mi"
+
+#: muglaSepetiApp/models.py:211
+msgid "Cash"
+msgstr "Nakit"
+
+#: muglaSepetiApp/models.py:212
+msgid "Credit Card"
+msgstr "Kredi Kartı"
+
+#: muglaSepetiApp/models.py:273
+msgid "Price"
+msgstr "Fiyat"
