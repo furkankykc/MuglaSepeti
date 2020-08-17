@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-17 03:30+0300\n"
+"POT-Creation-Date: 2020-08-17 05:56+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,69 +17,95 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: muglaSepeti/settings.py:104
-msgid "English"
-msgstr "İngilizce"
+#: muglaSepeti/django_standard_messages.py:4
+msgid "Filter"
+msgstr "Filtre"
 
-#: muglaSepeti/settings.py:105
-msgid "Turkish"
-msgstr "Türkçe"
+#: muglaSepeti/django_standard_messages.py:5
+#, fuzzy
+#| msgid "filters"
+msgid "filter"
+msgstr "Filtre"
 
-#: muglaSepetiApp/admin.py:40
+#: muglaSepeti/django_standard_messages.py:6
+msgid "filters"
+msgstr "Filtre"
+
+#: muglaSepeti/django_standard_messages.py:7
+msgid "FILTER"
+msgstr "Filtre"
+
+#: muglaSepetiApp/admin.py:41
 msgid "This field is not editable"
 msgstr "Bu alan düzenlenebilir değil"
 
-#: muglaSepetiApp/admin.py:153
+#: muglaSepetiApp/admin.py:154
 msgid "Mark selected orders as checked"
 msgstr "Şeçilen siparişleri onayla"
 
-#: muglaSepetiApp/admin.py:154
+#: muglaSepetiApp/admin.py:155
 msgid "Mark selected orders as on the way"
 msgstr "Seçilen siparişleri yolda olarak işaretle"
 
-#: muglaSepetiApp/admin.py:155
+#: muglaSepetiApp/admin.py:156
 msgid "Mark selected orders as delivered"
 msgstr "Seçilen siparişleri teslim edildi olarak işaretle"
 
-#: muglaSepetiApp/admin.py:156
+#: muglaSepetiApp/admin.py:157
 msgid "Mark selected orders as canceled"
 msgstr "Seçilen siparişleri iptal edildi olarak işaretle"
 
-#: muglaSepetiApp/admin.py:191
+#: muglaSepetiApp/admin.py:184
+msgid "Order time"
+msgstr "Sipariş Zamanı"
+
+#: muglaSepetiApp/admin.py:185
+msgid "Borrow"
+msgstr "Ücret"
+
+#: muglaSepetiApp/admin.py:202
 msgid "Canceled"
 msgstr "İptal Edildi"
 
-#: muglaSepetiApp/admin.py:195
+#: muglaSepetiApp/admin.py:206
 msgid "Mark this order as checked"
 msgstr "Bu siparişi onayla"
 
-#: muglaSepetiApp/admin.py:195
+#: muglaSepetiApp/admin.py:206
 msgid "Check"
 msgstr "Onayla"
 
-#: muglaSepetiApp/admin.py:197
+#: muglaSepetiApp/admin.py:208
 msgid "Mark this order as Canceled"
 msgstr "Bu siparişi iptal edildi olarak işaretle"
 
-#: muglaSepetiApp/admin.py:197
+#: muglaSepetiApp/admin.py:208
 msgid "Cancel"
 msgstr "İptal Et"
 
-#: muglaSepetiApp/admin.py:201
+#: muglaSepetiApp/admin.py:212
 msgid "Mark this order as on the way"
 msgstr "Bu siparişi yolda olarak işaretle"
 
-#: muglaSepetiApp/admin.py:201
+#: muglaSepetiApp/admin.py:212
 msgid "On the way"
 msgstr "Yolda"
 
-#: muglaSepetiApp/admin.py:205
+#: muglaSepetiApp/admin.py:216
 msgid "Mark this order as delivered"
 msgstr "Bu siparişi  teslim edildi olarak işaretle"
 
-#: muglaSepetiApp/admin.py:205 muglaSepetiApp/admin.py:206
+#: muglaSepetiApp/admin.py:216 muglaSepetiApp/admin.py:217
 msgid "Delivered"
 msgstr "Tesilim Edildi"
+
+#: muglaSepetiApp/admin.py:231
+msgid "Muğla Sepeti"
+msgstr ""
+
+#: muglaSepetiApp/admin.py:231
+msgid "Sipariş Paneli"
+msgstr ""
 
 #: muglaSepetiApp/models.py:14
 msgid "Phone number must be entered in the format"
@@ -230,7 +255,7 @@ msgid "Product Groups"
 msgstr "ürün grupları"
 
 #: muglaSepetiApp/models.py:118 muglaSepetiApp/models.py:152
-#: muglaSepetiApp/models.py:169 muglaSepetiApp/models.py:194
+#: muglaSepetiApp/models.py:169 muglaSepetiApp/models.py:195
 msgid "company"
 msgstr "şirket"
 
@@ -283,7 +308,6 @@ msgid "Menus"
 msgstr "menüler"
 
 #: muglaSepetiApp/models.py:168
-#| msgid "order list"
 msgid "Entry list"
 msgstr "Ürün listesi"
 
@@ -311,85 +335,77 @@ msgstr "sipariş"
 msgid "Orders"
 msgstr "siparişler"
 
-#: muglaSepetiApp/models.py:193
+#: muglaSepetiApp/models.py:194
 msgid "profile"
 msgstr "profil"
 
-#: muglaSepetiApp/models.py:195
-#| msgid "Delivered"
+#: muglaSepetiApp/models.py:196
 msgid "delivery note"
 msgstr "Sipariş Notu"
 
-#: muglaSepetiApp/models.py:196
+#: muglaSepetiApp/models.py:197
 msgid "order list"
 msgstr "sipariş listesi"
 
-#: muglaSepetiApp/models.py:197
+#: muglaSepetiApp/models.py:198
 msgid "order address"
 msgstr "sipariş adresi"
 
-#: muglaSepetiApp/models.py:198
+#: muglaSepetiApp/models.py:199
 msgid "orderer's phone"
 msgstr "Müşteri telefonu"
 
-#: muglaSepetiApp/models.py:199
+#: muglaSepetiApp/models.py:200
 msgid "check time"
 msgstr "Onaylanma zamanı"
 
-#: muglaSepetiApp/models.py:200
+#: muglaSepetiApp/models.py:201
 msgid "order time"
 msgstr "Sipariş Zamanı"
 
-#: muglaSepetiApp/models.py:201
-#, fuzzy
-#| msgid "On the way"
+#: muglaSepetiApp/models.py:202
 msgid "on the way time"
 msgstr "Yola çıkma zamanı"
 
-#: muglaSepetiApp/models.py:202
-#, fuzzy
-#| msgid "Delivered"
+#: muglaSepetiApp/models.py:203
 msgid "deliver time"
 msgstr "Tesilim edilme zamanı"
 
-#: muglaSepetiApp/models.py:203
-#, fuzzy
-#| msgid "Canceled"
+#: muglaSepetiApp/models.py:204
 msgid "Cancel time"
 msgstr "İptal edilme zamanı"
 
-#: muglaSepetiApp/models.py:204
+#: muglaSepetiApp/models.py:205
 msgid "is ordered"
 msgstr "sipariş edildi mi"
 
-#: muglaSepetiApp/models.py:205
+#: muglaSepetiApp/models.py:206
 msgid "is checked"
 msgstr "Onaylandı mı"
 
-#: muglaSepetiApp/models.py:206
-#, fuzzy
-#| msgid "On the way"
+#: muglaSepetiApp/models.py:207
 msgid "is on the way"
 msgstr "Yola çıktı mı"
 
-#: muglaSepetiApp/models.py:207
-#, fuzzy
-#| msgid "Delivered"
+#: muglaSepetiApp/models.py:208
 msgid "is delivered"
 msgstr "Teslim edildi mi"
 
-#: muglaSepetiApp/models.py:208
+#: muglaSepetiApp/models.py:209
 msgid "is deleted"
 msgstr "silindi mi"
 
-#: muglaSepetiApp/models.py:211
+#: muglaSepetiApp/models.py:212
 msgid "Cash"
 msgstr "Nakit"
 
-#: muglaSepetiApp/models.py:212
+#: muglaSepetiApp/models.py:213
 msgid "Credit Card"
 msgstr "Kredi Kartı"
 
-#: muglaSepetiApp/models.py:273
+#: muglaSepetiApp/models.py:274
 msgid "Price"
 msgstr "Fiyat"
+
+#~ msgid "by"
+#~ msgstr "göre"

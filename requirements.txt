@@ -1,3 +1,4 @@
 git+https://github.com/furkankykc/django-liststyle.git
-
+django-modeladmin-reorder
 Django~=3.0.8
+Pillow

@@ -1,18 +1,21 @@
 from django.contrib import admin
+from django.template.defaultfilters import floatformat
 from django.urls import reverse
 from django.utils.safestring import mark_safe
 from liststyle import ListStyleAdminMixin
 from django.utils.translation import ugettext_lazy as _
-
+from django.contrib.humanize.templatetags.humanize import naturaltime
 from muglaSepetiApp.models import *
 
 # Register your models here.
-admin.site.register(BucketEntry)
+# admin.site.register(BucketEntry)
 # admin.site.register(Bucket)
 admin.site.register(Address)
+
+
 # admin.site.register(Entry)
 # admin.site.register(Company)
-admin.site.register(Profile)
+# admin.site.register(Profile)
 
 
 # admin.site.register(FoodGroup)
@@ -20,6 +23,34 @@ admin.site.register(Profile)
 
 
 # admin.site.register(Menu)
+
+class CustomAdminSite(admin.AdminSite):
+    site_title = "Muğla Sepeti"
+    site_header = "Muğla Sepeti"
+    index_title = "Muğla Sepeti"
+    #
+    # def each_context(self, request):
+    #     context = super().each_context(request)
+    #     if request.user.is_authenticated:
+    #         try:
+    #             comp = Company.objects.get(owner=request.user).slug
+    #         except Company.DoesNotExist:
+    #             comp = ""
+    #
+    #         context.update({
+    #             'slug': comp
+    #         })
+    #     return context
+
+
+customAdminSite = CustomAdminSite()
+customAdminSite.register(BucketEntry)
+customAdminSite.register(Address)
+customAdminSite.register(User)
+customAdminSite.register(Profile)
+customAdminSite.register(Comment)
+admin.site = customAdminSite
+
 
 # default admin model for company releated views
 class DefaultAdminModel(admin.ModelAdmin):
@@ -69,7 +100,7 @@ class DefaultAdminModel(admin.ModelAdmin):
         return qs.filter(company__owner=request.user)
 
 
-@admin.register(Company)
+@admin.register(Company, site=customAdminSite)
 class CompanyAdmin(DefaultAdminModel):
     list_display = ('name', 'active_menu', 'open_at', 'close_at', 'is_currently_open')
     prepopulated_fields = {'slug': ['name']}
@@ -98,7 +129,7 @@ class CompanyAdmin(DefaultAdminModel):
         return qs.filter(owner=request.user)
 
 
-@admin.register(Menu)
+@admin.register(Menu, site=customAdminSite)
 class MenuAdmin(DefaultAdminModel):
     list_display = ('name', 'count_of_entries')
     # fields = ('name')
@@ -114,17 +145,17 @@ class MenuAdmin(DefaultAdminModel):
         return obj.entry_list.count()
 
 
-@admin.register(FoodGroup)
+@admin.register(FoodGroup, site=customAdminSite)
 class FoodGroupAdmin(DefaultAdminModel):
     list_display = ('name', 'company')
 
 
-@admin.register(FoodCategory)
+@admin.register(FoodCategory, site=customAdminSite)
 class FoodCategoryAdmin(DefaultAdminModel):
     list_display = ('name', 'group', 'company')
 
 
-@admin.register(Entry)
+@admin.register(Entry, site=customAdminSite)
 class EntryAdmin(DefaultAdminModel):
     list_filter = ('company', 'category')
     list_display = ('name', 'detail', 'price', 'company', 'category')
@@ -156,7 +187,7 @@ make_delivered.short_description = _("Mark selected orders as delivered")
 make_cancel.short_description = _("Mark selected orders as canceled")
 
 
-@admin.register(Bucket)
+@admin.register(Bucket, site=customAdminSite)
 class BucketAdmin(admin.ModelAdmin, ListStyleAdminMixin):
     class Media:
         js = ('admin/js/override_for_change_form.js',)
@@ -164,14 +195,24 @@ class BucketAdmin(admin.ModelAdmin, ListStyleAdminMixin):
             'all': ('admin/css/override_for_change_form.css',)
         }
 
-    exclude = ['is_checked', 'is_ordered', 'is_delivered', 'is_on_the_way', 'is_deleted', 'checked_at', 'delivered_at',
-               'deleted_at', 'on_the_way_at']
-    list_display = ('get_products', 'get_borrow', 'delivery_note', 'order_address', 'order_phone', 'company', 'status')
+    # exclude = ['is_checked', 'is_ordered', 'is_delivered', 'is_on_the_way', 'is_deleted', 'checked_at', 'delivered_at',
+    #            'deleted_at', 'on_the_way_at']
+    list_display = (
+        'get_products', 'delivery_note', 'order_address', 'order_phone', 'get_borrow', 'get_order_time',
+        'status')
     list_filter = ('company',)
     ordering = ['ordered_at']
     actions = [make_check, make_on_the_way, make_delivered, make_cancel]
-
     change_list_template = 'admin/change_list_for_bucket.html'
+
+    def get_order_time(self, obj):
+        return naturaltime(obj.ordered_at)
+
+    def get_borrow(self, obj):
+        return "{}₺".format(floatformat(obj.get_borrow()))
+
+    get_order_time.short_description = _("Order time")
+    get_borrow.short_description = _("Borrow")
 
     def get_row_css(self, obj, index):
 
@@ -214,3 +255,9 @@ class BucketAdmin(admin.ModelAdmin, ListStyleAdminMixin):
         if request.user.is_superuser:
             return qs
         return qs.filter(company__owner=request.user, is_ordered=True)
+
+    def changelist_view(self, request, extra_context=None):
+
+        extra_context = {'title': "{}  |  {}".format(_("Muğla Sepeti"), _('Sipariş Paneli'))}
+
+        return super(BucketAdmin, self).changelist_view(request, extra_context=extra_context)

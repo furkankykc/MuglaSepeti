@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-from django.utils.translation import ugettext_lazy as _
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'muglaSepetiApp.apps.MuglasepetiappConfig',
+    'admin_reorder',
+    'django.contrib.humanize',
+
 ]
 
 MIDDLEWARE = [
@@ -47,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'admin_reorder.middleware.ModelAdminReorder',
 ]
 
 ROOT_URLCONF = 'muglaSepeti.urls'
@@ -97,21 +101,40 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+ADMIN_REORDER = (
+    # Keep original label and models
+    'sites',
+    # models with custom name
+    {'app': 'muglaSepetiApp', 'models': ({'model': 'muglaSepetiApp.Bucket', 'label': 'Sipariş Paneli'},
+                                         )
+     },
+    {'app': 'auth', 'models': ('auth.User', 'auth.Group')},
+    # Rename app
+    {'app': 'muglaSepetiApp', 'models': (
+        'muglaSepetiApp.Company', 'muglaSepetiApp.FoodGroup', 'muglaSepetiApp.FoodCategory', 'muglaSepetiApp.Entry',
+        'muglaSepetiApp.Menu','muglaSepetiApp.Comment'),
+     'label': 'Muğla Sepeti | Düzenle'},
 
+)
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
-LANGUAGES = (
-    ('en', _('English')),
-    ('tr', _('Turkish')),
-)
+
 LANGUAGE_CODE = 'tr'
-MODELTRANSLATION_DEFAULT_LANGUAGE = 'en-us'
 TIME_ZONE = 'Europe/Istanbul'
 
 USE_I18N = True
 
 USE_L10N = True
 
+# Mail sending
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'furkanfbr@gmail.com'
+EMAIL_HOST_PASSWORD = 'rghzpghdhchyqkaa'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'Muğla Sepeti Ekibi <noreply@muglasepeti.com>'
 USE_TZ = True
 LOCALE_PATHS = ('static/locale',)
 # Static files (CSS, JavaScript, Images)

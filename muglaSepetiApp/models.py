@@ -3,7 +3,7 @@ import os
 from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
 from django.db import models
-from django.db.models import F, Sum
+from django.db.models import F, Sum, Avg
 from django.dispatch import receiver
 from django.utils import timezone
 from django.db.models.signals import post_save
@@ -103,6 +103,13 @@ class Company(models.Model):
                 return True
         return False
 
+    def get_comments(self):
+        return Bucket.objects.filter(company=self).order_by('-comment__time')
+
+    def get_rating(self):
+        rating = Bucket.objects.filter(company=self).aggregate(Avg('comment__rating'))['comment__rating__avg']
+        return rating
+
     get_is_open.short_description = _("Company Status")
 
     def __str__(self):
@@ -155,6 +162,10 @@ class Entry(models.Model):
     def get_image(self):
         return self.image or self.category.image
 
+    def get_food_rating(self):
+        # todo get foot rating filter by entry id sum of total rating
+        pass
+
     def __str__(self):
         return self.name
 
@@ -189,6 +200,7 @@ class Bucket(models.Model):
     class Meta:
         verbose_name = _('Order')
         verbose_name_plural = _('Orders')
+        app_label = 'muglaSepetiApp'
 
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE, verbose_name=_("profile"))
     company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name=_("company"))
@@ -273,4 +285,27 @@ class Bucket(models.Model):
     get_borrow.short_description = _('Price')
 
     def __str__(self):
-        return 'Accounting user {}'.format(self.profile.user.username)
+        return '{} tarihli sipariş'.format(self.ordered_at)
+
+
+class Comment(models.Model):
+    class Meta:
+        verbose_name = _("Comment")
+        verbose_name_plural = _("Comments")
+
+    RATING_LEVELS = (
+        ('1', _("Beğenmedim")),
+        ('2', _('İdare eder')),
+        ('3', _('İyiydi işte')),
+        ('4', _('Güzeldi')),
+        ('5', _('Mükemmeldi')),
+    )
+    owner = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, verbose_name=_("owner"))
+    bucket = models.OneToOneField(Bucket,
+                                  on_delete=models.CASCADE, verbose_name=_("Bucket"))
+    rating = models.CharField(max_length=1, choices=RATING_LEVELS)
+    comment = models.CharField(max_length=100, verbose_name=_("comment"))
+    time = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.comment
