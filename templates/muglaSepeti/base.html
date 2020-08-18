@@ -2,15 +2,15 @@
 <html lang="en">
 {% load static %}
 
-<!-- Mirrored from www.spheretheme.com/html/steam/404.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 12 Aug 2020 15:48:44 GMT -->
+<!-- Mirrored from www.spheretheme.com/html/steam/shop.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 12 Aug 2020 15:48:29 GMT -->
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="theme-color" content="#e54c2a">
     <!-- Favicon -->
-    <link type="image/x-icon" rel="shortcut icon" href="{% static 'assets/images/{% static 'assets/images/favicon.png' %}' %}"/>
-    <title>Page Not Found - STEAM - Restaurant and Drinks Responsive HTML5 Template</title>
+    <link type="image/x-icon" rel="shortcut icon" href="{% static 'assets/images/favicon.png' %}"/>
+    <title>Our Shop - STEAM - Restaurant and Drinks Responsive HTML5 Template</title>
     <meta name="description"
           content="STEAM - Restaurant, food and Drinks HTML5 website template is Modern, Clean and Professional site template. Prefect for RESTAURANT, Bakery, Cafe, Bar, Catering, food business and for personal chef portfolio website.">
 
@@ -23,6 +23,8 @@
     <!-- mb.YTPlayer css -->
     <link href="{% static 'assets/libs/mb.YTPlayer/css/jquery.mb.YTPlayer.min.css' %}" rel="stylesheet"
           type="text/css"/>
+    <!-- Bootstrap Select css -->
+    <link href="{% static 'assets/libs/bootstrap-select/bootstrap-select.css' %}" rel="stylesheet" type="text/css"/>
     <!-- Switch Style css -->
     <link href="{% static 'assets/switch-style/switch-style.css' %}" rel="stylesheet" type="text/css"/>
     <!-- Theme Stylesheet -->
@@ -30,11 +32,12 @@
     <!-- Switch Color Style css -->
     <link href="#" data-style="styles" rel="stylesheet">
 </head>
-<body>
+<body class="">
 <div class="wrapper">
     <!--[if lt IE 8]>
-       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-   <![endif]-->
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a
+            href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
 
     <!-- Loader Start -->
     <div class="loader">
@@ -66,7 +69,7 @@
         <div class="top">
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-12 col-xs-12">
+                    <div class="col-sm-12 col-12">
                         <ul class="list-inline float-left icon">
                             <li class="list-inline-item"><a href="#"><i class="icofont icofont-phone"></i> Hotline : 123
                                 456 7890</a></li>
@@ -113,7 +116,7 @@
 
         <div class="container">
             <div class="row">
-                <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="col-md-3 col-sm-6 col-12">
                     <!-- Logo Start  -->
                     <div id="logo">
                         <a href="index.html"><img id="logo_img" class="img-fluid"
@@ -123,7 +126,7 @@
                     <!-- Logo End  -->
                 </div>
 
-                <div class="col-md-7 col-sm-6 col-xs-12 paddleft">
+                <div class="col-md-7 col-sm-6 col-12 paddleft">
                     <!-- Main Menu Start  -->
                     <div id="menu">
                         <nav class="navbar navbar-expand-md">
@@ -211,7 +214,7 @@
                     </div>
                     <!-- Main Menu End -->
                 </div>
-                <div class="col-md-2 col-sm-12 col-xs-12 button-top paddleft">
+                <div class="col-md-2 col-sm-12 col-12 button-top paddleft">
                     <a class="btn-primary btn" href='reservation.html'>Book Your Table</a>
                 </div>
             </div>
@@ -219,80 +222,9 @@
     </header>
     <!-- Header End   -->
 
-    <!-- Breadcrumb Start -->
-    <div class="bread-crumb">
-        <div class="container">
-            <div class="matter">
-                <h2>Page Not Found</h2>
-                <ul class="list-inline">
-                    <li class="list-inline-item"><a href="index.html">HOME</a></li>
-                    <li class="list-inline-item"><a href="#">Page not found</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <!-- Breadcrumb End -->
+    {% block content %}
+    {% endblock %}
 
-
-    <!-- Service Start  -->
-    <div class="page-not-found">
-        <div class="container">
-            <div class="row ">
-                <div class="col-sm-12 col-xs-12">
-
-                </div>
-
-                <!-- Title Content Start -->
-                <div class="col-sm-12 col-xs-12 commontop text-center">
-                    <h4>Page not found!</h4>
-                    <div class="divider style-1 center">
-                        <span class="hr-simple left"></span>
-                        <i class="icofont icofont-ui-press hr-icon"></i>
-                        <span class="hr-simple right"></span>
-                    </div>
-                    <div class="error-content">
-                        <h2>404</h2>
-                        <h3>Oops! Looks like something going rong</h3>
-                        <p>We can’t seem to find the page you’re looking for make sure that you have typed the currect
-                            URL</p>
-                        <a class="btn btn-theme btn-wide" href="index.html">Go to home</a>
-                    </div>
-                </div>
-                <!-- Title Content End -->
-
-            </div>
-        </div>
-    </div>
-    <!-- Service End   -->
-
-    <!-- Newsletter Start -->
-    <div id="newsletter">
-        <div class="container">
-            <div id="subscribe">
-                <!-- Subscribe Form -->
-                <form class="form-horizontal" name="subscribe">
-                    <div class="row">
-                        <div class="col-sm-6 col-md-7">
-                            <div class="input-group">
-                                <span class="news">newsletter</span>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam iaculis lorem augue, at
-                                    quam finibus eget.</p>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-5 form-group">
-                            <div class="input-group">
-                                <input value="" name="subscribe_email" id="subscribe_email" placeholder="Email"
-                                       type="text">
-                                <button class="btn btn-news" type="submit" value="submit">Send</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                <!-- Subscribe Form -->
-            </div>
-        </div>
-    </div>
-    <!-- Newsletter End -->
 
     <!-- Footer Start -->
     <footer>
@@ -388,68 +320,6 @@
     </footer>
     <!-- Footer End  -->
 
-    <!-- Switch Style Start -->
-    <div class="style-customizer closed">
-        <a class="opener" href="#"><i class="icofont icofont-options"></i></a>
-        <div class="buy-button">
-            <a href="index.html" class="customizer-logo">
-                <img src="{% static 'assets/images/logo/logo-gray.png' %}" alt="Theme Logo">
-            </a>
-            <div class="buy-now">
-                <a class="btn btn-theme btn-md" target="new"
-                   href="https://themeforest.net/item/steam-restaurant-food-drinks-html-5-website-template/21212196">Buy
-                    now!</a>
-            </div>
-        </div>
-        <div class="clearfix content-chooser">
-            <h3>Layout Options</h3>
-            <p>Which layout option you want to use?</p>
-            <ul class="layoutstyle clearfix">
-                <li class="wide-layout selected" data-style="wide-layout" title="wide"> Wide</li>
-                <li class="boxed-layout" data-style="boxed-layout" title="boxed"> Boxed</li>
-            </ul>
-            <h3>Color Schemes</h3>
-            <p>Which theme color you want to use? Select from here.</p>
-            <ul class="styleChange clearfix">
-                <li class="skin-default selected" title="skin-default" data-style="skin-default"></li>
-                <li class="color-1" title="color-1" data-style="color-1"></li>
-                <li class="color-2" title="color-2" data-style="color-2"></li>
-                <li class="color-3" title="color-3" data-style="color-3"></li>
-                <li class="color-4" title="color-4" data-style="color-4"></li>
-                <li class="color-5" title="color-5" data-style="color-5"></li>
-                <li class="color-6" title="color-6" data-style="color-6"></li>
-                <li class="color-7" title="color-7" data-style="color-7"></li>
-                <li class="color-8" title="color-8" data-style="color-8"></li>
-                <li class="color-9" title="color-9" data-style="color-9"></li>
-                <li class="color-10" title="color-10" data-style="color-10"></li>
-                <li class="color-11" title="color-11" data-style="color-11"></li>
-            </ul>
-            <h3>Header Style</h3>
-            <p>Which Header Style you want to use? Select from here.</p>
-            <ul class="headerChange clearfix">
-                <li class="header-0" data-style="header-0" title="Default Header">0</li>
-                <li class="header-1" data-style="header-1" title="Header Color">1</li>
-                <li class="header-2" data-style="header-2" title="Sticky Header">2</li>
-            </ul>
-            <h3>Background Style</h3>
-            <p>Which background Style you want to use? Select from here.</p>
-            <ul class="backgroundChange clearfix">
-                <li class="main-bg-1" data-style="main-bg-1" title="Background 1"></li>
-                <li class="main-bg-2" data-style="main-bg-2" title="Background 2"></li>
-                <li class="main-bg-3" data-style="main-bg-3" title="Background 3"></li>
-                <li class="main-bg-4" data-style="main-bg-4" title="Background 4"></li>
-                <li class="main-bg-5" data-style="main-bg-5" title="Background 5"></li>
-                <li class="main-bg-6" data-style="main-bg-6" title="Background 6"></li>
-                <li class="main-bg-7" data-style="main-bg-7" title="Background 7"></li>
-                <li class="main-bg-8" data-style="main-bg-8" title="Background 8"></li>
-            </ul>
-
-            <ul class="resetAll">
-                <li><a class="btn btn-theme btn-md btn-block button-reset" href="#">Reset All</a></li>
-            </ul>
-        </div>
-    </div>
-    <!-- Switch Style End -->
 
 </div>
 
@@ -469,12 +339,14 @@
 <script src="{% static 'assets/libs/jquery.countTo/jquery.countTo.js' %}"></script>
 <!-- mb.YTPlayer js code-->
 <script src="{% static 'assets/libs/mb.YTPlayer/jquery.mb.YTPlayer.min.js' %}"></script>
+<!-- Bootstrap Select js -->
+<script src="{% static 'assets/libs/bootstrap-select/bootstrap-select.js' %}"></script>
 <!-- Switch Style js -->
 <script src="{% static 'assets/switch-style/switch-style.js' %}"></script>
 <!--internal js-->
 <script src="{% static 'assets/js/internal.js' %}"></script>
 </body>
 
-<!-- Mirrored from www.spheretheme.com/html/steam/404.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 12 Aug 2020 15:48:44 GMT -->
+<!-- Mirrored from www.spheretheme.com/html/steam/shop.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 12 Aug 2020 15:48:40 GMT -->
 </html>
 

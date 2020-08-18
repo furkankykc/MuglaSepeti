@@ -115,7 +115,7 @@ class CompanyAdmin(DefaultAdminModel):
         return obj.get_is_open()
 
     def get_form(self, request, obj=None, **kwargs):
-        form = super(DefaultAdminModel, self).get_form(request, obj, **kwargs)
+        form = super(CompanyAdmin, self).get_form(request, obj, **kwargs)
         if 'active_menu' in form.base_fields:
             if obj is not None:
                 print(obj.id)

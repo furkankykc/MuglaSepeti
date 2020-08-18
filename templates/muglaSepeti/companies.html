@@ -1,0 +1,270 @@
+{% extends 'muglaSepeti/base.html' %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+
+    <!-- Breadcrumb Start -->
+    <div class="bread-crumb">
+        <div class="container">
+            <div class="matter">
+                <h2>{% trans 'Restourant Page' %}</h2>
+                <ul class="list-inline">
+{#                    <li class="list-inline-item"><a href="index.html">HOME</a></li>#}
+{#                    <li class="list-inline-item"><a href="#">Our Shop</a></li>#}
+                    <li class="list-inline-item"><a href="#">{{ company.name }}</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
+    <!-- Shop Start -->
+    <div class="shop">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <!-- Left Filter Start -->
+                    <div class="left-side">
+                        <h4>{% trans 'Categories' %}</h4>
+                        <div class="search">
+                            <!-- Search Filter Start -->
+                            <form class="form-horizontal" method="post">
+                                <fieldset>
+                                    <div class="form-group">
+                                        <input name="s" value="" class="form-control" placeholder="Search Food"
+                                               type="text">
+                                        <button type="submit" value="submit" class="btn"><i
+                                                class="icofont icofont-search"></i></button>
+                                    </div>
+                                    <ul class="list-unstyled">
+                                        {% for category in categories %}
+                                        <li>
+                                            <label class="check">
+                                                <input type="radio" name="payment" class="checkclass"/>
+                                                {{ category.name }}
+                                            </label>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </fieldset>
+                            </form>
+                            <!-- Search Filter End -->
+                        </div>
+                        <div class="food">
+                            <h3>Food For</h3>
+                            <ul class="list-inline">
+                                <li class="list-inline-item">
+                                    <label class="check">
+                                        <input type="radio" name="payment" class="checkclass"/>
+                                        Delivery
+                                    </label>
+                                </li>
+                                <li class="list-inline-item">
+                                    <label class="check">
+                                        <input type="radio" name="payment" class="checkclass"/>
+                                        Pickup
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="popular">
+                            <!-- Tag Filter Start -->
+                            <h3>popular tags <a href="#" class="pull-right"><i class="icofont icofont-plus"></i></a>
+                            </h3>
+                            <ul class="list-inline">
+                                <li class="list-inline-item"><a href="#">Service <i
+                                        class="icofont icofont-close"></i></a></li>
+                                <li class="list-inline-item"><a href="#">Cookies <i
+                                        class="icofont icofont-close"></i></a></li>
+                                <li class="list-inline-item"><a href="#">Pizza <i class="icofont icofont-close"></i></a>
+                                </li>
+                                <li class="list-inline-item"><a href="#">Tandoori Chicken <i
+                                        class="icofont icofont-close"></i></a></li>
+                                <li class="list-inline-item"><a href="#">Cupcake <i
+                                        class="icofont icofont-close"></i></a></li>
+                                <li class="list-inline-item"><a href="#">Burger <i
+                                        class="icofont icofont-close"></i></a></li>
+                            </ul>
+                            <!-- Tag Filter End -->
+                        </div>
+                        <div class="rating">
+                            <!-- Rating Filter Start -->
+                            <h3>Rating</h3>
+                            <ul class="list-unstyled">
+                                <li>
+                                    <label class="check">
+                                        <input type="radio" name="payment" class="checkclass"/>
+                                        <i class="icofont icofont-star"></i>
+                                        <i class="icofont icofont-star"></i>
+                                        <i class="icofont icofont-star"></i>
+                                        <i class="icofont icofont-star"></i>
+                                        <i class="icofont icofont-star"></i>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="check">
+                                        <input type="radio" name="payment" class="checkclass"/>
+                                        <i class="icofont icofont-star"></i>
+                                        <i class="icofont icofont-star"></i>
+                                        <i class="icofont icofont-star"></i>
+                                        <i class="icofont icofont-star"></i>
+                                        <i class="icofont icofont-star"></i>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="check">
+                                        <input type="radio" name="payment" class="checkclass"/>
+                                        <i class="icofont icofont-star"></i>
+                                        <i class="icofont icofont-star"></i>
+                                        <i class="icofont icofont-star"></i>
+                                        <i class="icofont icofont-star"></i>
+                                        <i class="icofont icofont-star"></i>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="check">
+                                        <input type="radio" name="payment" class="checkclass"/>
+                                        <i class="icofont icofont-star"></i>
+                                        <i class="icofont icofont-star"></i>
+                                        <i class="icofont icofont-star"></i>
+                                        <i class="icofont icofont-star"></i>
+                                        <i class="icofont icofont-star"></i>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label class="check">
+                                        <input type="radio" name="payment" class="checkclass"/>
+                                        <i class="icofont icofont-star"></i>
+                                        <i class="icofont icofont-star"></i>
+                                        <i class="icofont icofont-star"></i>
+                                        <i class="icofont icofont-star"></i>
+                                        <i class="icofont icofont-star"></i>
+                                    </label>
+                                </li>
+                            </ul>
+                            <!-- Rating Filter End -->
+                        </div>
+                    </div>
+                    <!-- Left Filter End -->
+                </div>
+                <div class="col-md-9 mainpage">
+                    <!-- Product View Start -->
+                    <div class="row sort">
+                        <!-- Product Short Start -->
+                        <div class="col-md-4">
+                            <div class="form-group input-group input-group-sm">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-addon" for="input-sort">Sort By : </label>
+                                </div>
+                                <select id="input-sort" class="form-control selectpicker bs-select-hidden">
+                                    <option value="" selected="selected">Newest</option>
+                                    <option value="">Trending</option>
+                                    <option value="">Best Seller</option>
+                                    <option value="">Low to High</option>
+                                    <option value="">High to Low</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group input-group input-group-sm">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-addon" for="input-sort">Show : </label>
+                                </div>
+                                <select id="input-show" class="form-control selectpicker bs-select-hidden">
+                                    <option value="" selected="selected">Default</option>
+                                    <option value="">1</option>
+                                    <option value="">5</option>
+                                    <option value="">15</option>
+                                    <option value="">20</option>
+                                    <option value="">25</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4 list d-sm-none d-md-block text-right">
+                            <div class="btn-group" role="group" aria-label="...">
+                                <button type="button" id="grid-view" class="btn btn-theme-alt btn-md btngrid"
+                                        data-toggle="tooltip" title="Grid"><i
+                                        class="icofont icofont-brand-microsoft"></i></button>
+                                <button type="button" id="list-view" class="btn btn-theme-alt btn-md btngrid"
+                                        data-toggle="tooltip" title="List"><i class="icofont icofont-listine-dots"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Product Short End -->
+                    </div>
+
+                    <div class="form-row">
+                        <!-- Product List Start -->
+                        <!-- Single Product Start -->
+                        {% for entry in company.active_menu.entry_list.all %}
+                            <div class="product-layout product-grid col-lg-4 col-md-4 col-sm-6 col-12">
+                                <div class="product-thumb">
+                                    <div class="image">
+                                        <a class="link" href="shop-details.html"><img
+                                                {# src="{{ entryget_image }}" alt="{{ entry.name }}"#}
+                                                src="{% static 'assets/images/shop/01.jpg' %}" alt="{{ entry.name }}"
+                                                title="{{ entry.name }}" class="img-fluid"/></a>
+                                        <div class="hoverbox">
+                                            <a class="btn btn-theme btn-md" href="shopping-cart.html">Add To Cart</a>
+                                        </div>
+                                    </div>
+                                    <div class="caption">
+                                        <h4>{{ entry.name }}</h4>
+                                        <div class="rating">
+                                            <i class="icofont icofont-star"></i>
+                                            <i class="icofont icofont-star"></i>
+                                            <i class="icofont icofont-star"></i>
+                                            <i class="icofont icofont-star"></i>
+                                            <i class="icofont icofont-star"></i>
+                                        </div>
+                                        <div class="price">{{ entry.price|floatformat }}₺</div>
+                                        <p class="des">{{ entry.category.name }}</p>
+                                        <p>{{ entry.detail }}</p>
+                                        <p><a class="btn btn-theme btn-md" href="shopping-cart.html">Add To Cart</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12 col-12 text-center">
+                            <!-- Pagination Start -->
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Previous"><i
+                                            class="icofont icofont-double-left"></i></a>
+                                </li>
+                                <li class="page-item active">
+                                    <a class="page-link" href="#">01</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">02</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">03</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">04</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">...</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#">18</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Next"><i
+                                            class="icofont icofont-double-right"></i></a>
+                                </li>
+                            </ul>
+                            <!-- Pagination End -->
+                        </div>
+                    </div>
+                    <!-- Product View End -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Shop End -->
+
+{% endblock %}

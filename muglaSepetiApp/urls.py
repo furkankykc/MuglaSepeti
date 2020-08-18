@@ -10,4 +10,5 @@ urlpatterns = [
     path('deliver/<int:pk>', views.deliver, name='deliver'),
     path('cancel/<int:pk>', views.cancel, name='cancel'),
     path('get_data/', views.get_more_tables, name='get_more_data'),
+    path('restaurants/<slug:cmp_slug>', views.company_menu, name='company_menu'),
 ]

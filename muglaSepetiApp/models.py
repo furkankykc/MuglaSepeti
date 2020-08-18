@@ -60,6 +60,12 @@ class Profile(models.Model):
         return self.user.username
 
 
+class GetCompanyOpen(models.Manager):
+    def get_query_set(self):
+        return super(GetCompanyOpen, self).get_query_set().filter(
+            open_at__lte=timezone.now().time(), close_at__gt=timezone.now().time())
+
+
 class Company(models.Model):
     class Meta:
         verbose_name = _("Company")
@@ -86,9 +92,15 @@ class Company(models.Model):
     youtube = models.URLField(blank=True, verbose_name=_("youtube address"))
     pinterest = models.URLField(blank=True, verbose_name=_("pinterest address"))
 
+    # is_open_now = GetCompanyOpen()
+
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         super(Company, self).save(*args, **kwargs)
+
+    @classmethod
+    def get_open_companies(cls):
+        return cls.objects.filter(open_at__lte=timezone.now().time(), close_at__gt=timezone.now().time())
 
     def get_is_open(self):
         curr_hour = timezone.now().hour
@@ -110,7 +122,7 @@ class Company(models.Model):
         rating = Bucket.objects.filter(company=self).aggregate(Avg('comment__rating'))['comment__rating__avg']
         return rating
 
-    get_is_open.short_description = _("Company Status")
+    # get_is_open.short_description = _("Company Status")
 
     def __str__(self):
         return self.name
