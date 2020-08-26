@@ -9,8 +9,8 @@
             <div class="matter">
                 <h2>{% trans 'Restourant Page' %}</h2>
                 <ul class="list-inline">
-{#                    <li class="list-inline-item"><a href="index.html">HOME</a></li>#}
-{#                    <li class="list-inline-item"><a href="#">Our Shop</a></li>#}
+                    {#                    <li class="list-inline-item"><a href="index.html">HOME</a></li>#}
+                    {#                    <li class="list-inline-item"><a href="#">Our Shop</a></li>#}
                     <li class="list-inline-item"><a href="#">{{ company.name }}</a></li>
                 </ul>
             </div>
@@ -37,12 +37,12 @@
                                     </div>
                                     <ul class="list-unstyled">
                                         {% for category in categories %}
-                                        <li>
-                                            <label class="check">
-                                                <input type="radio" name="payment" class="checkclass"/>
-                                                {{ category.name }}
-                                            </label>
-                                        </li>
+                                            <li>
+                                                <label class="check">
+                                                    <input type="radio" name="payment" class="checkclass"/>
+                                                    {{ category.name }}
+                                                </label>
+                                            </li>
                                         {% endfor %}
                                     </ul>
                                 </fieldset>
@@ -191,7 +191,13 @@
                         </div>
                         <!-- Product Short End -->
                     </div>
-
+                    <style>
+                        img {
+                            width: 270px; /* You can set the dimensions to whatever you want */
+                            height: 300px;
+                            object-fit: cover;
+                        }
+                    </style>
                     <div class="form-row">
                         <!-- Product List Start -->
                         <!-- Single Product Start -->
@@ -201,8 +207,15 @@
                                     <div class="image">
                                         <a class="link" href="shop-details.html"><img
                                                 {# src="{{ entryget_image }}" alt="{{ entry.name }}"#}
-                                                src="{% static 'assets/images/shop/01.jpg' %}" alt="{{ entry.name }}"
-                                                title="{{ entry.name }}" class="img-fluid"/></a>
+                                                {% if entry.image %}
+                                                    src="{{ entry.image.url }}"
+                                                    style="  object-fit: cover;height: 300px;width: 270px;"
+
+                                                {% else %}
+                                                    src="{% static 'assets/images/shop/01.jpg' %}"
+                                                {% endif %}
+                                                    alt="{{ entry.name }}"
+                                                    title="{{ entry.name }}" class="img-fluid"/></a>
                                         <div class="hoverbox">
                                             <a class="btn btn-theme btn-md" href="shopping-cart.html">Add To Cart</a>
                                         </div>

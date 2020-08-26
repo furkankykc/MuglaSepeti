@@ -6,6 +6,7 @@ from liststyle import ListStyleAdminMixin
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.humanize.templatetags.humanize import naturaltime
 from muglaSepetiApp.models import *
+from django import forms
 
 # Register your models here.
 # admin.site.register(BucketEntry)
@@ -75,6 +76,12 @@ class DefaultAdminModel(admin.ModelAdmin):
 
         return form
 
+    def formfield_for_dbfield(self, db_field, **kwargs):
+        formfield = super(DefaultAdminModel, self).formfield_for_dbfield(db_field, **kwargs)
+        if db_field.name == 'detail':
+            formfield.widget = forms.Textarea(attrs=formfield.widget.attrs)
+        return formfield
+
     def get_readonly_fields(self, request, obj=None):
         local_read_only_fields = ()
         if obj and not request.user.is_superuser:
@@ -102,13 +109,18 @@ class DefaultAdminModel(admin.ModelAdmin):
 
 @admin.register(Company, site=customAdminSite)
 class CompanyAdmin(DefaultAdminModel):
-    list_display = ('name', 'active_menu', 'open_at', 'close_at', 'is_currently_open')
+    list_display = ('name', 'active_menu', 'open_at', 'close_at', 'is_currently_open', 'restaurant_url')
     prepopulated_fields = {'slug': ['name']}
 
     fields = (
         'owner', 'slug', 'name', 'logo', 'address', 'active_menu', 'is_open', 'open_at', 'close_at', 'phone', 'email',
         'instagram',
         'facebook', 'twitter')
+
+    def restaurant_url(self, obj):
+        return mark_safe(
+            '<a class="button" target="blank_" href="{}">{}</a>'.format(reverse('company_menu', args=[obj.slug]),
+                                                                        obj.slug))
 
     @staticmethod
     def is_currently_open(obj):

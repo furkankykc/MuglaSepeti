@@ -163,8 +163,8 @@ class Entry(models.Model):
         verbose_name = _('Product')
         verbose_name_plural = _('Products')
 
-    name = models.CharField(max_length=30, verbose_name=_('name'))
-    detail = models.CharField(max_length=100, verbose_name=_('detail'))
+    name = models.CharField(max_length=50, verbose_name=_('name'))
+    detail = models.CharField(max_length=100, verbose_name=_('detail'), blank=True, null=True)
     price = models.FloatField(verbose_name=_('price'))
     image = models.ImageField(upload_to=get_image_path, blank=True, null=True, verbose_name=_('product image'))
     category = models.ForeignKey(FoodCategory, on_delete=models.CASCADE, verbose_name=_('category'))
