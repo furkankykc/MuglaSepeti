@@ -1,13 +1,79 @@
+from django.contrib import auth
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 # Create your views here.
+from django.urls import reverse
+from django.views import View
+from django.views.decorators.cache import never_cache
+from django.views.decorators.csrf import csrf_protect
+
+from muglaSepetiApp.forms import RegisterForm, ChangeUserForm, ChangeProfileForm, CreateAddressForm, ChangePasswordForm
 from muglaSepetiApp.models import Bucket, Company, Menu, Entry, FoodCategory
+from django.contrib.auth.views import LoginView
+from django.contrib.auth.forms import PasswordChangeForm
 
 
 def test(request):
     page_url = "assets/index.html"
     return render(request, template_name=page_url)
+
+
+def index(request):
+    context = {
+
+    }
+    return render(request, template_name='muglaSepeti/index.html', context=context)
+
+
+def register(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = auth.authenticate(username=username, password=raw_password)
+            auth.login(request, user)
+            return redirect('home')
+    else:
+        form = RegisterForm()
+    context = {
+        'form': form
+    }
+    return render(request, template_name='registration/register.html', context=context)
+
+
+def profile(request):
+    profileForm = ChangeProfileForm()
+    userForm = ChangeUserForm()
+    addressForm = CreateAddressForm
+    passwordForm = ChangePasswordForm(request.user)
+    context = {
+        'user_form': userForm,
+        'profile_form': profileForm,
+        'address_form': addressForm,
+        'password_form': passwordForm,
+    }
+    return render(request, template_name='registration/profile.html', context=context)
+
+
+def logout(request):
+    from django.contrib.auth import logout
+    logout(request)
+    return redirect(reverse('home'))
+
+
+def checkout(request):
+    context = {
+    }
+    return render(request, template_name='muglaSepeti/checkout.html', context=context)
+
+
+def companies(request):
+    context = {
+    }
+    return render(request, template_name='muglaSepeti/company_list.html', context=context)
 
 
 def check(request, pk):
@@ -66,3 +132,29 @@ def company_menu(request, cmp_slug):
         'categories': categories,
     }
     return render(request, template_name='muglaSepeti/companies.html', context=context)
+
+
+class RememberLoginView(LoginView):
+    # def get(self, request, *args, **kwargs):
+    #
+    #     request.session.set_test_cookie()
+    #     super(RememberLoginView, self).get(self, request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        """
+        Handle POST requests: instantiate a form instance with the passed
+        POST variables and then check if it's valid.
+        """
+        form = self.get_form()
+        if form.is_valid():
+            if not form.cleaned_data.get('remember_me'):
+                request.session.set_expiry(0)
+            if request.session.test_cookie_worked():
+                request.session.delete_test_cookie()
+
+            request.session.set_test_cookie()
+            return self.form_valid(form)
+        else:
+
+            request.session.set_test_cookie()
+            return self.form_invalid(form)

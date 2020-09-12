@@ -1,0 +1,85 @@
+{% extends 'muglaSepeti/base.html' %}
+{% load static %}
+{% load i18n %}
+{% block title %}{% trans 'Kayıt Ol' %}{% endblock %}
+{% block btitle %}
+    {% trans 'Kayıt Sayfası' %}
+{% endblock %}
+
+{% block content %}
+    <!-- Login Start -->
+    <style>
+        ul {
+            margin-bottom: 0;
+        }
+    </style>
+
+    <div class="login">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-sm-12 commontop text-center">
+                    <h4>{% trans 'Yeni Hesap Oluştur' %}</h4>
+                    <div class="divider style-1 center">
+                        <span class="hr-simple left"></span>
+                        <i class="icofont icofont-ui-press hr-icon"></i>
+                        <span class="hr-simple right"></span>
+                    </div>
+                    <p>Eğer hala muğla sepeti hesabınız yoksa buradan kolayca yeni hesap oluşturup siparişinizi hemen
+                        verebilirsiniz.</p>
+                </div>
+
+                <div class="col-lg-10 col-md-12">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <div class="loginnow" style="height: inherit ;min-height:615px;padding-bottom: 0px">
+                                <h5>Register</h5>
+                                <p>Do You have an account? So <a href="login.html">login</a> And starts less than a
+                                    minute</p>
+                                <form method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    {% for field in form %}
+                                        <div class="form-group">
+                                            <i class="icofont {{ field.field.icon }}"></i>
+                                            {% if field.name != 'aggree_terms' %}
+                                                {{ field }}
+                                            {% else %}
+                                                <label>
+                                                    {{ field }}  {{ field.label }}
+                                                </label>
+                                            {% endif %}
+                                            {% if field.errors %}
+                                                <div class="alert alert-danger">
+                                                    <strong>{{ field.errors|escape }}</strong>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    {% endfor %}
+
+
+                                    <div class="form-group">
+                                        <input type="submit" value="SIGN UP" class="btn btn-theme btn-md btn-wide"/>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-6">
+                            <div class="loginto loginnow">
+                                <h5>Login via social accounts</h5>
+                                <ul class="list-unstyled text-center">
+                                    <li><a href="#" target="_blank"><i class="icofont icofont-social-facebook"></i>
+                                        Login with Facebook</a></li>
+                                    <li><a href="#" target="_blank"><i class="icofont icofont-social-twitter"></i> Login
+                                        with Twitter</a></li>
+                                    <li><a href="#" target="_blank"><i class="icofont icofont-social-google-plus"></i>
+                                        Login with Google+</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Login End -->
+{% endblock %}

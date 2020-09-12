@@ -1,0 +1,82 @@
+{% extends 'muglaSepeti/base.html' %}
+{% load static %}
+{% load i18n %}
+{% block title %}{% trans 'Giriş Yap' %}{% endblock %}
+{% block btitle %}{% trans 'Giriş Sayfası' %}{% endblock %}
+{% block content %}
+    <!-- Login Start -->
+    <div class="login">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-sm-12 commontop text-center">
+                    <h4>{% trans 'Hesabına Giriş Yap' %}</h4>
+                    <div class="divider style-1 center">
+                        <span class="hr-simple left"></span>
+                        <i class="icofont icofont-ui-press hr-icon"></i>
+                        <span class="hr-simple right"></span>
+                    </div>
+                    <p>{% trans 'Hesabınıza giriş yapmak için aşağıdaki yöntemlerden herhangi birini kullanabilirsiniz...' %}</p>
+                </div>
+                <div class="col-lg-10 col-md-12">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <div class="loginnow">
+                                <h5>{% trans 'GİRİŞ YAP' %}</h5>
+                                <p>{% trans 'Hesabınız yok mu ?' %} {% trans 'Hemen' %}
+                                    <a href="{% url 'register' %}">{% trans 'Kayıt ol' %}</a></p>
+                                <form method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    {% for field in form %}
+                                        {% if field.name != 'remember_me' %}
+                                            <div class="form-group">
+                                                <i class="icofont {{ field.field.icon }}"></i>
+                                                <input type="{{ field.field.widget.input_type }}" id="{{ field.id_for_label }}" name="{{ field.html_name }}" placeholder="{{ field.label }}" class="{{ field.field.class_val }}"/>
+                                                {% if field.errors %}
+                                                    <div class="alert alert-danger">
+                                                        <strong>{{ field.errors|escape }}</strong>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+
+                                        {% else %}
+
+                                            <div class="form-group">
+                                                <div class="links">
+                                                    <label><input type="{{ field.field.widget.input_type }}" id="{{ field.id_for_label }}" name="{{ field.html_name }}" placeholder="{{ field.label }}" class="{{ field.field.class_val }}"/>{{ field.label }}
+                                                    </label>
+                                                    <a class="float-right sign" href="{% url 'password_reset' %}">{% trans 'Parolamı unuttum?' %}</a>
+
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+
+                                    <div class="form-group">
+                                        <input type="submit" value="{% trans 'GİRİŞ YAP' %}" class="btn btn-theme btn-md btn-wide"/>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-6">
+                            <div class="loginto loginnow">
+                                <h5>Login via social accounts</h5>
+                                <ul class="list-unstyled text-center">
+                                    <li><a href="#" target="_blank"><i class="icofont icofont-social-facebook"></i>
+                                        Login with Facebook</a></li>
+                                    <li><a href="#" target="_blank"><i class="icofont icofont-social-twitter"></i> Login
+                                        with Twitter</a></li>
+                                    <li><a href="#" target="_blank"><i class="icofont icofont-social-google-plus"></i>
+                                        Login with Google+</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Login End -->
+
+{% endblock %}

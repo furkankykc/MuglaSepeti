@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'muglaSepetiApp.apps.MuglasepetiappConfig',
     'admin_reorder',
     'django.contrib.humanize',
-
+    'django.forms',
 ]
 
 MIDDLEWARE = [
@@ -112,13 +112,13 @@ ADMIN_REORDER = (
     # Rename app
     {'app': 'muglaSepetiApp', 'models': (
         'muglaSepetiApp.Company', 'muglaSepetiApp.FoodGroup', 'muglaSepetiApp.FoodCategory', 'muglaSepetiApp.Entry',
-        'muglaSepetiApp.Menu','muglaSepetiApp.Comment'),
+        'muglaSepetiApp.Menu', 'muglaSepetiApp.Comment'),
      'label': 'Muğla Sepeti | Düzenle'},
 
 )
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
-
+FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
 LANGUAGE_CODE = 'tr'
 TIME_ZONE = 'Europe/Istanbul'
 
@@ -146,3 +146,4 @@ STATIC_URL = '/static/'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = (os.path.join('static'),)
 # STATIC_ROOT = ""
+LOGIN_REDIRECT_URL = 'home'
