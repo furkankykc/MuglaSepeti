@@ -56,6 +56,10 @@ class Profile(models.Model):
     def save_user_profile(sender, instance, **kwargs):
         instance.profile.save()
 
+    def get_bucket(self):
+        bucket, _ = self.bucket.get_or_create(is_ordered=False, is_deleted=False)
+        return bucket
+
     def __str__(self):
         return self.user.username
 
@@ -201,6 +205,7 @@ class BucketEntry(models.Model):
         verbose_name_plural = _("Bucket Products")
 
     entry = models.ForeignKey(Entry, on_delete=models.CASCADE, verbose_name=_("Product"))
+    # ara toplam olmadan gereksiz
     price = models.FloatField(default=0, verbose_name=_("Total Bucket Price"))
     count = models.IntegerField(default=1, verbose_name=_("Count"))
 
@@ -214,8 +219,8 @@ class Bucket(models.Model):
         verbose_name_plural = _('Orders')
         app_label = 'muglaSepetiApp'
 
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, verbose_name=_("profile"))
-    company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name=_("company"))
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, verbose_name=_("profile"), related_name='bucket')
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name=_("company"), null=True, blank=True)
     delivery_note = models.CharField(max_length=500, blank=True, verbose_name=_("delivery note"))
     order_list = models.ManyToManyField(BucketEntry, blank=True, verbose_name=_("order list"))
     order_address = models.CharField(max_length=500, verbose_name=_("order address"))

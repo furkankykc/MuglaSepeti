@@ -1,2 +1,109 @@
 {% load static %}
 {% load i18n %}
+
+<div id="profile" class="tab-pane fade">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="user-personal-info">
+                <h5>Personal Information</h5>
+                <div class="user-info-body">
+                    <form action="{% url 'update_user' %}" method="post">
+                        {% csrf_token %}
+                        {% for field in user_form %}
+                            <div class="form-group">
+                                {{ field }}
+                                {% if field.errors %}
+                                    <div class="alert alert-danger">
+                                        <strong>{{ field.errors|escape }}</strong>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+
+                        <div class="form-row">
+                            <div class="form-group mb-0 pt-4 col-12 text-center">
+                                <button class="btn btn-theme btn-md" type="submit">{% trans 'BİLGİLERİMİ GÜNCELLE' %}
+                                </button>
+                                <a class="btn btn-theme btn-md btn-wide" href="#">{% trans 'İPTAL' %}</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="user-change-password">
+                <h5>{% trans 'PAROLA DEĞİŞTİR' %}</h5>
+                <div class="change-password-body">
+
+                    <form action="{% url 'change_pass' %}" method="post">
+                        {% csrf_token %}
+                        {% for field in password_form %}
+                            <div class="form-group">
+                                {{ field }}
+                                {% if field.errors %}
+                                    <div class="alert alert-danger">
+                                        <strong>{{ field.errors|escape }}</strong>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                        <div class="form-group mb-0 pt-4 text-center">
+                            <button class="btn btn-theme btn-md" type="submit">{% trans 'PAROLA DEĞİŞTİR' %}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+
+            <div class="user-change-password">
+                <h5>Change Profile</h5>
+                <div class="change-password-body">
+                    <form action="{% url 'update_info' %}" method="post">
+                        {% csrf_token %}
+                        {% for field in profile_form %}
+                            {% if field %}
+                                <div class="form-group">
+                                    {{ field }}
+                                    {% if field.errors %}
+                                        <div class="alert alert-danger">
+                                            <strong>{{ field.errors|escape }}</strong>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                        <div class="form-group mb-0 pt-4 text-center">
+                            <button class="btn btn-theme btn-md" type="submit">{% trans 'PROFİLİ Güncelle' %}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="user-change-password">
+                <h5>{% trans 'Adres Ekle' %}</h5>
+                <div class="change-password-body">
+                    <form action="{% url 'add_address' %}" method="post">
+                        {% csrf_token %}
+                        {% for field in address_form %}
+                            <div class="form-group">
+                                {{ field }}
+                                {% if field.errors %}
+                                    <div class="alert alert-danger">
+                                        <strong>{{ field.errors|escape }}</strong>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                        <div class="form-group mb-0 pt-4 text-center">
+                            <button class="btn btn-theme btn-md" type="submit">{% trans 'Adres Oluştur' %}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

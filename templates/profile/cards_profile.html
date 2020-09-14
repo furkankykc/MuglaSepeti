@@ -1,0 +1,108 @@
+{% load static %}
+{% load i18n %}
+
+<div id="cards" class="tab-pane fade">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card-entry">
+                <div class="right">
+                    <p>
+                        <a href="#"><i class="icofont icofont-pencil-alt-5"></i></a><a href="#"><i class="icofont icofont-close"></i></a>
+                    </p>
+                </div>
+                <h4>XXXX XXXX XXXX 1234</h4>
+                <p>Valid Thru 06/22</p>
+                <div class="card-type">
+                    <p>Name On Card</p>
+                    <div class="left">
+                        <h4>Kapil Patel</h4>
+                    </div>
+                    <div class="right">
+                        <img src="{% static 'assets/images/mastercard.png' %}" alt="Steam">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card-entry">
+                <div class="right">
+                    <p>
+                        <a href="#"><i class="icofont icofont-pencil-alt-5"></i></a><a href="#"><i class="icofont icofont-close"></i></a>
+                    </p>
+                </div>
+                <h4>XXXX XXXX XXXX 2345</h4>
+                <p>Valid Thru 06/22</p>
+                <div class="card-type">
+                    <p>Name On Card</p>
+                    <div class="left">
+                        <h4>Kapil Patel</h4>
+                    </div>
+                    <div class="right">
+                        <img src="{% static 'assets/images/visa.png' %}" alt="Steam">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card-entry primary-card">
+                <div class="left">
+                    <span>Primary</span>
+                </div>
+                <div class="right">
+                    <p>
+                        <a href="#"><i class="icofont icofont-pencil-alt-5"></i></a><a href="#"><i class="icofont icofont-close"></i></a>
+                    </p>
+                </div>
+                <div class="clearfix"></div>
+                <h4>XXXX XXXX XXXX 1234</h4>
+                <p>Valid Thru 06/17</p>
+                <div class="card-type">
+                    <p>Name On Card</p>
+                    <div class="left">
+                        <h4>Kapil Patel</h4>
+                    </div>
+                    <div class="right">
+                        <img src="{% static 'assets/images/mastercard.png' %}" alt="Steam">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="user-add-card">
+                <h5>Add New Card</h5>
+                <div class="user-add-card-body">
+                    <form>
+                        <div class="form-row">
+                            <div class="form-group col-12">
+                                <input class="form-control" name="card-number" required="" placeholder="Card Number" type="text">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-12">
+                                <input class="form-control" name="cardholder-name" required="" placeholder="Cardholder Name" type="text">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-4">
+                                <input class="form-control" name="valid-month" required="" placeholder="Expiry Month" type="text">
+                            </div>
+                            <div class="form-group col-4">
+                                <input class="form-control" name="valid-year" required="" placeholder="Expiry Year" type="text">
+                            </div>
+                            <div class="form-group col-4">
+                                <input class="form-control" name="cvv" required="" placeholder="CVV" type="password">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group mb-0 col-12 text-center">
+                                <button class="btn btn-theme btn-md btn-wide" type="submit">
+                                    ADD CARD
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

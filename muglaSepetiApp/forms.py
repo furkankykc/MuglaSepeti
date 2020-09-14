@@ -1,6 +1,9 @@
+from datetime import datetime
+
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm, PasswordChangeForm
 from django import forms
 from django.contrib.auth.models import User
+from django.forms import DateInput, SelectDateWidget
 from django.utils.translation import ugettext_lazy as _
 
 from muglaSepetiApp.models import Profile, Address
@@ -75,6 +78,14 @@ class ChangeProfileForm(forms.ModelForm, InputForm):
         model = Profile
         fields = ('address', 'birth_date', 'phone')
 
+    def __init__(self, request=None, *args, **kwargs):
+        self.user_cache = None
+        super(ChangeProfileForm, self).__init__(request, *args, **kwargs)
+        self.fields['birth_date'].widget.input_type = 'date'
+        self.fields['birth_date'].widget.format = '%Y-%m-%d'
+
 
 class ChangePasswordForm(PasswordChangeForm, InputForm):
     pass
+
+

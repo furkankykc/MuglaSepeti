@@ -1,6 +1,7 @@
 from django.contrib import auth
+from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
 from django.urls import reverse
@@ -9,7 +10,7 @@ from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 
 from muglaSepetiApp.forms import RegisterForm, ChangeUserForm, ChangeProfileForm, CreateAddressForm, ChangePasswordForm
-from muglaSepetiApp.models import Bucket, Company, Menu, Entry, FoodCategory
+from muglaSepetiApp.models import Bucket, Company, Menu, Entry, FoodCategory, Profile
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.forms import PasswordChangeForm
 
@@ -45,9 +46,9 @@ def register(request):
 
 
 def profile(request):
-    profileForm = ChangeProfileForm()
-    userForm = ChangeUserForm()
-    addressForm = CreateAddressForm
+    profileForm = ChangeProfileForm(instance=request.user.profile)
+    userForm = ChangeUserForm(instance=request.user)
+    addressForm = CreateAddressForm()
     passwordForm = ChangePasswordForm(request.user)
     context = {
         'user_form': userForm,
@@ -70,10 +71,48 @@ def checkout(request):
     return render(request, template_name='muglaSepeti/checkout.html', context=context)
 
 
+def cart_delete(request, bucket_pk, list_pk):
+    bucket = Bucket.objects.get(profile__user=request.user, pk=bucket_pk)
+    bucket_item = bucket.order_list.get(pk=list_pk)
+    if bucket_item:
+        bucket.order_list.remove(bucket_item)
+        bucket.save()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+def cart_count_add(request, bucket_pk, list_pk):
+    bucket = Bucket.objects.get(profile__user=request.user, pk=bucket_pk)
+    bucket_item = bucket.order_list.get(pk=list_pk)
+    if bucket_item:
+        if bucket_item.count < 99:
+            bucket_item.count = bucket_item.count + 1
+            bucket_item.save()
+            bucket.save()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+def cart_count_minus(request, bucket_pk, list_pk):
+    bucket = Bucket.objects.get(profile__user=request.user, pk=bucket_pk)
+    bucket_item = bucket.order_list.get(pk=list_pk)
+    if bucket_item:
+        if bucket_item.count > 1:
+            bucket_item = bucket.order_list.get(pk=list_pk)
+            bucket_item.count = bucket_item.count - 1
+            bucket_item.save()
+            bucket.save()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
 def companies(request):
     context = {
     }
     return render(request, template_name='muglaSepeti/company_list.html', context=context)
+
+
+def order(request, pk):
+    Bucket.objects.get(pk=pk).order(request.user.profile.address)
+    # redirect back to where it comes from
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 def check(request, pk):
@@ -97,6 +136,52 @@ def deliver(request, pk):
 def cancel(request, pk):
     Bucket.objects.get(pk=pk).cancel_order()
     # redirect back to where it comes from
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+def update_user(request):
+    if request.method == 'POST':
+        obj = get_object_or_404(User, username=request.user.username)
+        form = ChangeUserForm(request.POST, instance=obj)
+        if form.is_valid():
+            cd = form.cleaned_data
+            print(cd)
+            u = form.save(commit=False)
+            print(u)
+            u.save()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+def update_info(request):
+    if request.method == 'POST':
+
+        form = ChangeProfileForm(request.POST or None)
+        if form.is_valid():
+            cd = form.cleaned_data
+            form.save()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+def add_address(request):
+    if request.method == 'POST':
+        form = CreateAddressForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+
+            print("cdddd = ", cd)
+            address = form.save(commit=False)
+            address.owner = request.user.profile
+            address.save()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+def change_pass(request):
+    if request.method == 'POST':
+        form = ChangePasswordForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            form.save()
+
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 

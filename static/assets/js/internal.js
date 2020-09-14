@@ -120,18 +120,18 @@ $(function () {
      /* Product Grid End */
 
     /*Product Quantity Plus/Minus Start */
-    $(function () {
-        $('.add').on('click',function(){
-                var $qty=$(this).closest('p').find('.qty');
-                var currentVal = parseInt($qty.val());
-                        $qty.val(currentVal + 1);
-        });
-        $('.minus').on('click',function(){
-                var $qty=$(this).closest('p').find('.qty');
-                var currentVal = parseInt($qty.val());
-                $qty.val(currentVal - 1);					
-        });
-    });
+    // $(function () {
+    //     $('.add').on('click',function(){
+    //             var $qty=$(this).closest('p').find('.qty');
+    //             var currentVal = parseInt($qty.val());
+    //                     $qty.val(currentVal + 1);
+    //     });
+    //     $('.minus').on('click',function(){
+    //             var $qty=$(this).closest('p').find('.qty');
+    //             var currentVal = parseInt($qty.val());
+    //             $qty.val(currentVal - 1);
+    //     });
+    // });
     /*Product Quantity Plus/Minus End */
     
 
