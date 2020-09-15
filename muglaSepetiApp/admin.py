@@ -53,7 +53,7 @@ customAdminSite.register(Comment)
 admin.site = customAdminSite
 
 
-# default admin model for company releated views
+# default admin model for company related views
 class DefaultAdminModel(admin.ModelAdmin):
     class Meta:
         abstract = True

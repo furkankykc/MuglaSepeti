@@ -74,18 +74,22 @@ class CreateAddressForm(forms.ModelForm, InputForm):
 
 
 class ChangeProfileForm(forms.ModelForm, InputForm):
+    # address = forms.ModelChoiceField(queryset=Address.objects.all(),
+    #                                  to_field_name='name',
+    #                                  empty_label="Select Address")
+
     class Meta:
         model = Profile
         fields = ('address', 'birth_date', 'phone')
+        # fields = '__all__'
 
     def __init__(self, request=None, *args, **kwargs):
-        self.user_cache = None
         super(ChangeProfileForm, self).__init__(request, *args, **kwargs)
         self.fields['birth_date'].widget.input_type = 'date'
         self.fields['birth_date'].widget.format = '%Y-%m-%d'
+        self.fields['address'].queryset = Address.objects.filter(owner=self.instance.user.id)
+        self.fields['address'].empty_label = _("Şuanki Adresinizi Seçiniz")
 
 
 class ChangePasswordForm(PasswordChangeForm, InputForm):
     pass
-
-

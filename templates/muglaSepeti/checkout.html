@@ -99,47 +99,52 @@
                         <div class="tab-pane col-md-12 col-12" id="tab-info">
                             <div class="row">
                                 <div class="col-lg-5 col-md-6 col-12">
-                                    <h6>Shopping Address</h6>
-                                    <form method="post" enctype="multipart/form-data">
-                                        <fieldset>
-                                            <div class="form-group">
-                                                <input name="india" value="" placeholder="Country" id="input-india" class="form-control" type="text">
-                                            </div>
-                                            <div class="form-group">
-                                                <input name="state" value="" placeholder="State" id="input-state" class="form-control" type="text">
-                                            </div>
-                                            <div class="form-group">
-                                                <input name="City" value="" placeholder="City" id="input-City" class="form-control" type="text">
-                                            </div>
-                                            <div class="form-group">
-                                                <input name="code" value="" placeholder="Zip Code" id="input-code" class="form-control" type="text">
-                                            </div>
-                                            <div class="form-group">
-                                                <input name="address" value="" placeholder="Address" id="input-address" class="form-control" type="text">
-                                            </div>
-                                        </fieldset>
-                                    </form>
+                                    <h6>{% trans 'Sipariş Adresi' %}</h6>
+                                    {#                                    <form method="post" enctype="multipart/form-data">#}
+                                    {#                                        <fieldset>#}
+                                    {#                                            <div class="form-group">#}
+                                    {#                                                <input name="india" value="" placeholder="Country" id="input-india" class="form-control" type="text">#}
+                                    {#                                            </div>#}
+                                    {#                                            <div class="form-group">#}
+                                    {#                                                <input name="state" value="" placeholder="State" id="input-state" class="form-control" type="text">#}
+                                    {#                                            </div>#}
+                                    {#                                            <div class="form-group">#}
+                                    {#                                                <input name="City" value="" placeholder="City" id="input-City" class="form-control" type="text">#}
+                                    {#                                            </div>#}
+                                    {#                                            <div class="form-group">#}
+                                    {#                                                <input name="code" value="" placeholder="Zip Code" id="input-code" class="form-control" type="text">#}
+                                    {#                                            </div>#}
+                                    {#                                            <div class="form-group">#}
+                                    {#                                                <input name="address" value="" placeholder="Address" id="input-address" class="form-control" type="text">#}
+                                    {#                                            </div>#}
+                                    {#                                        </fieldset>#}
+                                    {#                                    </form>#}
+                                    Adres adı : {{ user.profile.address }}<br>
+                                    Adres konumu : {{ user.profile.address.location }}<br>
+
                                 </div>
 
                                 <div class="col-lg-2 d-none d-lg-block"></div>
                                 <div class="col-lg-5 col-md-6 col-12">
-                                    <h6>Contact information</h6>
-                                    <form method="post" enctype="multipart/form-data">
-                                        <fieldset>
-                                            <div class="form-group">
-                                                <input name="firstname" value="" placeholder="First Name" id="input-firstname" class="form-control" type="text">
-                                            </div>
-                                            <div class="form-group">
-                                                <input name="lastname" value="" placeholder="Last Name" id="input-lastname" class="form-control" type="text">
-                                            </div>
-                                            <div class="form-group">
-                                                <input name="email" value="" placeholder="Email" id="input-email" class="form-control" type="text">
-                                            </div>
-                                            <div class="form-group">
-                                                <input name="phone" value="" placeholder="Phone Number" id="input-phone" class="form-control" type="text">
-                                            </div>
-                                        </fieldset>
-                                    </form>
+                                    <h6>{% trans 'irtibat bilgileri' %}</h6>
+{#                                    <form method="post" enctype="multipart/form-data">#}
+{#                                        <fieldset>#}
+{#                                            <div class="form-group">#}
+{#                                                <input name="firstname" value="" placeholder="First Name" id="input-firstname" class="form-control" type="text">#}
+{#                                            </div>#}
+{#                                            <div class="form-group">#}
+{#                                                <input name="lastname" value="" placeholder="Last Name" id="input-lastname" class="form-control" type="text">#}
+{#                                            </div>#}
+{#                                            <div class="form-group">#}
+{#                                                <input name="email" value="" placeholder="Email" id="input-email" class="form-control" type="text">#}
+{#                                            </div>#}
+{#                                            <div class="form-group">#}
+{#                                                <input name="phone" value="" placeholder="Phone Number" id="input-phone" class="form-control" type="text">#}
+{#                                            </div>#}
+{#                                        </fieldset>#}
+{#                                    </form>#}
+                                      Teslim alacak kişi : {% if user.first_name or user.last_name %}{{ user.first_name }}{{ user.last_name }}{% else %}{% trans 'Lütfen kullanıcı adınızı soyadınızı profil bölümünden doldurun' %}{% endif %}<br>
+                                      İrtibat numarası : {{ user.profile.phone }}<br>
                                 </div>
                                 <div class="col-md-12 col-12">
                                     <div class="buttons float-left">

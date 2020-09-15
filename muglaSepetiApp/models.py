@@ -41,7 +41,8 @@ class Profile(models.Model):
         verbose_name_plural = _("Profiles")
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name=_("user"))
-    address = models.ManyToManyField(Address, related_name='profile_address', verbose_name=_("adress"))
+    address = models.ForeignKey(Address, related_name='profile_address', on_delete=models.CASCADE, null=True,
+                                verbose_name=_("adress"))
     birth_date = models.DateField(null=True, blank=True, verbose_name=_("birth date"))
     phone = models.CharField(validators=[phone_regex], max_length=17, blank=True,
                              null=True, verbose_name=_("phone number"))
@@ -58,6 +59,10 @@ class Profile(models.Model):
 
     def get_bucket(self):
         bucket, _ = self.bucket.get_or_create(is_ordered=False, is_deleted=False)
+        return bucket
+
+    def get_last_orders(self):
+        bucket = self.bucket.filter(is_ordered=True)
         return bucket
 
     def __str__(self):

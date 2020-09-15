@@ -112,7 +112,7 @@ ADMIN_REORDER = (
     # Rename app
     {'app': 'muglaSepetiApp', 'models': (
         'muglaSepetiApp.Company', 'muglaSepetiApp.FoodGroup', 'muglaSepetiApp.FoodCategory', 'muglaSepetiApp.Entry',
-        'muglaSepetiApp.Menu', 'muglaSepetiApp.Comment'),
+        'muglaSepetiApp.Menu', 'muglaSepetiApp.Comment','muglaSepetiApp.Profile','muglaSepetiApp.Address'),
      'label': 'Muğla Sepeti | Düzenle'},
 
 )

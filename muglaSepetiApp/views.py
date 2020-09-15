@@ -145,20 +145,20 @@ def update_user(request):
         form = ChangeUserForm(request.POST, instance=obj)
         if form.is_valid():
             cd = form.cleaned_data
-            print(cd)
             u = form.save(commit=False)
-            print(u)
             u.save()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 def update_info(request):
     if request.method == 'POST':
+        obj = get_object_or_404(User, username=request.user.username)
 
-        form = ChangeProfileForm(request.POST or None)
+        form = ChangeProfileForm(request.POST, instance=obj.profile)
         if form.is_valid():
             cd = form.cleaned_data
-            form.save()
+            u = form.save(commit=False)
+            u.save()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
