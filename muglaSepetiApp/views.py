@@ -103,8 +103,15 @@ def cart_count_minus(request, bucket_pk, list_pk):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
+def entry_details(request, company_slug, entry_id):
+    # company = Company.objects.get(slug=company_slug)
+    entry = Entry.objects.get(company__slug=company_slug, pk=entry_id)
+    return render(request, template_name='muglaSepeti/food_details.html', context={'entry': entry})
+
+
 def companies(request):
     context = {
+        'companies': Company.get_open_companies()
     }
     return render(request, template_name='muglaSepeti/company_list.html', context=context)
 

@@ -82,6 +82,7 @@ class Company(models.Model):
 
     owner = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, verbose_name=_("owner"))
     name = models.CharField(max_length=20, verbose_name=_("name"))
+    description = models.CharField(max_length=500, verbose_name=_("description"))
     logo = models.ImageField(upload_to=get_image_path, blank=True, null=True, verbose_name=_("logo"))
     slug = models.SlugField(blank=True, verbose_name=_("slug"))
     active_menu = models.ForeignKey('Menu', on_delete=models.CASCADE, blank=True, null=True,

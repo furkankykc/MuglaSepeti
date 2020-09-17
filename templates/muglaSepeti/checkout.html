@@ -1,4 +1,4 @@
-{% extends 'muglaSepeti/base.html' %}
+{% extends 'base/base.html' %}
 {% load static %}
 {% load i18n %}
 
@@ -78,18 +78,20 @@
                                                 </td>
                                             </tr>
                                         {% endfor %}
-                                        <tr>
-                                            <td colspan="5">
-                                                <h3 class="text-right">Toplam
-                                                    - {{ user.profile.get_bucket.get_borrow|floatformat }}₺</h3>
-                                                <div class="buttons float-left">
-                                                    <a href="{% url 'shop' %}" class="btn btn-theme btn-md btn-wide">{% trans 'GERİ DÖN' %}</a>
-                                                </div>
-                                                <div class="buttons float-right">
-                                                    <a href="{% url 'order' user.profile.get_bucket.pk %}" class="btn btn-theme btn-md btn-wide">{% trans 'SİPARİŞ ET' %}</a>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                        {% if user.profile.get_bucket %}
+                                            <tr>
+                                                <td colspan="5">
+                                                    <h3 class="text-right">Toplam
+                                                        - {{ user.profile.get_bucket.get_borrow|floatformat }}₺</h3>
+                                                    <div class="buttons float-left">
+                                                        <a href="{% url 'shop' %}" class="btn btn-theme btn-md btn-wide">{% trans 'GERİ DÖN' %}</a>
+                                                    </div>
+                                                    <div class="buttons float-right">
+                                                        <a href="{% url 'order' user.profile.get_bucket.pk %}" class="btn btn-theme btn-md btn-wide">{% trans 'SİPARİŞ ET' %}</a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        {% endif %}
                                         </tbody>
                                     </table>
                                 </div>
@@ -127,24 +129,26 @@
                                 <div class="col-lg-2 d-none d-lg-block"></div>
                                 <div class="col-lg-5 col-md-6 col-12">
                                     <h6>{% trans 'irtibat bilgileri' %}</h6>
-{#                                    <form method="post" enctype="multipart/form-data">#}
-{#                                        <fieldset>#}
-{#                                            <div class="form-group">#}
-{#                                                <input name="firstname" value="" placeholder="First Name" id="input-firstname" class="form-control" type="text">#}
-{#                                            </div>#}
-{#                                            <div class="form-group">#}
-{#                                                <input name="lastname" value="" placeholder="Last Name" id="input-lastname" class="form-control" type="text">#}
-{#                                            </div>#}
-{#                                            <div class="form-group">#}
-{#                                                <input name="email" value="" placeholder="Email" id="input-email" class="form-control" type="text">#}
-{#                                            </div>#}
-{#                                            <div class="form-group">#}
-{#                                                <input name="phone" value="" placeholder="Phone Number" id="input-phone" class="form-control" type="text">#}
-{#                                            </div>#}
-{#                                        </fieldset>#}
-{#                                    </form>#}
-                                      Teslim alacak kişi : {% if user.first_name or user.last_name %}{{ user.first_name }}{{ user.last_name }}{% else %}{% trans 'Lütfen kullanıcı adınızı soyadınızı profil bölümünden doldurun' %}{% endif %}<br>
-                                      İrtibat numarası : {{ user.profile.phone }}<br>
+                                    {#                                    <form method="post" enctype="multipart/form-data">#}
+                                    {#                                        <fieldset>#}
+                                    {#                                            <div class="form-group">#}
+                                    {#                                                <input name="firstname" value="" placeholder="First Name" id="input-firstname" class="form-control" type="text">#}
+                                    {#                                            </div>#}
+                                    {#                                            <div class="form-group">#}
+                                    {#                                                <input name="lastname" value="" placeholder="Last Name" id="input-lastname" class="form-control" type="text">#}
+                                    {#                                            </div>#}
+                                    {#                                            <div class="form-group">#}
+                                    {#                                                <input name="email" value="" placeholder="Email" id="input-email" class="form-control" type="text">#}
+                                    {#                                            </div>#}
+                                    {#                                            <div class="form-group">#}
+                                    {#                                                <input name="phone" value="" placeholder="Phone Number" id="input-phone" class="form-control" type="text">#}
+                                    {#                                            </div>#}
+                                    {#                                        </fieldset>#}
+                                    {#                                    </form>#}
+                                    Teslim alacak kişi : {% if user.first_name or user.last_name %}{{ user.first_name }}
+                                    {{ user.last_name }}{% else %}
+                                    {% trans 'Lütfen kullanıcı adınızı soyadınızı profil bölümünden doldurun' %}{% endif %}<br>
+                                    İrtibat numarası : {{ user.profile.phone }}<br>
                                 </div>
                                 <div class="col-md-12 col-12">
                                     <div class="buttons float-left">

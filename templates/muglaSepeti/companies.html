@@ -1,4 +1,4 @@
-{% extends 'muglaSepeti/base.html' %}
+{% extends 'base/base.html' %}
 {% load static %}
 {% load i18n %}
 
@@ -205,10 +205,10 @@
                         <!-- Product List Start -->
                         <!-- Single Product Start -->
                         {% for entry in company.active_menu.entry_list.all %}
-                            <div class="product-layout product-list col-12">
+                            <div class="product-layout product-grid col-lg-4 col-md-4 col-sm-6 col-12'">
                                 <div class="product-thumb">
                                     <div class="image">
-                                        <a class="link" href="shop-details.html"><img
+                                        <a class="link" href="{% url 'food' company.slug entry.pk %}"><img
                                                 {# src="{{ entryget_image }}" alt="{{ entry.name }}"#}
                                                 {% if entry.image %}
                                                     src="{{ entry.image.url }}"

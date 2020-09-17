@@ -1,0 +1,162 @@
+{% load static i18n %}
+<!--  Header Start  -->
+<header>
+    <!--Top Header Start -->
+    <div class="top">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-12">
+                    {#                        <ul class="list-inline float-left icon">#}
+                    {#                            <li class="list-inline-item"><a href="#"><i class="icofont icofont-phone"></i> Hotline : 123#}
+                    {#                                456 7890</a></li>#}
+                    {#                        </ul>#}
+                    <!-- Header Social Start -->
+                    <ul class="list-inline float-right icon">
+                        <li class="list-inline-item"><a href="{% url 'checkout' %}"><i
+                                class="icofont icofont-cart-alt"></i>{% trans 'Sepet' %}</a></li>
+                        <li class="list-inline-item dropdown">
+                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
+                                    class="icofont icofont-ui-user"></i>{% trans 'Hesap' %}</a>
+                            <ul class="dropdown-menu dropdown-menu-right drophover"
+                                aria-labelledby="dropdownMenuLink">
+                                {% if user.is_authenticated %}
+                                    <li class="dropdown-item">
+                                        <a href="{% url 'profile' %}">{% trans 'Profil' %}</a></li>
+                                    <li class="dropdown-item">
+                                        <a href="{% url 'logout' %}">{% trans 'Çıkış Yap' %}</a></li>
+                                {% else %}
+                                    <li class="dropdown-item">
+                                        <a href="{% url 'login' %}">{% trans 'Giriş Yap' %}</a></li>
+                                    <li class="dropdown-item">
+                                        <a href="{% url 'register' %}">{% trans 'Kayıt Ol' %}</a></li>
+                                {% endif %}
+                            </ul>
+                        </li>
+                        <li class="list-inline-item">
+                            <ul class="list-inline social">
+                                <li class="list-inline-item"><a href="https://www.facebook.com/spheretheme/"
+                                                                target="_blank"><i
+                                        class="icofont icofont-social-facebook"></i></a></li>
+                                <li class="list-inline-item"><a href="https://twitter.com/spheretheme/"
+                                                                target="_blank"><i
+                                        class="icofont icofont-social-twitter"></i></a></li>
+                                <li class="list-inline-item"><a href="https://plus.google.com/" target="_blank"><i
+                                        class="icofont icofont-social-google-plus"></i></a></li>
+                                <li class="list-inline-item">
+                                    <a href="https://www.instagram.com/" target="_blank"><i
+                                            class="icofont icofont-social-instagram"></i></a></li>
+                                <li class="list-inline-item">
+                                    <a href="https://in.pinterest.com/" target="_blank"><i
+                                            class="icofont icofont-social-pinterest"></i></a></li>
+                                <li class="list-inline-item"><a href="https://www.youtube.com/" target="_blank"><i
+                                        class="icofont icofont-social-youtube-play"></i></a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!-- Header Social End -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Top Header End -->
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-sm-6 col-12" style="align-items: center;justify-content: center;display: flex;">
+                <!-- Logo Start  -->
+                <div id="logo " style="align-items: center;justify-content: center;display: flex;width: 200px;height: 56px;">
+
+                    <a href="{% url 'home' %}"><img id="logo_img" class="img-fluid"
+                                                    src="{% static 'assets/images/logo/muglasepetilogo.png' %}" alt="logo"
+                                                    title="logo"/></a>
+                </div>
+                <!-- Logo End  -->
+            </div>
+
+            <div class="col-md-7 col-sm-6 col-12 paddleft">
+                <!-- Main Menu Start  -->
+                <div id="menu">
+                    <nav class="navbar navbar-expand-md">
+                        <div class="navbar-header">
+                            <span class="menutext d-block d-md-none">Menu</span>
+                            <button data-target=".navbar-ex1-collapse" data-toggle="collapse"
+                                    class="btn btn-navbar navbar-toggler" type="button"><i
+                                    class="icofont icofont-navigation-menu"></i></button>
+                        </div>
+                        <div class="collapse navbar-collapse navbar-ex1-collapse padd0">
+                            <ul class="nav navbar-nav">
+                                <li class="nav-item"><a href="{% url 'home' %}">{% trans 'Anasayfa' %}</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{% url 'companies' %}">{% trans 'Restorantlar' %}</a>
+                                </li>
+                                <li class="nav-item dropdown"><a href="#" class="dropdown-toggle"
+                                                                 data-toggle="dropdown">Our Menu</a>
+                                    <div class="dropdown-menu">
+                                        <div class="dropdown-inner">
+                                            <ul class="list-unstyled">
+                                                <li><a href="menu.html">Menu Options 1</a></li>
+                                                <li><a href="menu-2.html">Menu Options 2</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="nav-item dropdown"><a href="#" class="dropdown-toggle"
+                                                                 data-toggle="dropdown">Pages</a>
+                                    <div class="dropdown-menu">
+                                        <div class="dropdown-inner">
+                                            <ul class="list-unstyled">
+                                                <li><a href="reservation.html">Reservation</a></li>
+                                                <li><a href="shop.html">Shop</a></li>
+                                                <li><a href="shop-details.html">Shop Details</a></li>
+                                                <li><a href="shopping-cart.html">Shopping Cart</a></li>
+                                                <li><a href="search.html">Search</a></li>
+                                                <li><a href="login.html">Login</a></li>
+                                                <li><a href="register.html">Register</a></li>
+                                                <li><a href="forgot-password.html">Forgot Password</a></li>
+                                                <li><a href="thank-you.html">Thank You</a></li>
+                                                <li><a href="404.html">404</a></li>
+                                                <li><a href="dashboard.html">Dashboard</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </li>
+                                {#                                    <li class="nav-item dropdown"><a href="#" class="dropdown-toggle"#}
+                                {#                                                                     data-toggle="dropdown">Our Blog</a>#}
+                                {#                                        <div class="dropdown-menu">#}
+                                {#                                            <div class="dropdown-inner">#}
+                                {#                                                <ul class="list-unstyled">#}
+                                {#                                                    <li><a href="blog.html">Blog list 1</a></li>#}
+                                {#                                                    <li><a href="blog-2.html">Blog list 2</a></li>#}
+                                {#                                                    <li><a href="blog-details.html">Blog Detail 1</a></li>#}
+                                {#                                                    <li><a href="blog-details-2.html">Blog Detail 2</a></li>#}
+                                {#                                                </ul>#}
+                                {#                                            </div>#}
+                                {#                                        </div>#}
+                                {#                                    </li>#}
+                                {#                                    <li class="nav-item dropdown"><a href="#" class="dropdown-toggle"#}
+                                {#                                                                     data-toggle="dropdown">contact us</a>#}
+                                {#                                        <div class="dropdown-menu">#}
+                                {#                                            <div class="dropdown-inner">#}
+                                {#                                                <ul class="list-unstyled">#}
+                                {#                                                    <li><a href="contact-us.html">contact us 1</a></li>#}
+                                {#                                                    <li><a href="contact-us-2.html">contact us 2</a></li>#}
+                                {#                                                    <li><a href="contact-us-3.html">contact us 3</a></li>#}
+                                {#                                                </ul>#}
+                                {#                                            </div>#}
+                                {#                                        </div>#}
+                                {#                                    </li>#}
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+                <!-- Main Menu End -->
+            </div>
+            {#                <div class="col-md-2 col-sm-12 col-12 button-top paddleft">#}
+            {#                    <a class="btn-primary btn" href='reservation.html'>Book Your Table</a>#}
+            {#                </div>#}
+        </div>
+    </div>
+</header>
+<!-- Header End   -->

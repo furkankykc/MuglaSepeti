@@ -1,0 +1,39 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+    <!-- Login Start -->
+    <div class="login">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-sm-12 commontop text-center">
+                    <h4>{% block content-head %}{% trans 'Bilgilendirme Sayfası' %}{% endblock %}</h4>
+                    <div class="divider style-1 center">
+                        <span class="hr-simple left"></span>
+                        <i class="icofont icofont-ui-press hr-icon"></i>
+                        <span class="hr-simple right"></span>
+                    </div>
+                    <p>{% block content-desc %}{% trans 'Bilgi içeren mesaj ayrıntısı.' %}{% endblock %}</p>
+                </div>
+
+                <div class="col-sm-12 col-md-7 col-lg-6">
+                    <div class="loginnow get-password">
+
+                        <h5>{% block content-title %}{% trans 'Bilgilendirici mesaj ayrıntısı' %}{% endblock %}</h5>
+                        <p>{% block content-message %}
+                            {% blocktrans %}
+                                Bilgilendirici mesaj açıklaması
+                            {% endblocktrans %}
+                        {% endblock %}
+                        </p>
+                        {% block content-form %}{% endblock %}
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Login End -->
+{% endblock %}

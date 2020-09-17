@@ -10,7 +10,7 @@
         <div class="col-lg-12">
             <div class="brief-info">
                 <div class="media">
-                    <img class="mr-3" src="{% static 'assets/images/blog-detail/01.jpg' %}" alt="steam">
+                    <img class="mr-3" style="border-radius: unset;" src="{% static 'assets/images/blog-detail/user-img.png' %}" width="98" alt="steam">
                     <div class="media-body">
                         {% if user.fistname %}
                             <h4>{{ user.firstname }}{{ user.lastname }}</h4>
@@ -46,7 +46,7 @@
                                     <p>{{ item.entry.name|title }}</p>
                                 </div>
                                 <div class="col">
-                                <a href="#">{{ order.company }}</a>
+                                    <a href="#">{{ order.company }}</a>
                                 </div>
                                 <div class="col text-right">
                                     {% if order.delivered %}
@@ -57,10 +57,10 @@
                                         {# icofont icofont-scooter #}
                                     {% elif order.is_checked %}
                                         <p class="waiting"><i class="icofont icofont-food-basket"></i>Hazırlanıyor</p>
-                                    {% elif order.is_ordered %}
+                                    {% elif order.is_deleted %}
                                         <p class="waiting"><i class="icofont icofont-ui-laoding"></i>Onay bekleniyor</p>
                                     {% else %}
-                                        <p class="failed"><i class="icofont icofont-close"></i>Failed</p>
+                                        <p class="failed"><i class="icofont icofont-close"></i>İptal Edildi</p>
                                     {% endif %}
                                 </div>
                                 {#                                <div class="col text-right">#}

@@ -1,2 +1,102 @@
-{% extends 'muglaSepeti/base.html' %}
-{% load static %}
+{% extends 'base/base.html' %}
+{% load static i18n %}
+{% block content %}
+    <!-- Food Menu Start -->
+    <div class="menu">
+        <div class="menu-inner">
+            <div class="container">
+                <div class="row ">
+                    <!-- Title Content Start -->
+                    <div class="col-sm-12 col-12 commontop text-center">
+                        <h4>{% trans 'Restorantlar' %}</h4>
+                        <div class="divider style-1 center">
+                            <span class="hr-simple left"></span>
+                            <i class="icofont icofont-ui-press hr-icon"></i>
+                            <span class="hr-simple right"></span>
+                        </div>
+                        {% if companies %}
+                            <p>
+                                {% blocktrans %}
+                                    Şuanda açık olan restorantlarımız aşağıda listelenmiştir, afiyet olsun.
+                                {% endblocktrans %}
+                            </p>
+                        {% endif %}
+                    </div>
+                    <!-- Title Content End -->
+                    <div class="col-sm-12 col-12">
+                        <!--  Menu Tabs Start  -->
+                        {#                        <ul class="nav nav-tabs list-inline">#}
+                        {#                            <li class="nav-item">#}
+                        {#                                <a class="nav-link active" href="#all" data-toggle="tab" aria-expanded="true">all</a>#}
+                        {#                            </li>#}
+                        {#                            <li class="nav-item">#}
+                        {#                                <a class="nav-link" href="#breakfast" data-toggle="tab" aria-expanded="false">breakfast</a>#}
+                        {#                            </li>#}
+                        {#                            <li class="nav-item">#}
+                        {#                                <a class="nav-link" href="#lunch" data-toggle="tab" aria-expanded="false">lunch</a>#}
+                        {#                            </li>#}
+                        {#                            <li class="nav-item">#}
+                        {#                                <a class="nav-link" href="#dinner" data-toggle="tab" aria-expanded="false">dinner</a>#}
+                        {#                            </li>#}
+                        {#                            <li class="nav-item">#}
+                        {#                                <a class="nav-link" href="#drinks" data-toggle="tab" aria-expanded="false">drinks</a>#}
+                        {#                            </li>#}
+                        {#                            <li class="nav-item">#}
+                        {#                                <a class="nav-link" href="#others" data-toggle="tab" aria-expanded="false">others</a>#}
+                        {#                            </li>#}
+                        {#                        </ul>#}
+                        <!--  Menu Tabs Start  -->
+
+                        <!--  Menu Tabs Content Start  -->
+                        <div class="tab-content">
+                            <!--  Menu Tab Start  -->
+                            <div class="tab-pane show active" id="all">
+                                <div class="row">
+                                    {% for company in companies %}
+                                        <div class="col-md-12 col-12">
+                                            <!-- Box Start -->
+                                            <diV class="box">
+                                                <div class="image" style="padding: 2px 1rem;">
+                                                    {% if company.logo %}
+                                                        <img src="{{ company.logo.url }}" alt="image" title="image" style="max-height: 130px;max-width: 130px;" class="img-fluid"/>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="caption">
+                                                    {% if company.name %}
+                                                        <h4>{{ company.name }}</h4>
+                                                    {% endif %}
+                                                    {% if company.phone %}
+                                                        <p class="des">{{ company.phone }}</p>
+                                                    {% endif %}
+                                                    {% if company.description %}
+                                                        <span>{{ company.description }}</span>
+                                                    {% endif %}
+
+                                                    <div class="price " style="top:unset;">
+                                                        <a href="{% url 'company_menu' company.slug %}" class="btn btn-theme btn-md btn-wide">{% trans 'Ziyaret Et' %}</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Box End -->
+                                        </div>
+                                    {% empty %}
+                                        <div class="col-sm-12 col-12 commontop text-center">
+                                            <p>Şuanda açık olan hiçbir restorant bulunmamaktadır.</p></div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <!--  Menu Tab End  -->
+
+                        </div>
+                        <!--  Menu Tabs Content End  -->
+                        {#                        <div class="text-center padbot30">#}
+                        {#                            <a class="btn btn-theme-alt btn-wide" href='menu.html'>view more#}
+                        {#                                <i class="icofont icofont-curved-double-right"></i></a>#}
+                        {#                        </div>#}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Food Menu End -->
+{% endblock %}

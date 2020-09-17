@@ -1,4 +1,4 @@
-{% extends 'muglaSepeti/base.html' %}
+{% extends 'base/base.html' %}
 {% load static %}
 {% load i18n %}
 {% block title %}{% trans 'Profil' %}{% endblock %}
@@ -28,34 +28,34 @@
                                 <ul class="nav nav-tabs flex-column">
                                     <li class="nav-item">
                                         <a class="nav-link active" data-toggle="tab" href="#overview" aria-expanded="true">
-                                            <i class="icofont icofont-dashboard-web"></i>
-                                            <span>Overview</span>
+                                            <i class="icofont icofont-ui-user"></i>
+                                            <span>{% trans 'Profil' %}</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" data-toggle="tab" href="#profile" aria-expanded="true">
-                                            <i class="icofont icofont-ui-user"></i>
-                                            <span>Profile</span>
+                                            <i class="icofont icofont-dashboard-web"></i>
+                                            <span>{% trans 'Profili Düzenle' %}</span>
                                         </a>
                                     </li>
-{#                                    <li class="nav-item">#}
-{#                                        <a class="nav-link" data-toggle="tab" href="#history" aria-expanded="true">#}
-{#                                            <i class="icofont icofont-history"></i>#}
-{#                                            <span>History</span>#}
-{#                                        </a>#}
-{#                                    </li>#}
-{#                                    <li class="nav-item">#}
-{#                                        <a class="nav-link" data-toggle="tab" href="#cards" aria-expanded="true">#}
-{#                                            <i class="icofont icofont-credit-card"></i>#}
-{#                                            <span>My Card</span>#}
-{#                                        </a>#}
-{#                                    </li>#}
-{#                                    <li class="nav-item">#}
-{#                                        <a class="nav-link" data-toggle="tab" href="#complaint" aria-expanded="true">#}
-{#                                            <i class="icofont icofont-support-faq"></i>#}
-{#                                            <span>Complaint</span>#}
-{#                                        </a>#}
-{#                                    </li>#}
+                                    {#                                    <li class="nav-item">#}
+                                    {#                                        <a class="nav-link" data-toggle="tab" href="#history" aria-expanded="true">#}
+                                    {#                                            <i class="icofont icofont-history"></i>#}
+                                    {#                                            <span>History</span>#}
+                                    {#                                        </a>#}
+                                    {#                                    </li>#}
+                                    {#                                    <li class="nav-item">#}
+                                    {#                                        <a class="nav-link" data-toggle="tab" href="#cards" aria-expanded="true">#}
+                                    {#                                            <i class="icofont icofont-credit-card"></i>#}
+                                    {#                                            <span>My Card</span>#}
+                                    {#                                        </a>#}
+                                    {#                                    </li>#}
+                                    {#                                    <li class="nav-item">#}
+                                    {#                                        <a class="nav-link" data-toggle="tab" href="#complaint" aria-expanded="true">#}
+                                    {#                                            <i class="icofont icofont-support-faq"></i>#}
+                                    {#                                            <span>Complaint</span>#}
+                                    {#                                        </a>#}
+                                    {#                                    </li>#}
 
                                 </ul>
                                 <!--  Menu Tabs Start  -->
@@ -66,8 +66,8 @@
                                 {% include 'profile/overview_profile.html' %}
                                 {% include 'profile/edit_profile.html' %}
                                 {% include 'profile/history_profile.html' %}
-{#                                {% include 'profile/cards_profile.html' %}#}
-{#                                {% include 'profile/complaint_profile.html' %}#}
+                                {#                                {% include 'profile/cards_profile.html' %}#}
+                                {#                                {% include 'profile/complaint_profile.html' %}#}
                             </div>
                         </div>
                     </div>

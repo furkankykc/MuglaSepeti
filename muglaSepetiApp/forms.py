@@ -1,9 +1,7 @@
-from datetime import datetime
 
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm, PasswordChangeForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordChangeForm
 from django import forms
 from django.contrib.auth.models import User
-from django.forms import DateInput, SelectDateWidget
 from django.utils.translation import ugettext_lazy as _
 
 from muglaSepetiApp.models import Profile, Address

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static i18n %}
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="theme-color" content="#e54c2a">
+    <!-- Favicon -->
+    <link type="image/x-icon" rel="shortcut icon" href="{% static 'assets/images/favicon.png' %}"/>
+    <title>{% block title %}Home{% endblock %} - MUĞLA SEPETİ</title>
+    <meta name="description"
+          content="MuğlaSepeti - Yerel Restorant Sipariş Sistemi">
+
+    <!-- Bootstrap stylesheet -->
+    <link href="{% static 'assets/libs/bootstrap-4.5.0/css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- icofont -->
+    <link href="{% static 'assets/libs/icofont/css/icofont.css' %}" rel="stylesheet" type="text/css"/>
+    <!-- crousel css -->
+    <link href="{% static 'assets/libs/owlcarousel2/assets/owl.carousel.min.css' %}" rel="stylesheet" type="text/css"/>
+    <!-- mb.YTPlayer css -->
+    <link href="{% static 'assets/libs/mb.YTPlayer/css/jquery.mb.YTPlayer.min.css' %}" rel="stylesheet"
+          type="text/css"/>
+    <!-- Bootstrap Select css -->
+    <link href="{% static 'assets/libs/bootstrap-select/bootstrap-select.css' %}" rel="stylesheet" type="text/css"/>
+    <!-- Switch Style css -->
+    <link href="{% static 'assets/switch-style/switch-style.css' %}" rel="stylesheet" type="text/css"/>
+    <!-- Theme Stylesheet -->
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" type="text/css"/>
+    <!-- Switch Color Style css -->
+    <link href="#" data-style="styles" rel="stylesheet">
+</head>
+<body class="">
+<div class="wrapper">
+    <!--[if lt IE 8]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a
+            href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <!-- Loader Start -->
+    <div class="loader">
+        <div class="loader-inner">
+            <h4>Yemekler Hazırlanıyor...</h4>
+            <div id="cooking">
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div id="area">
+                    <div id="sides">
+                        <div id="pan"></div>
+                        <div id="handle"></div>
+                    </div>
+                    <div id="pancake">
+                        <div id="pastry"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Loader End -->
+    {% block header %}
+        {% include 'base/navbar.html' %}
+    {% endblock %}
+    {% block breadcumb %}
+        <!-- Breadcrumb Start -->
+        <div class="bread-crumb">
+            <div class="container">
+                <div class="matter">
+                    <h2>
+                        {% block btitle %}
+                            {% trans 'Hoş Geldiniz' %}
+                        {% endblock %}
+                    </h2>
+                    <ul class="list-inline">
+                        {#                    <li class="list-inline-item"><a href="index.html">HOME</a></li>#}
+                        {#                    <li class="list-inline-item"><a href="#">Our Shop</a></li>#}
+                        <li class="list-inline-item"><a href="{% block blink %}{% url 'home' %}{% endblock %}">
+                            {% block bheader %}MUĞLA SEPETİ{% endblock %}</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Breadcrumb End -->
+
+    {% endblock %}
+
+    {% block content %}
+    {% endblock %}
+
+    {% block footer %}
+{% include 'base/footer.html' %}
+    {% endblock %}
+
+</div>
+
+<!-- jquery -->
+<script src="{% static 'assets/libs/jquery/jquery.min.js' %}"></script>
+<!-- jquery Validate -->
+<script src="{% static 'assets/libs/jquery-validation/jquery.validate.min.js' %}"></script>
+<!-- popper js -->
+<script src="{% static 'assets/libs/popper/popper.min.js' %}"></script>
+<!-- bootstrap js -->
+<script src="{% static 'assets/libs/bootstrap-4.5.0/js/bootstrap.min.js' %}"></script>
+<!-- owlcarousel js -->
+<script src="{% static 'assets/libs/owlcarousel2/owl.carousel.min.js' %}"></script>
+<!--inview js code-->
+<script src="{% static 'assets/libs/jquery.inview/jquery.inview.min.js' %}"></script>
+<!--CountTo js code-->
+<script src="{% static 'assets/libs/jquery.countTo/jquery.countTo.js' %}"></script>
+<!-- mb.YTPlayer js code-->
+<script src="{% static 'assets/libs/mb.YTPlayer/jquery.mb.YTPlayer.min.js' %}"></script>
+<!-- Bootstrap Select js -->
+<script src="{% static 'assets/libs/bootstrap-select/bootstrap-select.js' %}"></script>
+<!-- Switch Style js -->
+{#<script src="{% static 'assets/switch-style/switch-style.js' %}"></script>#}
+<!--internal js-->
+<script src="{% static 'assets/js/internal.js' %}"></script>
+</body>
+</html>
+
