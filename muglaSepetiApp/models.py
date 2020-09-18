@@ -185,11 +185,15 @@ class Entry(models.Model):
         return self.image or self.category.image
 
     def get_food_rating(self):
-        # todo get foot rating filter by entry id sum of total rating
-        pass
+        comment_ratings = self.get_comments().aggregate(Avg('rating'))['rating__avg'] or 0
+
+        return int(comment_ratings)
 
     def __str__(self):
         return self.name
+
+    def get_comments(self):
+        return Comment.objects.filter(bucket__order_list__entry_id=self.id)
 
 
 class Menu(models.Model):
@@ -288,6 +292,8 @@ class Bucket(models.Model):
 
     def add_entry(self, entry: Entry, count: int = 1):
         obj, _ = self.order_list.get_or_create(entry_id=entry.id)
+        if self.company == None:
+            self.company = obj.entry.company
         obj.price = entry.price
         obj.entry = entry
         obj.count = obj.count + count
@@ -329,6 +335,12 @@ class Comment(models.Model):
     rating = models.CharField(max_length=1, choices=RATING_LEVELS)
     comment = models.CharField(max_length=100, verbose_name=_("comment"))
     time = models.DateTimeField(auto_now=True)
+
+    def get_rating_value(self):
+        if self.rating:
+            return int(self.rating)
+        else:
+            return 0
 
     def __str__(self):
         return self.comment

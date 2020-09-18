@@ -38,9 +38,11 @@ urlpatterns = [
     path('logout', views.logout, name='logout'),
     path('check/<int:pk>', views.check, name='check'),
     path('order/<int:pk>', views.order, name='order'),
+    path('order/', views.order_food, name='order_food'),
     path('ontheway/<int:pk>', views.ontheway, name='on_the_way'),
     path('deliver/<int:pk>', views.deliver, name='deliver'),
     path('cancel/<int:pk>', views.cancel, name='cancel'),
     path('get_data/', views.get_more_tables, name='get_more_data'),
-    path('restaurants/<slug:cmp_slug>', views.company_menu, name='company_menu'),
+    path('restaurants/<slug:company_slug>', views.company_menu, name='company_menu'),
+    path('restaurants/<slug:company_slug>/category/<int:category_id>', views.company_menu, name='company_category'),
 ]

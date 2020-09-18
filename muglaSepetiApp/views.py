@@ -116,8 +116,29 @@ def companies(request):
     return render(request, template_name='muglaSepeti/company_list.html', context=context)
 
 
+def order_food(request):
+    print("order_foods")
+    order_now = False
+    if request.method == 'POST':
+        if 'order_now' in request.POST:
+            order_now = True
+        quantity = request.POST['quantity']
+        entry_id = request.POST['entry_id']
+        bucket = request.user.profile.get_bucket()
+        entry = Entry.objects.get(id=entry_id)
+        bucket.add_entry(entry, int(quantity))
+    if order_now:
+        return HttpResponseRedirect(reverse('checkout'))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
 def order(request, pk):
-    Bucket.objects.get(pk=pk).order(request.user.profile.address)
+    bucket = Bucket.objects.get(pk=pk)
+    print(bucket)
+    bucket.order(request.user.profile.address)
+
+
+    print("Sipariş edildi")
     # redirect back to where it comes from
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
@@ -215,15 +236,21 @@ def one_page_companies(request, company_id=0):
     }
 
 
-def company_menu(request, cmp_slug):
-    company = Company.objects.get(slug=cmp_slug)
+def company_menu(request, company_slug, category_id=None):
+    company = Company.objects.get(slug=company_slug)
     category_ids = company.active_menu.entry_list.values_list('category', flat=True).distinct()
     categories = FoodCategory.objects.filter(id__in=category_ids)
+    if (category_id):
+        entries = company.active_menu.entry_list.filter(category=category_id)
+    else:
+        entries = company.active_menu.entry_list.all()
     context = {
         'company': company,
         'categories': categories,
+        'entries': entries,
+        'category_id': category_id,
     }
-    return render(request, template_name='muglaSepeti/companies.html', context=context)
+    return render(request, template_name='muglaSepeti/company_page.html', context=context)
 
 
 class RememberLoginView(LoginView):
