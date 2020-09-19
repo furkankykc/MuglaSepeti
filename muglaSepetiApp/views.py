@@ -1,4 +1,5 @@
 from django.contrib import auth
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
@@ -65,6 +66,7 @@ def logout(request):
     return redirect(reverse('home'))
 
 
+@login_required(login_url='login')
 def checkout(request):
     context = {
     }
@@ -116,6 +118,7 @@ def companies(request):
     return render(request, template_name='muglaSepeti/company_list.html', context=context)
 
 
+@login_required(login_url='login')
 def order_food(request):
     order_now = False
     if request.method == 'POST':
@@ -136,6 +139,12 @@ def order_food(request):
 def order(request, pk):
     bucket = Bucket.objects.get(pk=pk)
     bucket.order(request.user.profile)
+    if request.POST:
+        payment_type = request.POST['payment_type']
+        order_note = request.POST['order_note']
+        bucket.payment_type = payment_type
+        bucket.delivery_note = order_note
+        print(payment_type)
     bucket.save()
 
     print("Sipariş edildi")
