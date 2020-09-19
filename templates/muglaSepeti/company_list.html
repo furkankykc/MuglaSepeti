@@ -55,33 +55,40 @@
                                     {% for company in companies %}
                                         <div class="col-md-12 col-12">
                                             <!-- Box Start -->
-                                            <diV class="box">
-                                                <div class="image" style="padding: 2px 1rem;">
-                                                    {% if company.logo %}
-                                                        <img src="{{ company.logo.url }}" alt="image" title="image" style="max-height: 130px;max-width: 130px;" class="img-fluid"/>
-                                                    {% endif %}
-                                                </div>
-                                                <div class="caption">
-                                                    {% if company.name %}
-                                                        <h4>{{ company.name }}</h4>
-                                                    {% endif %}
-                                                    {% if company.phone %}
-                                                        <p class="des">{{ company.phone }}</p>
-                                                    {% endif %}
-                                                    {% if company.description %}
-                                                        <span>{{ company.description }}</span>
-                                                    {% endif %}
-
-                                                    <div class="price " style="top:unset;">
+                                            <div class="box">
+                                                    <div class="image" style="padding: 2px 1rem;">
+                                                        {% if company.logo %}
+                                                            <img src="{{ company.logo.url }}" alt="image" title="image" style="max-height: 130px;max-width: 130px;" class="img-fluid"/>
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="caption">
+                                                        {% if company.name %}
+                                                            <h4>{{ company.name }}</h4>
+                                                        {% endif %}
+                                                        {% if company.phone %}
+                                                            <p class="des">Telefon: {{ company.phone }}</p>
+                                                        {% endif %}
+                                                        {% if company.open_at and company.close_at %}
+                                                            <p class="des">Çalışma saatleri: {{ company.open_at }}
+                                                                - {{ company.close_at }}</p>
+                                                        {% endif %}
+                                                        {% if company.description %}
+                                                            <span>{{ company.description }}</span>
+                                                        {% endif %}
+                                                    <div class="price" style="top: unset;bottom: 18px">
                                                         <a href="{% url 'company_menu' company.slug %}" class="btn btn-theme btn-md btn-wide">{% trans 'Ziyaret Et' %}</a>
                                                     </div>
-                                                </div>
+
+                                                    </div>
+
+
                                             </div>
                                             <!-- Box End -->
                                         </div>
                                     {% empty %}
                                         <div class="col-sm-12 col-12 commontop text-center">
-                                            <p style="background-color: white;">Şuanda açık olan hiçbir restorant bulunmamaktadır.</p></div>
+                                            <p style="background-color: white;">Şuanda açık olan hiçbir restorant
+                                                bulunmamaktadır.</p></div>
                                     {% endfor %}
                                 </div>
                             </div>

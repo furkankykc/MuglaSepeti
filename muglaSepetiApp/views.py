@@ -117,7 +117,6 @@ def companies(request):
 
 
 def order_food(request):
-    print("order_foods")
     order_now = False
     if request.method == 'POST':
         if 'order_now' in request.POST:
@@ -126,7 +125,9 @@ def order_food(request):
         entry_id = request.POST['entry_id']
         bucket = request.user.profile.get_bucket()
         entry = Entry.objects.get(id=entry_id)
+
         bucket.add_entry(entry, int(quantity))
+        # [print(i.count) for i in bucket.order_list.all()]
     if order_now:
         return HttpResponseRedirect(reverse('checkout'))
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
@@ -134,9 +135,8 @@ def order_food(request):
 
 def order(request, pk):
     bucket = Bucket.objects.get(pk=pk)
-    print(bucket)
-    bucket.order(request.user.profile.address)
-
+    bucket.order(request.user.profile)
+    bucket.save()
 
     print("Sipariş edildi")
     # redirect back to where it comes from

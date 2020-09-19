@@ -141,8 +141,14 @@
                                                     alt="{{ entry.name }}"
                                                     title="{{ entry.name }}" class="img-fluid"/></a>
                                         <div class="hoverbox">
-                                            <a class="btn btn-theme btn-md" href="shopping-cart.html">Add To Cart</a>
+                                            <form method="post" action="{% url 'order_food' %}">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="entry_id" value="{{ entry.id }}">
+                                                <input type="hidden" name="quantity" value="1">
+                                                <input class="btn btn-theme btn-md" type="submit" value="{% trans 'SEPETE EKLE' %}"/>
+                                            </form>
                                         </div>
+                                        </form>
                                     </div>
                                     <div class="caption">
                                         <h4>{{ entry.name }}</h4>
@@ -157,7 +163,9 @@
                                         <div class="price">{{ entry.price|floatformat }}₺</div>
                                         <p class="des">{{ entry.category.name }}</p>
                                         <p>{{ entry.detail }}</p>
-                                        <p><a class="btn btn-theme btn-md" href="shopping-cart.html">Add To Cart</a></p>
+                                        <p>
+                                            <a class="btn btn-theme btn-md" href="shopping-cart.html">{% trans 'SEPETE EKLE' %}</a>
+                                        </p>
                                     </div>
                                 </div>
                             </div>

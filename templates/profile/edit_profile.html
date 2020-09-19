@@ -24,7 +24,7 @@
                             <div class="form-group mb-0 pt-4 col-12 text-center">
                                 <button class="btn btn-theme btn-md" type="submit">{% trans 'BİLGİLERİMİ GÜNCELLE' %}
                                 </button>
-                                <a class="btn btn-theme btn-md btn-wide" href="#">{% trans 'İPTAL' %}</a>
+                                {#                                <a class="btn btn-theme btn-md btn-wide" href="#">{% trans 'İPTAL' %}</a>#}
                             </div>
                         </div>
                     </form>
@@ -54,11 +54,9 @@
                 </div>
             </div>
         </div>
-
         <div class="col-lg-6">
-
             <div class="user-change-password">
-                <h5>Change Profile</h5>
+                <h5>İletişim Bilgilerini Düzenle</h5>
                 <div class="change-password-body">
                     <form action="{% url 'update_info' %}" method="post">
                         {% csrf_token %}

@@ -1,5 +1,4 @@
-{% load static %}
-{% load i18n %}
+{% load static i18n humanize %}
 <style>
     .waiting {
         color: #ff860d;
@@ -38,38 +37,93 @@
 
             <div class="most-recent-order">
                 <h5>{% trans 'Son Siparişler' %}</h5>
-                {% for order in user.profile.get_last_orders.all %}
-                    {% for item in order.order_list.all %}
+                <div id="accordion">
+                    {% for order in user.profile.get_last_orders.all %}
                         <div class="field-entry">
                             <div class="row">
+
+
                                 <div class="col-5">
-                                    <p>{{ item.entry.name|title }}</p>
+                                    <a href="{% url 'company_menu' order.company.slug %}">{{ order.company }}</a>
                                 </div>
                                 <div class="col">
-                                    <a href="#">{{ order.company }}</a>
+                                    <button class="btn btn-link" data-toggle="collapse" data-target="#collapse{{ forloop.counter0 }}" aria-expanded="true" aria-controls="collapse{{ forloop.counter0 }}">
+                                        {{ order.ordered_at|naturaltime }}
+                                    </button>
                                 </div>
                                 <div class="col text-right">
-                                    {% if order.delivered %}
-                                        <p class="confirmed" style="float: right"><i class="icofont icofont-check"></i>Confirmed
-                                        </p>
+                                    {% if order.is_delivered %}
+                                        <p class="confirmed" style="float: right">
+                                            <i class="icofont icofont-check"></i>Teslim Edildi</p>
                                     {% elif order.is_on_the_way %}
                                         <p class="waiting"><i class="icofont icofont-foot-print"></i>Yolda</p>
                                         {# icofont icofont-scooter #}
                                     {% elif order.is_checked %}
-                                        <p class="waiting"><i class="icofont icofont-food-basket"></i>Hazırlanıyor</p>
+                                        <p class="waiting"><i class="icofont icofont-food-basket"></i>Hazırlanıyor
+                                        </p>
                                     {% elif order.is_deleted %}
-                                        <p class="waiting"><i class="icofont icofont-ui-laoding"></i>Onay bekleniyor</p>
-                                    {% else %}
+
                                         <p class="failed"><i class="icofont icofont-close"></i>İptal Edildi</p>
+                                    {% else %}
+
+                                        <p class="waiting"><i class="icofont icofont-ui-laoding"></i>Onay bekleniyor
+                                        </p>
                                     {% endif %}
                                 </div>
                                 {#                                <div class="col text-right">#}
                                 {#                                    <a href="#">Detail</a>#}
                                 {#                                </div>#}
                             </div>
+                            <div id="collapse{{ forloop.counter0 }}" class="collapse" aria-labelledby="heading{{ forloop.counter0 }}" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="field-entry">
+                                        <div class="row">
+
+                                            <div class="col-5">
+                                                {% for item in order.order_list.all %}
+                                                    <p>
+                                                        {{ item.count }}x {{ item.entry.name|title }}
+                                                    </p>
+                                                {% endfor %}
+                                            </div>
+
+
+                                            <div class="col-5" style="float: right">
+                                                {% if order.is_ordered %}
+                                                    <p class="confirmed"><i class="icofont icofont-check"></i>Sipariş
+                                                        edildi
+                                                        ({{ order.ordered_at|naturaltime }})
+                                                    </p>
+                                                {% endif %}
+                                                {% if order.is_checked %}
+                                                    <p class="confirmed"><i class="icofont icofont-check"></i>Onaylandı
+                                                        ({{ order.checked_at|naturaltime }})</p>
+                                                {% endif %}
+                                                {% if order.is_deleted %}
+                                                    <p class="failed"><i class="icofont icofont-close"></i>İptal Edildi
+                                                        ({{ order.checked_at|naturaltime }})</p>
+                                                {% endif %}
+                                                {% if order.is_on_the_way %}
+                                                    <p class="confirmed"><i class="icofont icofont-check"></i>Yola Çıktı
+                                                        ({{ order.on_the_way_at|naturaltime }})</p>
+                                                {% endif %}
+                                                {% if order.is_delivered %}
+                                                    <p class="confirmed"><i class="icofont icofont-check"></i>Teslim
+                                                        Edildi ({{ order.delivered_at|naturaltime }})</p>
+                                                {% endif %}
+                                            </div>
+                                            <div class="col text-right">
+                                                <p> Toplam: {{ order.get_borrow|floatformat }}₺</p>
+                                                <p>({{ order.get_payment_type }})</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     {% endfor %}
-                {% endfor %}
+
+                </div>
             </div>
         </div>
         {##}

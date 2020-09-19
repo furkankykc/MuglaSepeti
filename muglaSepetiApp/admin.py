@@ -109,7 +109,7 @@ class DefaultAdminModel(admin.ModelAdmin):
 
 @admin.register(Company, site=customAdminSite)
 class CompanyAdmin(DefaultAdminModel):
-    list_display = ('name', 'active_menu', 'open_at', 'close_at', 'is_currently_open', 'restaurant_url')
+    list_display = ('name', 'active_menu', 'open_at', 'close_at', 'get_is_open', 'restaurant_url')
     prepopulated_fields = {'slug': ['name']}
 
     fields = (
@@ -121,10 +121,10 @@ class CompanyAdmin(DefaultAdminModel):
         return mark_safe(
             '<a class="button" target="blank_" href="{}">{}</a>'.format(reverse('company_menu', args=[obj.slug]),
                                                                         obj.slug))
-
-    @staticmethod
-    def is_currently_open(obj):
-        return obj.get_is_open()
+    #
+    # @staticmethod
+    # def is_currently_open(obj):
+    #     return obj.get_is_open()
 
     def get_form(self, request, obj=None, **kwargs):
         form = super(CompanyAdmin, self).get_form(request, obj, **kwargs)
@@ -210,10 +210,11 @@ class BucketAdmin(admin.ModelAdmin, ListStyleAdminMixin):
     # exclude = ['is_checked', 'is_ordered', 'is_delivered', 'is_on_the_way', 'is_deleted', 'checked_at', 'delivered_at',
     #            'deleted_at', 'on_the_way_at']
     list_display = (
-        'get_products', 'delivery_note', 'order_address', 'order_phone', 'get_borrow', 'get_order_time',
+        'get_products', 'get_payment_type', 'delivery_note', 'order_address', 'order_phone', 'get_borrow',
+        'get_order_time',
         'status')
     list_filter = ('company',)
-    ordering = ['ordered_at']
+    ordering = ['-ordered_at']
     actions = [make_check, make_on_the_way, make_delivered, make_cancel]
     change_list_template = 'admin/change_list_for_bucket.html'
 
@@ -261,6 +262,8 @@ class BucketAdmin(admin.ModelAdmin, ListStyleAdminMixin):
     def get_products(self, obj):
         return mark_safe(
             "</br>".join(["{}x {}".format(p.count, p.entry.name) for p in obj.order_list.all()]))
+
+    get_products.short_description = _("Sipariş Edilen Ürünler")
 
     def get_queryset(self, request):
         qs = super(BucketAdmin, self).get_queryset(request)

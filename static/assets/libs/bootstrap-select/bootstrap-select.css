@@ -105,6 +105,12 @@ select.selectpicker {
   line-height: inherit;
   border-radius: inherit;
 }
+
+/*.form-group .form-control option:hover{*/
+/*    box-shadow: 0 0 10px 100px #000 inset;*/
+
+/*  color: #0f6674;*/
+/*}*/
 .form-inline .bootstrap-select .form-control {
   width: 100%;
 }

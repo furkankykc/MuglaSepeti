@@ -59,10 +59,15 @@ class Profile(models.Model):
 
     def get_bucket(self):
         bucket, _ = self.bucket.get_or_create(is_ordered=False, is_deleted=False)
+        if _ is True:
+            bucket.profile = self
+            bucket.order_address = self.address.location
+            bucket.order_phone = self.phone
+            bucket.save()
         return bucket
 
     def get_last_orders(self):
-        bucket = self.bucket.filter(is_ordered=True)
+        bucket = self.bucket.filter(is_ordered=True).order_by('-ordered_at')
         return bucket
 
     def __str__(self):
@@ -110,19 +115,18 @@ class Company(models.Model):
 
     @classmethod
     def get_open_companies(cls):
-        return cls.objects.filter(open_at__lte=timezone.now().time(), close_at__gt=timezone.now().time())
 
+        return (x for x in cls.objects.all() if x.get_is_open)
+
+    @property
     def get_is_open(self):
-        curr_hour = timezone.now().hour
-        curr_minute = timezone.now().minute
-        open_hour = self.open_at.hour
-        open_minute = self.open_at.minute
-        close_hour = self.close_at.hour
-        close_minute = self.close_at.minute
+        current_time = timezone.localtime(timezone.now()).time()
         if self.is_open:
-            if (curr_hour >= open_hour and curr_minute >= open_minute) and (
-                    curr_hour <= close_hour and curr_minute <= close_minute):
-                return True
+            if self.open_at > self.close_at:
+                return self.open_at < current_time > self.close_at
+            else:
+                return self.open_at < current_time < self.close_at
+
         return False
 
     def get_comments(self):
@@ -132,7 +136,7 @@ class Company(models.Model):
         rating = Bucket.objects.filter(company=self).aggregate(Avg('comment__rating'))['comment__rating__avg']
         return rating
 
-    # get_is_open.short_description = _("Company Status")
+    # get_is_open.short_description = _("Şuanda Açık mı?")
 
     def __str__(self):
         return self.name
@@ -252,17 +256,24 @@ class Bucket(models.Model):
     )
     payment_type = models.CharField(max_length=1, choices=PAYMENT_OPTIONS)
 
-    def set_address(self, address: Address):
-        self.order_address = address.location
+    def set_address(self):
+        self.order_address = self.profile.address.location
+        self.save()
 
     def set_phone(self):
         self.order_phone = self.profile.phone
+        self.save()
 
-    def order(self, address: Address):
+    def set_profile(self, profile):
+        self.profile = profile
+        self.save()
+
+    def order(self, profile: Profile):
         self.is_ordered = True
-        self.ordered_at = timezone.now()
+        self.ordered_at = timezone.localtime(timezone.now())
+        self.set_profile(profile)
         self.set_phone()
-        self.set_address(address)
+        self.set_address()
         self.save()
 
     def check_order(self):
@@ -292,26 +303,32 @@ class Bucket(models.Model):
 
     def add_entry(self, entry: Entry, count: int = 1):
         obj, _ = self.order_list.get_or_create(entry_id=entry.id)
-        if self.company == None:
+
+        if _:
             self.company = obj.entry.company
-        obj.price = entry.price
-        obj.entry = entry
-        obj.count = obj.count + count
+            obj.count = count
+            obj.price = entry.price
+            obj.entry = entry
+        else:
+            obj.count = obj.count + count
+            if self.company != entry.company:
+                return
+
         obj.save()
+        self.save()
 
     def get_borrow(self):
-        sum = 0
-        if self.order_list.exists():
-            order_list = self.order_list.all()
-            if order_list.count() > 0:
-                sum = list(order_list.annotate(total_spent=Sum(
-                    F('price') *
-                    F('count'),
-                    output_field=models.FloatField()
-                )).aggregate(Sum('total_spent')).values())[0]
-        return sum
+        item_sum = Sum(F('price')*F('count'),output_field=models.FloatField())
+        borrow = self.order_list.aggregate(amount=item_sum,).get('amount', 0)
+        return borrow
+
+    def get_payment_type(self):
+        if self.payment_type:
+            return dict(self.PAYMENT_OPTIONS)[self.payment_type]
+        return None
 
     get_borrow.short_description = _('Price')
+    get_payment_type.short_description = _('Payment Type')
 
     def __str__(self):
         return '{} tarihli sipariş'.format(self.ordered_at)
@@ -334,7 +351,7 @@ class Comment(models.Model):
                                   on_delete=models.CASCADE, verbose_name=_("Bucket"))
     rating = models.CharField(max_length=1, choices=RATING_LEVELS)
     comment = models.CharField(max_length=100, verbose_name=_("comment"))
-    time = models.DateTimeField(auto_now=True)
+    time = models.DateTimeField(auto_now_add=True)
 
     def get_rating_value(self):
         if self.rating:
