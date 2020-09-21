@@ -31,10 +31,11 @@
                 <div class="col-lg-10 col-md-12">
                     <div class="row">
                         <div class="col-sm-12 col-md-6">
-                            <div class="loginnow" style="height: inherit ;min-height:615px;padding-bottom: 0px">
-                                <h5>Register</h5>
-                                <p>Do You have an account? So <a href="login.html">login</a> And starts less than a
-                                    minute</p>
+                            <div class="loginnow" style="height: inherit ;min-height:615px;padding-bottom: 0">
+                                <h5>{% trans 'Kayıt ol' %}</h5>
+                                <p>{% trans 'Bir hesabın var mı ?' %}
+                                    <a href="{% url 'login' %}">{% trans 'Giriş yap' %} </a>{% trans 've hemen sipariş ver' %}
+                                </p>
                                 <form method="post" enctype="multipart/form-data">
                                     {% csrf_token %}
                                     {% for field in form %}
@@ -44,7 +45,7 @@
                                                 {{ field }}
                                             {% else %}
                                                 <label>
-                                                    {{ field }}  {{ field.label }}
+                                                    {{ field }} {{ field.label }}
                                                 </label>
                                             {% endif %}
                                             {% if field.errors %}
@@ -63,19 +64,19 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-12 col-md-6">
-                            <div class="loginto loginnow">
-                                <h5>Login via social accounts</h5>
-                                <ul class="list-unstyled text-center">
-                                    <li><a href="#" target="_blank"><i class="icofont icofont-social-facebook"></i>
-                                        Login with Facebook</a></li>
-                                    <li><a href="#" target="_blank"><i class="icofont icofont-social-twitter"></i> Login
-                                        with Twitter</a></li>
-                                    <li><a href="#" target="_blank"><i class="icofont icofont-social-google-plus"></i>
-                                        Login with Google+</a></li>
-                                </ul>
-                            </div>
-                        </div>
+                        {#                        <div class="col-sm-12 col-md-6">#}
+                        {#                            <div class="loginto loginnow">#}
+                        {#                                <h5>Login via social accounts</h5>#}
+                        {#                                <ul class="list-unstyled text-center">#}
+                        {#                                    <li><a href="#" target="_blank"><i class="icofont icofont-social-facebook"></i>#}
+                        {#                                        Login with Facebook</a></li>#}
+                        {#                                    <li><a href="#" target="_blank"><i class="icofont icofont-social-twitter"></i> Login#}
+                        {#                                        with Twitter</a></li>#}
+                        {#                                    <li><a href="#" target="_blank"><i class="icofont icofont-social-google-plus"></i>#}
+                        {#                                        Login with Google+</a></li>#}
+                        {#                                </ul>#}
+                        {#                            </div>#}
+                        {#                        </div>#}
                     </div>
                 </div>
             </div>

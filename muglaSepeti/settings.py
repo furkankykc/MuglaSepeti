@@ -24,12 +24,13 @@ SECRET_KEY = 'j_0!f=(^3mx8^3t1x%(q^1%^h&2z*s*!u=^b)@sj@j9n157i42'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
 INSTALLED_APPS = [
     'liststyle',
+    'admin_reorder',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -37,12 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'muglaSepetiApp.apps.MuglasepetiappConfig',
-    'admin_reorder',
     'django.contrib.humanize',
     'django.forms',
 ]
 
 MIDDLEWARE = [
+
+    'admin_reorder.middleware.ModelAdminReorder',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -50,7 +52,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'admin_reorder.middleware.ModelAdminReorder',
 ]
 
 ROOT_URLCONF = 'muglaSepeti.urls'
@@ -67,6 +68,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'muglaSepetiApp.context_processors.site_config',
             ],
         },
     },
@@ -112,7 +114,8 @@ ADMIN_REORDER = (
     # Rename app
     {'app': 'muglaSepetiApp', 'models': (
         'muglaSepetiApp.Company', 'muglaSepetiApp.FoodGroup', 'muglaSepetiApp.FoodCategory', 'muglaSepetiApp.Entry',
-        'muglaSepetiApp.Menu', 'muglaSepetiApp.Comment','muglaSepetiApp.Profile','muglaSepetiApp.Address'),
+        'muglaSepetiApp.Menu', 'muglaSepetiApp.Comment', 'muglaSepetiApp.Profile', 'muglaSepetiApp.Address',
+        'muglaSepetiApp.PacketPrice', 'muglaSepetiApp.SiteConfig', 'muglaSepetiApp.Config'),
      'label': 'Muğla Sepeti | Düzenle'},
 
 )

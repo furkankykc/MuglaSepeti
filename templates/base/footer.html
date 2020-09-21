@@ -3,44 +3,49 @@
 <footer>
     <div class="container">
         <div class="row inner">
-            <div class="col-sm-6 col-md-6 col-lg-3">
+            <div class="col-sm-6 col-md-6 col-lg-3" style="margin: auto">
                 <!-- Footer Widget Start -->
                 <h5>{% trans 'İLETİŞİM' %}</h5>
                 <ul class="list-unstyled contact">
-                    <li><i class="icofont icofont-social-google-map"></i> 20, floor, Restaurant Food & Drinks,
-                        Nr,
-                        Queenslad Victoria Building, USA
-                    </li>
-                    <li><i class="icofont icofont-phone"></i> 1800 000 0000,<br>+88 123 1234 1234</li>
-                    <li><a href="#"><i class="icofont icofont-ui-message"></i>info@yourdomainname.com</a></li>
+                    {% if config.address %}
+                        <li><i class="icofont icofont-social-google-map"></i>{{ config.address }}</li>
+                    {% endif %}
+                    {% if config.phone %}
+                        <li><a href="tel:{{ config.phone }}"><i class="icofont icofont-phone"></i>{{ config.phone }}</a></li>
+                    {% endif %}
+                    {% if config.email %}
+                        <li>
+                            <a href="mailto:{{ config.email }}"><i class="icofont icofont-ui-message"></i>{{ config.email }}
+                            </a></li>
+                    {% endif %}
                 </ul>
                 <!-- Footer Widget End -->
             </div>
-            <div class="col-sm-6 col-md-6 col-lg-3">
-                <!-- Footer Widget Start -->
-                <h5>Information</h5>
-                <ul class="list-unstyled">
-                    <li><a href="#">{% trans 'Hakkımızda' %}</a></li>
-                    <li><a href="#">{% trans 'Servis Hakkında' %}</a></li>
-                    <li><a href="#">{% trans 'İletişim' %}</a></li>
-                    <li><a href="#">{% trans 'Kullanım Talimatları' %}</a></li>
-                    <li><a href="#">{% trans 'Site haritası' %}</a></li>
-                </ul>
-                <!-- Footer Widget End -->
-            </div>
-            <div class="w-100 d-none d-xs-block"></div>
-            <div class="col-sm-6 col-md-6 col-lg-3">
-                <!-- Footer Widget Start -->
-                <h5>Open Hours</h5>
-                <ul class="list-unstyled">
-                    <li>Monday - Friday : 9 am to 12 am.</li>
-                    <li>Saturday - Sunday : 24 Hour Open</li>
-                    <li>Breakfast : 7 am to 12 pm</li>
-                    <li>Lunch : 12 pm to 7 pm</li>
-                    <li>Dinner : 7 am to 12 am</li>
-                </ul>
-                <!-- Footer Widget End -->
-            </div>
+            {#            <div class="col-sm-6 col-md-6 col-lg-3">#}
+            {#                <!-- Footer Widget Start -->#}
+            {#                <h5>Information</h5>#}
+            {#                <ul class="list-unstyled">#}
+            {#                    <li><a href="#">{% trans 'Hakkımızda' %}</a></li>#}
+            {#                    <li><a href="#">{% trans 'Servis Hakkında' %}</a></li>#}
+            {#                    <li><a href="#">{% trans 'İletişim' %}</a></li>#}
+            {#                    <li><a href="#">{% trans 'Kullanım Talimatları' %}</a></li>#}
+            {#                    <li><a href="#">{% trans 'Site haritası' %}</a></li>#}
+            {#                </ul>#}
+            {#                <!-- Footer Widget End -->#}
+            {#            </div>#}
+            {#            <div class="w-100 d-none d-xs-block"></div>#}
+            {#            <div class="col-sm-6 col-md-6 col-lg-3">#}
+            {#                <!-- Footer Widget Start -->#}
+            {#                <h5>Open Hours</h5>#}
+            {#                <ul class="list-unstyled">#}
+            {#                    <li>Monday - Friday : 9 am to 12 am.</li>#}
+            {#                    <li>Saturday - Sunday : 24 Hour Open</li>#}
+            {#                    <li>Breakfast : 7 am to 12 pm</li>#}
+            {#                    <li>Lunch : 12 pm to 7 pm</li>#}
+            {#                    <li>Dinner : 7 am to 12 am</li>#}
+            {#                </ul>#}
+            {#                <!-- Footer Widget End -->#}
+            {#            </div>#}
             {#                <div class="col-sm-6 col-md-6 col-lg-3">#}
             {#                    <!-- Footer Widget Start -->#}
             {#                    <h5>Instagram</h5>#}
@@ -62,26 +67,48 @@
             <div class="row powered">
                 <!--  Copyright Start -->
                 {#                    200x56 #}
-                <div class="col-md-3 col-sm-6 order-md-1">
-                    <img src="{% static 'assets/images/logo/muglasepetilogo.png' %}" class="img-fluid" title="logo"
-                         alt="logo">
-                </div>
+                {% if config.footer_logo or config.logo %}
+                    <div class="col-md-3 col-sm-6 order-md-1">
+                        {% if config.footer_logo %}
+                            <img src="{{ config.footer_logo.url }}" width="400" height="80" class="img-fluid" title="logo"
+                                 alt="logo">
+                        {% elif config.logo %}
+                            <img src="{{ config.logo.url }}" width="400" height="80" class="img-fluid" title="logo"
+                                 alt="logo">
+                        {% endif %}
+                    </div>
+                {% endif %}
+                {#            #}
                 <div class="col-md-3 col-sm-6 text-right order-md-3">
                     <!--  Footer Social Start -->
                     <ul class="list-inline social">
-                        <li class="list-inline-item"><a href="https://www.facebook.com/spheretheme/"
-                                                        target="_blank"><i
-                                class="icofont icofont-social-facebook"></i></a></li>
-                        <li class="list-inline-item"><a href="https://twitter.com/spheretheme/" target="_blank"><i
-                                class="icofont icofont-social-twitter"></i></a></li>
-                        <li class="list-inline-item"><a href="https://plus.google.com/" target="_blank"><i
-                                class="icofont icofont-social-google-plus"></i></a></li>
-                        <li class="list-inline-item"><a href="https://in.pinterest.com/" target="_blank"><i
-                                class="icofont icofont-social-pinterest"></i></a></li>
-                        <li class="list-inline-item"><a href="https://www.instagram.com/" target="_blank"><i
-                                class="icofont icofont-social-instagram"></i></a></li>
-                        <li class="list-inline-item"><a href="https://www.youtube.com/" target="_blank"><i
-                                class="icofont icofont-social-youtube-play"></i></a></li>
+                        {% if config.facebook %}
+                            <li class="list-inline-item"><a href="{{ config.facebook }}"
+                                                            target="_blank"><i
+                                    class="icofont icofont-social-facebook"></i></a></li>
+                        {% endif %}
+                        {% if config.twitter %}
+                            <li class="list-inline-item"><a href="{{ config.twitter }}" target="_blank"><i
+                                    class="icofont icofont-social-twitter"></i></a></li>
+                        {% endif %}
+                        {% if config.googleplus %}
+                            <li class="list-inline-item"><a href="{{ config.googleplus }}" target="_blank"><i
+                                    class="icofont icofont-social-google-plus"></i></a></li>
+                        {% endif %}
+                        {% if config.pinterest %}
+                            <li class="list-inline-item"><a href="{{ config.pinterest }}" target="_blank"><i
+                                    class="icofont icofont-social-pinterest"></i></a></li>
+                        {% endif %}
+                        {% if config.instagram %}
+                            <li class="list-inline-item"><a href="{{ config.instagram }}" target="_blank"><i
+                                    class="icofont icofont-social-instagram"></i></a></li>
+                        {% endif %}
+                        {% if config.youtube %}
+                            <li class="list-inline-item"><a href="{{ config.youtube }}" target="_blank"><i
+                                    class="icofont icofont-social-youtube-play"></i></a>
+                            </li>
+                        {% endif %}
+
                     </ul>
                     <!--  Footer Social End -->
                 </div>

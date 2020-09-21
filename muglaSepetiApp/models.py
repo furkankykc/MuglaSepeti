@@ -1,7 +1,7 @@
 import os
 
 from django.contrib.auth.models import User
-from django.core.validators import RegexValidator
+from django.core.validators import RegexValidator, FileExtensionValidator
 from django.db import models
 from django.db.models import F, Sum, Avg
 from django.dispatch import receiver
@@ -24,7 +24,7 @@ def get_image_path(instance, filename):
 
 class Address(models.Model):
     class Meta:
-        verbose_name = _("Adress")
+        verbose_name = _("Address")
         verbose_name_plural = _("Addresses")
 
     name = models.CharField(max_length=30, verbose_name=_("name"))
@@ -42,7 +42,7 @@ class Profile(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name=_("user"))
     address = models.ForeignKey(Address, related_name='profile_address', on_delete=models.CASCADE, null=True,
-                                verbose_name=_("adress"))
+                                verbose_name=_("address"))
     birth_date = models.DateField(null=True, blank=True, verbose_name=_("birth date"))
     phone = models.CharField(validators=[phone_regex], max_length=17, blank=True,
                              null=True, verbose_name=_("phone number"))
@@ -78,6 +78,105 @@ class GetCompanyOpen(models.Manager):
     def get_query_set(self):
         return super(GetCompanyOpen, self).get_query_set().filter(
             open_at__lte=timezone.now().time(), close_at__gt=timezone.now().time())
+
+
+class Config(models.Model):
+    name = models.CharField(max_length=20, null=True)
+    phone = models.CharField(validators=[phone_regex], max_length=17, blank=True,
+                             null=True, verbose_name=_("phone number"))
+    favicon = models.ImageField(upload_to=get_image_path, blank=True, null=True,
+                                validators=[FileExtensionValidator(allowed_extensions=['ico'])], verbose_name=_("icon"))
+
+    email = models.CharField(validators=[email_regex], max_length=50, blank=True, verbose_name=_("email address"))
+    address = models.CharField(max_length=100, null=True, verbose_name=_("address"))
+    logo = models.ImageField(upload_to=get_image_path, blank=True, null=True, verbose_name=_("Site Logo"))
+    footer_logo = models.ImageField(upload_to=get_image_path, blank=True, null=True, verbose_name=_("Footer Logo"))
+    site_description = models.CharField(max_length=500, blank=True, null=True, verbose_name=_("Site Description"))
+    content_description = models.CharField(max_length=500, blank=True, null=True, verbose_name=_("Content Description"))
+    slider_title = models.CharField(max_length=20, blank=True, null=True, verbose_name=_("Slider Title"))
+    slider_description = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("Slider Description"))
+    slider_image_1 = models.ImageField(upload_to=get_image_path, blank=True, null=True,
+                                       verbose_name=_("Slider Image 1"))
+    slider_image_2 = models.ImageField(upload_to=get_image_path, blank=True, null=True,
+                                       verbose_name=_("Slider Image 2"))
+    slider_image_3 = models.ImageField(upload_to=get_image_path, blank=True, null=True,
+                                       verbose_name=_("Slider Image 3"))
+    slider_image_4 = models.ImageField(upload_to=get_image_path, blank=True, null=True,
+                                       verbose_name=_("Slider Image 4"))
+    menu_background = models.ImageField(upload_to=get_image_path,
+                                        validators=[FileExtensionValidator(allowed_extensions=['png'])], blank=True,
+                                        null=True,
+                                        verbose_name=_("Menu Background"))
+    menu_inner_background = models.ImageField(upload_to=get_image_path,
+                                              validators=[FileExtensionValidator(allowed_extensions=['png'])],
+                                              blank=True,
+                                              null=True,
+                                              verbose_name=_("Menu Inner Background"))
+    bread_crumb_background = models.ImageField(upload_to=get_image_path,
+                                               blank=True, null=True,
+                                               verbose_name=_("Breadcrumb Background"))
+
+    order_background = models.ImageField(upload_to=get_image_path, blank=True, null=True,
+                                         validators=[FileExtensionValidator(allowed_extensions=['png'])],
+                                         verbose_name=_("Order Background"))
+    facebook = models.URLField(blank=True, null=True)
+    youtube = models.URLField(blank=True, null=True)
+    twitter = models.URLField(blank=True, null=True)
+    instagram = models.URLField(blank=True, null=True)
+    pinterest = models.URLField(blank=True, null=True)
+    googleplus = models.URLField(blank=True, null=True)
+
+    about_title = models.CharField(max_length=50, blank=True, null=True)
+    about_description = models.CharField(max_length=1500, blank=True, null=True)
+    about_image_1 = models.ImageField(upload_to=get_image_path, blank=True, null=True,
+                                      verbose_name=_("About Image 1"))
+    about_image_2 = models.ImageField(upload_to=get_image_path, blank=True, null=True,
+                                      verbose_name=_("About Image 2"))
+    about_image_3 = models.ImageField(upload_to=get_image_path, blank=True, null=True,
+                                      verbose_name=_("About Image 3"))
+    about_image_large = models.ImageField(upload_to=get_image_path, blank=True, null=True,
+                                          verbose_name=_("About Image Large"))
+    about_background_quotes = models.ImageField(upload_to=get_image_path, blank=True, null=True,
+                                                verbose_name=_("About Quotes Background "))
+    about_fact_title_1 = models.CharField(max_length=20, null=True, blank=True, verbose_name=_("Statistic Title 1"))
+    about_fact_value_1 = models.IntegerField(null=True, blank=True, verbose_name=_("Statistic Value 1"))
+    about_fact_title_2 = models.CharField(max_length=20, null=True, blank=True, verbose_name=_("Statistic Title 2"))
+    about_fact_value_2 = models.IntegerField(null=True, blank=True, verbose_name=_("Statistic Value 1"))
+    about_fact_title_3 = models.CharField(max_length=20, null=True, blank=True, verbose_name=_("Statistic Title 3"))
+    about_fact_value_3 = models.IntegerField(null=True, blank=True, verbose_name=_("Statistic Value 1"))
+    about_fact_title_4 = models.CharField(max_length=20, null=True, blank=True, verbose_name=_("Statistic Title 4"))
+    about_fact_value_4 = models.IntegerField(null=True, blank=True, verbose_name=_("Statistic Value 1"))
+
+    about_content_title = models.CharField(max_length=100, null=True, blank=True, verbose_name=_("Content Title"))
+    about_content_description = models.CharField(max_length=500, null=True, blank=True, verbose_name=_("Content Title"))
+
+    about_info_title_1 = models.CharField(max_length=20, null=True, blank=True, verbose_name=_("Information Title 1"))
+    about_info_description_1 = models.CharField(max_length=150, null=True, blank=True,
+                                                verbose_name=_("Information Description 1"))
+    about_info_title_2 = models.CharField(max_length=20, null=True, blank=True, verbose_name=_("Information Title 2"))
+    about_info_description_2 = models.CharField(max_length=150, null=True, blank=True,
+                                                verbose_name=_("Information Description 2"))
+    about_info_title_3 = models.CharField(max_length=20, null=True, blank=True, verbose_name=_("Information Title 3"))
+    about_info_description_3 = models.CharField(max_length=150, null=True, blank=True,
+                                                verbose_name=_("Information Description 3"))
+    about_quote_title = models.CharField(max_length=50, null=True, blank=True, verbose_name=_("Quotes Title"))
+    about_quote_1 = models.CharField(max_length=300, null=True, blank=True, verbose_name=_("Quote 1"),
+                                     help_text=_("Type writer name end of the text heading with '-' Ex:-Furkankykc"))
+    about_quote_2 = models.CharField(max_length=300, null=True, blank=True, verbose_name=_("Quote 2"),
+                                     help_text=_("Type writer name end of the text heading with '-' Ex:-Furkankykc"))
+    about_quote_3 = models.CharField(max_length=300, null=True, blank=True, verbose_name=_("Quote 3"),
+                                     help_text=_("Type writer name end of the text heading with '-' Ex:-Furkankykc"))
+
+    def __str__(self):
+        return self.name
+
+
+class SiteConfig(models.Model):
+    name = models.CharField(max_length=20, verbose_name=_("Name"))
+    config = models.ForeignKey(Config, on_delete=models.SET_NULL, null=True, verbose_name=_("Site Config"))
+
+    def __str__(self):
+        return self.name
 
 
 class Company(models.Model):
@@ -118,7 +217,6 @@ class Company(models.Model):
 
         return (x for x in cls.objects.all() if x.get_is_open)
 
-    @property
     def get_is_open(self):
         current_time = timezone.localtime(timezone.now()).time()
         if self.is_open:
@@ -136,7 +234,10 @@ class Company(models.Model):
         rating = Bucket.objects.filter(company=self).aggregate(Avg('comment__rating'))['comment__rating__avg']
         return rating
 
-    # get_is_open.short_description = _("Şuanda Açık mı?")
+    def get_packet_prices(self):
+        return PacketPrice.objects.filter(company=self)
+
+    get_is_open.short_description = _("Şuanda Açık mı?")
 
     def __str__(self):
         return self.name
@@ -205,9 +306,9 @@ class Menu(models.Model):
         verbose_name = _('Menu')
         verbose_name_plural = _("Menus")
 
-    name = models.CharField(max_length=50, verbose_name=_("name"))
+    name = models.CharField(max_length=50, verbose_name=_("Name"))
     entry_list = models.ManyToManyField(Entry, verbose_name=_("Entry list"))
-    company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name=_("company"))
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name=_("Company"))
 
     def __str__(self):
         return self.name
@@ -225,6 +326,19 @@ class BucketEntry(models.Model):
 
     def __str__(self):
         return '{}x{}'.format(self.count, self.entry.name)
+
+
+class PacketPrice(models.Model):
+    class Meta:
+        verbose_name = _("Minimum Packet Price")
+        verbose_name_plural = _("Minimum Packet Prices")
+
+    name = models.CharField(max_length=50, verbose_name=_("Address"))
+    price = models.FloatField(default=5, verbose_name=_("Minimum Price"))
+    company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name=_("Company"))
+
+    def __str__(self):
+        return self.name
 
 
 class Bucket(models.Model):
@@ -318,8 +432,8 @@ class Bucket(models.Model):
         self.save()
 
     def get_borrow(self):
-        item_sum = Sum(F('price')*F('count'),output_field=models.FloatField())
-        borrow = self.order_list.aggregate(amount=item_sum,).get('amount', 0)
+        item_sum = Sum(F('price') * F('count'), output_field=models.FloatField())
+        borrow = self.order_list.aggregate(amount=item_sum, ).get('amount', 0)
         return borrow
 
     def get_payment_type(self):
@@ -350,7 +464,8 @@ class Comment(models.Model):
     bucket = models.OneToOneField(Bucket,
                                   on_delete=models.CASCADE, verbose_name=_("Bucket"))
     rating = models.CharField(max_length=1, choices=RATING_LEVELS)
-    comment = models.CharField(max_length=100, verbose_name=_("comment"))
+    comment = models.CharField(max_length=100, null=True, blank=True,
+                               verbose_name=_("comment"))
     time = models.DateTimeField(auto_now_add=True)
 
     def get_rating_value(self):

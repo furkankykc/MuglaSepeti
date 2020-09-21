@@ -1,0 +1,200 @@
+{% extends 'base/base.html' %}
+{% load static i18n templatetags %}
+{% block content %}
+    <!-- About Start -->
+    <div class="about">
+        <div class="container">
+            <div class="row">
+                <!-- Title Content Start -->
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xs-12 commontop text-left">
+                    {% if config.about_title %}
+                        <h4>{{ config.about_title }}</h4>
+                    {% endif %}
+                    <div class="divider style-1 left">
+                        <i class="icofont icofont-ui-press hr-icon left"></i>
+                        <span class="hr-simple right"></span>
+                    </div>
+                    {% if config.about_description %}
+                        <p>{{ config.about_description }}</p>
+                    {% endif %}
+                </div>
+                <!-- Title Content End -->
+                <div class="col-sm-12 col-md-12 col-lg-6 col-xs-12">
+                    <div class="owl-carousel owl-theme owl-about">
+                        <!--  Slider image Start  -->
+                        {% if config.about_image_1 %}
+                            <div class="item">
+                                <img src="{{ config.about_image_1.url }}" alt="restaurant">
+                            </div>
+                        {% endif %}
+                        {% if config.about_image_2 %}
+                            <div class="item">
+                                <img src="{{ config.about_image_2.url }}" alt="restaurant">
+                            </div>
+                        {% endif %}
+                        {% if config.about_image_3 %}
+                            <div class="item">
+                                <img src="{{ config.about_image_3.url }}" alt="restaurant">
+                            </div>
+                        {% endif %}
+                        <!--  Slider image End  -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- About End -->
+
+    <!-- Fun-Factor Start -->
+    <div class="fun-factor">
+        <div class="container">
+            <div class="row ">
+                <div class="col-sm-3 col-6">
+                    <!-- Fun-Factor Box Start -->
+                    {% if config.about_fact_title_1 and config.about_fact_value_1 %}
+                        <div class="single-box">
+                                <span>
+                                    <i class="icofont icofont-spoon-and-fork"></i>
+                                </span>
+                            <h4 class="number" data-from="0" data-to="{{ config.about_fact_value_1 }}" data-refresh-interval="10">{{ config.about_fact_value_1 }}</h4>
+                            <h3>{{ config.about_fact_title_1 }}</h3>
+                        </div>
+                    {% endif %}
+                    <!-- Fun-Factor Box End -->
+                </div>
+                <div class="col-sm-3 col-6">
+                    <!-- Fun-Factor Box Start -->
+                    {% if config.about_fact_title_2 and config.about_fact_value_2 %}
+                        <div class="single-box">
+                                <span>
+                                    <i class="icofont icofont-emo-simple-smile"></i>
+                                </span>
+                            <h4 class="number" data-from="0" data-to="{{ config.about_fact_value_2 }}" data-refresh-interval="10">{{ config.about_fact_value_2 }}</h4>
+                            <h3>{{ config.about_fact_title_2 }}</h3>
+                        </div>
+                    {% endif %}
+                    <!-- Fun-Factor Box End -->
+                </div>
+                <div class="col-sm-3 col-6">
+                    <!-- Fun-Factor Box Start -->
+                    {% if config.about_fact_title_3 and config.about_fact_value_3 %}
+
+                        <div class="single-box">
+                                <span>
+                                    <i class="icofont icofont-waiter-alt"></i>
+                                </span>
+                            <h4 class="number" data-from="0" data-to="{{ config.about_fact_value_3 }}" data-refresh-interval="10">{{ config.about_fact_value_3 }}</h4>
+                            <h3>{{ config.about_fact_title_3 }}</h3>
+                        </div>
+                    {% endif %}
+                    <!-- Fun-Factor Box End -->
+                </div>
+                <div class="col-sm-3 col-6">
+                    <!-- Fun-Factor Box Start -->
+                    {% if config.about_fact_title_4 and config.about_fact_value_4 %}
+                        <div class="single-box">
+                                <span>
+                                    <i class="icofont icofont-heart-alt"></i>
+                                </span>
+                            <h4 class="number" data-from="0" data-to="{{ config.about_fact_value_4 }}" data-refresh-interval="10">{{ config.about_fact_value_4 }}</h4>
+                            <h3>{{ config.about_fact_title_4 }}</h3>
+                        </div>
+                    {% endif %}
+                    <!-- Fun-Factor Box End -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Fun-Factor End -->
+
+    <!-- Service Start  -->
+    <div class="service">
+        <div class="container">
+            <div class="row ">
+                <!-- Title Content Start -->
+                <div class="col-sm-12 col-xs-12 commontop text-center">
+                    <h4>{{ config.about_content_title }}</h4>
+                    <div class="divider style-1 center">
+                        <span class="hr-simple left"></span>
+                        <i class="icofont icofont-ui-press hr-icon"></i>
+                        <span class="hr-simple right"></span>
+                    </div>
+                    <p>{{ config.about_content_description }}</p>
+                </div>
+                <!-- Title Content End -->
+                {% if config.about_image_large %}
+                    <div class="col-sm-12 col-xs-12 video">
+                        <img src="{{ config.about_image_large.url }}" class="img-fluid" alt="image" title="image"/>
+                    </div>
+                {% endif %}
+                <div class="col-sm-4 col-xs-12">
+                    <!--  Box Start  -->
+                    <div class="box text-center">
+                        <span><i class="icofont icofont-waiter-alt"></i></span>
+                        <h4>{{ config.about_info_title_1 }}</h4>
+                        <p>{{ config.about_info_description_1 }}</p>
+                    </div>
+                    <!--  Box End  -->
+                </div>
+                <div class="col-sm-4 col-xs-12">
+                    <!--  Box Start  -->
+                    <div class="box text-center">
+                        <span><i class="icofont icofont-dining-table"></i></span>
+                        <h4>{{ config.about_info_title_2 }}</h4>
+                        <p>{{ config.about_info_description_2 }}</p>
+                    </div>
+                    <!--  Box End  -->
+                </div>
+                <div class="col-sm-4 col-xs-12">
+                    <!--  Box Start  -->
+                    <div class="box text-center">
+                        <span><i class="icofont icofont-recycling-man"></i></span>
+                        <h4>{{ config.about_info_title_3 }}</h4>
+                        <p>{{ config.about_info_description_3 }}</p>
+                    </div>
+                    <!--  Box End  -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Service End   -->
+    <
+    <!-- Testimonials Start  -->
+    <div class="testimonials" style="{% if config.about_background_quotes %}background: url({{ config.about_background_quotes.url }}) no-repeat center center"{% endif %}>
+        <div class="container">
+            <div class="testimonials-inner">
+                <div class="row ">
+                    <!-- Title Content Start -->
+                    <div class="col-sm-12 col-xs-12 commontop white text-center">
+                        <h4>{{ config.about_quote_title }}</h4>
+                        <div class="divider style-1 center">
+                            <span class="hr-simple left"></span>
+                            <i class="icofont icofont-ui-press hr-icon"></i>
+                            <span class="hr-simple right"></span>
+                        </div>
+                    </div>
+                    <!-- Title Content End -->
+                    <div class="col-sm-12 col-xs-12">
+                        <div class="owl-carousel owl-theme owl-testi">
+                            <div class="item">
+                                <p>{{ config.about_quote_1|quote }}</p>
+                                <span>-{{ config.about_quote_1|lquote }}</span>
+                            </div>
+                            <div class="item">
+                                <p>{{ config.about_quote_2|quote }}</p>
+                                <span>-{{ config.about_quote_2|lquote }}</span>
+                            </div>
+                            <div class="item">
+                                <p>{{ config.about_quote_3|quote }}</p>
+                                <span>-{{ config.about_quote_3|lquote }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- Testimonials End  -->
+
+{% endblock %}

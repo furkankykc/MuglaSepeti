@@ -1,5 +1,3 @@
-
-
 $(function () {
     "use strict";
 
@@ -41,7 +39,8 @@ $(function () {
         autoplayTimeout: 3000,
         items: 4,
         navigation: false,
-        loop: true,
+        loop: false,
+        rewind: true,
         pagination: false,
         responsive: {
             0: {
@@ -107,34 +106,33 @@ $(function () {
         }
     });
     /* Sticky header End */
-    
+
     /* Product Grid Start */
-    $('#grid-view').on('click',function(){
+    $('#grid-view').on('click', function () {
         $('.mainpage .form-row > .product-list').attr('class', 'product-layout product-grid col-lg-4 col-md-4 col-sm-6 col-12');
         localStorage.setItem('display', 'grid');
     });
-    $('#list-view').on('click',function(){
+    $('#list-view').on('click', function () {
         $('.mainpage .form-row > .product-grid').attr('class', 'product-layout product-list col-12');
         localStorage.setItem('display', 'list');
     });
-     /* Product Grid End */
+    /* Product Grid End */
 
     /*Product Quantity Plus/Minus Start */
     $(function () {
-        $('.add2').on('click',function(){
-                var $qty=$(this).closest('p').find('.qty');
-                var currentVal = parseInt($qty.val());
-                        $qty.val(currentVal + 1);
+        $('.add2').on('click', function () {
+            var $qty = $(this).closest('p').find('.qty');
+            var currentVal = parseInt($qty.val());
+            $qty.val(currentVal + 1);
         });
-        $('.minus2').on('click',function(){
-                var $qty=$(this).closest('p').find('.qty');
-                var currentVal = parseInt($qty.val());
-                if(currentVal>1)
-                    $qty.val(currentVal - 1);
+        $('.minus2').on('click', function () {
+            var $qty = $(this).closest('p').find('.qty');
+            var currentVal = parseInt($qty.val());
+            if (currentVal > 1)
+                $qty.val(currentVal - 1);
         });
     });
     /*Product Quantity Plus/Minus End */
-    
 
 
 });
@@ -158,11 +156,11 @@ function loadscroler() {
         return false;
     });
 }
+
 /*Function for Add Go to up arrow End */
 
 /*Function for Reservation form Start */
-function initReservationForm()
-{
+function initReservationForm() {
     var $reservationForm = $('.reservation-form');
     //validation rules
     var validator = $reservationForm.validate({
@@ -201,27 +199,28 @@ function initReservationForm()
             url: $reservationForm.attr('action'),
             data: formData
         })
-                .done(function (response) {
-                    // Set the message text.
-                    $('#emailSend').show();
-                    // Clear the form.
-                    $('#input-name').val('');
-                    $('#input-email').val('');
-                    $('#input-mobile').val('');
-                    $('#input-date').val('');
-                    $('#input-time').val('');
-                    $('#input-persons').val('');
-                    setTimeout(function () {
-                        $('#emailSend').hide();
-                    }, 3000);
-                })
-                .fail(function (data) {
-                    // Set the message text.
-                    $('#emailError').show();
-                    setTimeout(function () {
-                        $('#emailError').hide();
-                    }, 3000);
-                });
+            .done(function (response) {
+                // Set the message text.
+                $('#emailSend').show();
+                // Clear the form.
+                $('#input-name').val('');
+                $('#input-email').val('');
+                $('#input-mobile').val('');
+                $('#input-date').val('');
+                $('#input-time').val('');
+                $('#input-persons').val('');
+                setTimeout(function () {
+                    $('#emailSend').hide();
+                }, 3000);
+            })
+            .fail(function (data) {
+                // Set the message text.
+                $('#emailError').show();
+                setTimeout(function () {
+                    $('#emailError').hide();
+                }, 3000);
+            });
     });
 }
+
 /*Function for Reservation form End */

@@ -9,6 +9,7 @@ urlpatterns = [
     path('', views.index, name='home'),
     path('checkout', views.checkout, name='checkout'),
     path('restaurants', views.companies, name='companies'),
+    path('do_comment', views.do_comment, name='do_comment'),
     path('shop', views.index, name='shop'),
     path('restaurants/<slug:company_slug>/details/<int:entry_id>', views.entry_details, name='food'),
     path('login/', views.RememberLoginView.as_view(
@@ -33,6 +34,7 @@ urlpatterns = [
     path('profile/change/pass', views.change_pass, name='change_pass'),
     path('profile/add/address', views.add_address, name='add_address'),
 
+    path('about', views.about, name='about'),
     path('register', views.register, name='register'),
     path('profile', views.profile, name='profile'),
     path('logout', views.logout, name='logout'),

@@ -8,10 +8,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="theme-color" content="#e54c2a">
     <!-- Favicon -->
-    <link type="image/x-icon" rel="shortcut icon" href="{% static 'assets/images/favicon.png' %}"/>
+    <link type="image/x-icon" rel="shortcut icon" href="{{ config.favicon.url }}"/>
     <title>{% block title %}Home{% endblock %} - MUĞLA SEPETİ</title>
     <meta name="description"
-          content="MuğlaSepeti - Yerel Restorant Sipariş Sistemi">
+          content="MuğlaSepeti - Yerel Restoran Sipariş Sistemi">
 
     <!-- Bootstrap stylesheet -->
     <link href="{% static 'assets/libs/bootstrap-4.5.0/css/bootstrap.min.css' %}" rel="stylesheet">
@@ -64,6 +64,19 @@
     {% block header %}
         {% include 'base/navbar.html' %}
     {% endblock %}
+    {% block extra_style %}
+        <style>
+            .menu-inner{
+                background: url({{ config.menu_inner_background.url }}) no-repeat right bottom;
+            }
+            .menu{
+               background: #f5f5f5 url({{ config.menu_background.url }}) no-repeat left bottom;
+            }
+            .bread-crumb{
+                background: url({{ config.bread_crumb_background.url }}) no-repeat center center;
+            }
+        </style>
+    {% endblock %}
     {% block breadcumb %}
         <!-- Breadcrumb Start -->
         <div class="bread-crumb">
@@ -91,7 +104,7 @@
     {% endblock %}
 
     {% block footer %}
-{% include 'base/footer.html' %}
+        {% include 'base/footer.html' %}
     {% endblock %}
 
 </div>

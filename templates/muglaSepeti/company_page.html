@@ -31,8 +31,16 @@
                             <!-- Search Filter Start -->
                             <p>{% trans 'Telefon' %}: {{ company.phone }}</p>
                             <p>{% trans 'Hakkımızda' %}: {{ company.description }}</p>
-                            <p>{% trans 'Minimum Paket' %}: {{ company.minpaket }}</p>
+
                             <!-- Search Filter End -->
+                        </div>
+                    </div>
+                    <div class="left-side">
+                        <h4>{% trans 'Minimum Paket' %}</h4>
+                        <div class="search">
+                            {% for min_price in company.get_packet_prices %}
+                                <p>{{ min_price.name }}: {{ min_price.price|floatformat }}₺</p>
+                            {% endfor %}
                         </div>
                     </div>
                     <div class="left-side">
@@ -164,7 +172,12 @@
                                         <p class="des">{{ entry.category.name }}</p>
                                         <p>{{ entry.detail }}</p>
                                         <p>
-                                            <a class="btn btn-theme btn-md" href="shopping-cart.html">{% trans 'SEPETE EKLE' %}</a>
+                                        <form method="post" action="{% url 'order_food' %}">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="entry_id" value="{{ entry.id }}">
+                                            <input type="hidden" name="quantity" value="1">
+                                            <input class="btn btn-theme btn-md" type="submit" value="{% trans 'SEPETE EKLE' %}"/>
+                                        </form>
                                         </p>
                                     </div>
                                 </div>
@@ -172,25 +185,25 @@
                         {% endfor %}
                     </div>
 
-                    <div class="row">
-                        <div class="col-sm-12 col-12 text-center">
-                            <!-- Pagination Start -->
-                            <ul class="pagination justify-content-center">
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Previous"><i
-                                            class="icofont icofont-double-left"></i></a>
-                                </li>
-                                <li class="page-item active">
-                                    <a class="page-link" href="#">01</a>
-                                </li>
-                                <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Next"><i
-                                            class="icofont icofont-double-right"></i></a>
-                                </li>
-                            </ul>
-                            <!-- Pagination End -->
-                        </div>
-                    </div>
+                    {#                    <div class="row">#}
+                    {#                        <div class="col-sm-12 col-12 text-center">#}
+                    {#                            <!-- Pagination Start -->#}
+                    {#                            <ul class="pagination justify-content-center">#}
+                    {#                                <li class="page-item">#}
+                    {#                                    <a class="page-link" href="#" aria-label="Previous"><i#}
+                    {#                                            class="icofont icofont-double-left"></i></a>#}
+                    {#                                </li>#}
+                    {#                                <li class="page-item active">#}
+                    {#                                    <a class="page-link" href="#">01</a>#}
+                    {#                                </li>#}
+                    {#                                <li class="page-item">#}
+                    {#                                    <a class="page-link" href="#" aria-label="Next"><i#}
+                    {#                                            class="icofont icofont-double-right"></i></a>#}
+                    {#                                </li>#}
+                    {#                            </ul>#}
+                    {#                            <!-- Pagination End -->#}
+                    {#                        </div>#}
+                    {#                    </div>#}
                     <!-- Product View End -->
                 </div>
             </div>

@@ -1,4 +1,4 @@
-{% load static i18n humanize %}
+{% load static i18n humanize templatetags %}
 <style>
     .waiting {
         color: #ff860d;
@@ -38,11 +38,9 @@
             <div class="most-recent-order">
                 <h5>{% trans 'Son Siparişler' %}</h5>
                 <div id="accordion">
-                    {% for order in user.profile.get_last_orders.all %}
+                    {% for order in user.profile.get_last_orders %}
                         <div class="field-entry">
                             <div class="row">
-
-
                                 <div class="col-5">
                                     <a href="{% url 'company_menu' order.company.slug %}">{{ order.company }}</a>
                                 </div>
@@ -89,27 +87,56 @@
 
 
                                             <div class="col-5" style="float: right">
-                                                {% if order.is_ordered %}
-                                                    <p class="confirmed"><i class="icofont icofont-check"></i>Sipariş
-                                                        edildi
-                                                        ({{ order.ordered_at|naturaltime }})
-                                                    </p>
-                                                {% endif %}
-                                                {% if order.is_checked %}
-                                                    <p class="confirmed"><i class="icofont icofont-check"></i>Onaylandı
-                                                        ({{ order.checked_at|naturaltime }})</p>
-                                                {% endif %}
-                                                {% if order.is_deleted %}
-                                                    <p class="failed"><i class="icofont icofont-close"></i>İptal Edildi
-                                                        ({{ order.checked_at|naturaltime }})</p>
-                                                {% endif %}
-                                                {% if order.is_on_the_way %}
-                                                    <p class="confirmed"><i class="icofont icofont-check"></i>Yola Çıktı
-                                                        ({{ order.on_the_way_at|naturaltime }})</p>
-                                                {% endif %}
+
                                                 {% if order.is_delivered %}
-                                                    <p class="confirmed"><i class="icofont icofont-check"></i>Teslim
-                                                        Edildi ({{ order.delivered_at|naturaltime }})</p>
+                                                    {% if not order.comment %}
+                                                        <form method="post" action="{% url 'do_comment' %}">
+                                                            {% csrf_token %}
+                                                            {{ rating_form }}
+                                                            <input type="hidden" value="{{ order.id }}" name="bucket_id">
+                                                            <input style="float:right;margin-top: 3px;" class="btn btn-theme btn-md" type="submit" value="{% trans 'Değerlendir' %}">
+                                                        </form>
+                                                    {% else %}
+                                                        <style>
+                                                            .rating i {
+                                                                color: #FFA41F;
+                                                            }
+
+                                                            .rating i.disabled {
+                                                                color: #b2b2b2;
+                                                            }
+                                                        </style>
+                                                        <div class="rating">
+                                                            {% for i in ""|ljust:order.comment.rating %}
+                                                                <i class="icofont icofont-star"></i>
+                                                            {% endfor %}
+                                                            {% for i in ""|ljusts:order.comment.rating %}
+                                                                <i class="icofont icofont-star disabled"></i>
+                                                            {% endfor %}
+
+                                                        </div>
+                                                    {% endif %}
+                                                {% else %}
+                                                    {% if order.is_ordered %}
+                                                        <p class="confirmed"><i class="icofont icofont-check"></i>Sipariş
+                                                            edildi
+                                                            ({{ order.ordered_at|naturaltime }})
+                                                        </p>
+                                                    {% endif %}
+                                                    {% if order.is_checked %}
+                                                        <p class="confirmed"><i class="icofont icofont-check"></i>Onaylandı
+                                                            ({{ order.checked_at|naturaltime }})</p>
+                                                    {% endif %}
+                                                    {% if order.is_deleted %}
+                                                        <p class="failed"><i class="icofont icofont-close"></i>İptal
+                                                            Edildi
+                                                            ({{ order.checked_at|naturaltime }})</p>
+                                                    {% endif %}
+                                                    {% if order.is_on_the_way %}
+                                                        <p class="confirmed"><i class="icofont icofont-check"></i>Yola
+                                                            Çıktı
+                                                            ({{ order.on_the_way_at|naturaltime }})</p>
+                                                    {% endif %}
                                                 {% endif %}
                                             </div>
                                             <div class="col text-right">

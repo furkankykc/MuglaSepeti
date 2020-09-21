@@ -3,6 +3,16 @@
 
 {% block content %}
     <!-- Shop Start -->
+    <style>
+        @media (max-width: 767px) {
+            .image {
+                float: none;
+                display: block;
+                text-align: center;
+            {#padding: 10px 0;#}
+            }
+        }
+    </style>
     <div class="shop">
         <div class="container">
             <div class="row">
@@ -29,7 +39,7 @@
                             </div>
                             <div class="price">{{ entry.price|floatformat }}₺</div>
                             {#                            <p class="des">Cursus / Dictum / Risus</p>#}
-                            <p class="shortdes">{{ entry.detail }}</p>
+                            <p class="shortdes" style="background-color: white">{{ entry.detail }}</p>
                             <div class="food">
                             </div>
                             <div class="common">
@@ -66,10 +76,11 @@
                             </ul>
                             <div class="tab-content">
 
-                                <div class="tab-pane active" id="tab-review">
+                                <div class="tab-pane active" id="tab-review" style="background-color:white;">
                                     {% for comment in entry.get_comments %}
                                         <div class="box">
-                                            <img src="{% static 'assets/images/blog-detail/01.jpg' %}" alt="image" title="image" class="img-fluid"/>
+                                            <img src="{% static 'assets/images/blog-detail/user-img.png' %}" alt="image" width="98" title="image"  class="img-fluid"/>
+
                                             <div class="detail">
                                                 <h2>{{ comment.owner.first_name|hiddenowner }} {{ comment.owner.last_name|hiddenowner }}</h2>
                                                 <span>{{ comment.time|naturaltime|title }}</span>
@@ -81,7 +92,9 @@
                                                         <i class="icofont icofont-star disabled"></i>
                                                     {% endfor %}
                                                 </div>
-                                                <p>{{ comment.comment }}</p>
+                                                {% if comment.comment %}
+                                                    <p>{{ comment.comment }}</p>
+                                                {% endif %}
                                             </div>
                                         </div>
                                     {% empty %}

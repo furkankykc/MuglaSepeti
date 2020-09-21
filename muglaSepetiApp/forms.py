@@ -1,10 +1,9 @@
-
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordChangeForm
 from django import forms
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 
-from muglaSepetiApp.models import Profile, Address
+from muglaSepetiApp.models import Profile, Address, Comment
 
 
 class InputForm(forms.Form):
@@ -35,7 +34,8 @@ class LoginForm(AuthenticationForm):
 class RegisterForm(UserCreationForm, InputForm):
     # first_name = forms.CharField(max_length=30, required=False, help_text='Optional.')
     # last_name = forms.CharField(max_length=30, required=False, help_text='Optional.')
-    email = forms.EmailField(max_length=254, help_text='Required. Inform a valid email address.')
+    email = forms.EmailField(label=_("Email"), max_length=254,
+                             help_text='Boş bırakılamaz,Lütfen geçerli bir email adresi giriniz.')
     aggree_terms = forms.BooleanField(label=_('Kayıt koşullarını kabul ediyorum'), required=True,
                                       help_text=_('Kayıt olabilmek için koşullarımızı kabul etmelisiniz.'))
 
@@ -50,6 +50,7 @@ class RegisterForm(UserCreationForm, InputForm):
         # self.fields['aggree_terms'].class_val = "radio-inline"
 
         self.fields['username'].icon = "icofont-ui-user"
+        # self.fields['email'].widget.attrs.update({'class': 'form-control', 'placeholder': self.fields['email'].label})
         # self.fields['first_name'].icon = "icofont-ui-message"
         # self.fields['last_name'].icon = "icofont-ui-message"
         self.fields['email'].icon = "icofont-ui-email"
@@ -91,3 +92,10 @@ class ChangeProfileForm(forms.ModelForm, InputForm):
 
 class ChangePasswordForm(PasswordChangeForm, InputForm):
     pass
+
+
+class RatingForm(forms.ModelForm, InputForm):
+    class Meta:
+        model = Comment
+        fields = ('rating', 'comment')
+        # fields = '__all__'

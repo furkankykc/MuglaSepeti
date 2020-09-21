@@ -35,22 +35,32 @@
                         </li>
                         <li class="list-inline-item">
                             <ul class="list-inline social">
-                                <li class="list-inline-item"><a href="https://www.facebook.com/spheretheme/"
-                                                                target="_blank"><i
-                                        class="icofont icofont-social-facebook"></i></a></li>
-                                <li class="list-inline-item"><a href="https://twitter.com/spheretheme/"
-                                                                target="_blank"><i
-                                        class="icofont icofont-social-twitter"></i></a></li>
-                                <li class="list-inline-item"><a href="https://plus.google.com/" target="_blank"><i
-                                        class="icofont icofont-social-google-plus"></i></a></li>
-                                <li class="list-inline-item">
-                                    <a href="https://www.instagram.com/" target="_blank"><i
-                                            class="icofont icofont-social-instagram"></i></a></li>
-                                <li class="list-inline-item">
-                                    <a href="https://in.pinterest.com/" target="_blank"><i
+                                {% if config.facebook %}
+                                    <li class="list-inline-item"><a href="{{ config.facebook }}"
+                                                                    target="_blank"><i
+                                            class="icofont icofont-social-facebook"></i></a></li>
+                                {% endif %}
+                                {% if config.twitter %}
+                                    <li class="list-inline-item"><a href="{{ config.twitter }}" target="_blank"><i
+                                            class="icofont icofont-social-twitter"></i></a></li>
+                                {% endif %}
+                                {% if config.googleplus %}
+                                    <li class="list-inline-item"><a href="{{ config.googleplus }}" target="_blank"><i
+                                            class="icofont icofont-social-google-plus"></i></a></li>
+                                {% endif %}
+                                {% if config.pinterest %}
+                                    <li class="list-inline-item"><a href="{{ config.pinterest }}" target="_blank"><i
                                             class="icofont icofont-social-pinterest"></i></a></li>
-                                <li class="list-inline-item"><a href="https://www.youtube.com/" target="_blank"><i
-                                        class="icofont icofont-social-youtube-play"></i></a></li>
+                                {% endif %}
+                                {% if config.instagram %}
+                                    <li class="list-inline-item"><a href="{{ config.instagram }}" target="_blank"><i
+                                            class="icofont icofont-social-instagram"></i></a></li>
+                                {% endif %}
+                                {% if config.youtube %}
+                                    <li class="list-inline-item"><a href="{{ config.youtube }}" target="_blank"><i
+                                            class="icofont icofont-social-youtube-play"></i></a>
+                                    </li>
+                                {% endif %}
                             </ul>
                         </li>
                     </ul>
@@ -64,14 +74,16 @@
     <div class="container">
         <div class="row">
             <div class="col-md-3 col-sm-6 col-12" style="align-items: center;justify-content: center;display: flex;">
-                <!-- Logo Start  -->
-                <div id="logo " style="align-items: center;justify-content: center;display: flex;width: 200px;height: 56px;">
+                {% if config.logo %}
+                    <!-- Logo Start  -->
+                    <div id="logo " style="align-items: center;justify-content: center;display: flex;width: 200px;height: 56px;">
 
-                    <a href="{% url 'home' %}"><img id="logo_img" class="img-fluid"
-                                                    src="{% static 'assets/images/logo/muglasepetilogo.png' %}" alt="logo"
-                                                    title="logo"/></a>
-                </div>
-                <!-- Logo End  -->
+                        <a href="{% url 'home' %}"><img id="logo_img" class="img-fluid"
+                                                        src="{{ config.logo.url }}"  width="400" height="80"  alt="logo"
+                                                        title="logo"/></a>
+                    </div>
+                    <!-- Logo End  -->
+                {% endif %}
             </div>
 
             <div class="col-md-7 col-sm-6 col-12 paddleft">
@@ -89,39 +101,42 @@
                                 <li class="nav-item"><a href="{% url 'home' %}">{% trans 'Anasayfa' %}</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{% url 'companies' %}">{% trans 'Restorantlar' %}</a>
+                                    <a href="{% url 'companies' %}">{% trans 'Restoranlar' %}</a>
                                 </li>
-                                <li class="nav-item dropdown"><a href="#" class="dropdown-toggle"
-                                                                 data-toggle="dropdown">Our Menu</a>
-                                    <div class="dropdown-menu">
-                                        <div class="dropdown-inner">
-                                            <ul class="list-unstyled">
-                                                <li><a href="menu.html">Menu Options 1</a></li>
-                                                <li><a href="menu-2.html">Menu Options 2</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
+
+                                <li class="nav-item"><a href="{% url 'about' %}">{% trans 'Hakkımızda' %}</a>
                                 </li>
-                                <li class="nav-item dropdown"><a href="#" class="dropdown-toggle"
-                                                                 data-toggle="dropdown">Pages</a>
-                                    <div class="dropdown-menu">
-                                        <div class="dropdown-inner">
-                                            <ul class="list-unstyled">
-                                                <li><a href="reservation.html">Reservation</a></li>
-                                                <li><a href="shop.html">Shop</a></li>
-                                                <li><a href="shop-details.html">Shop Details</a></li>
-                                                <li><a href="shopping-cart.html">Shopping Cart</a></li>
-                                                <li><a href="search.html">Search</a></li>
-                                                <li><a href="login.html">Login</a></li>
-                                                <li><a href="register.html">Register</a></li>
-                                                <li><a href="forgot-password.html">Forgot Password</a></li>
-                                                <li><a href="thank-you.html">Thank You</a></li>
-                                                <li><a href="404.html">404</a></li>
-                                                <li><a href="dashboard.html">Dashboard</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </li>
+                                {#                                <li class="nav-item dropdown"><a href="#" class="dropdown-toggle"#}
+                                {#                                                                 data-toggle="dropdown">Our Menu</a>#}
+                                {#                                    <div class="dropdown-menu">#}
+                                {#                                        <div class="dropdown-inner">#}
+                                {#                                            <ul class="list-unstyled">#}
+                                {#                                                <li><a href="menu.html">Menu Options 1</a></li>#}
+                                {#                                                <li><a href="menu-2.html">Menu Options 2</a></li>#}
+                                {#                                            </ul>#}
+                                {#                                        </div>#}
+                                {#                                    </div>#}
+                                {#                                </li>#}
+                                {#                                <li class="nav-item dropdown"><a href="#" class="dropdown-toggle"#}
+                                {#                                                                 data-toggle="dropdown">Pages</a>#}
+                                {#                                    <div class="dropdown-menu">#}
+                                {#                                        <div class="dropdown-inner">#}
+                                {#                                            <ul class="list-unstyled">#}
+                                {#                                                <li><a href="reservation.html">Reservation</a></li>#}
+                                {#                                                <li><a href="shop.html">Shop</a></li>#}
+                                {#                                                <li><a href="shop-details.html">Shop Details</a></li>#}
+                                {#                                                <li><a href="shopping-cart.html">Shopping Cart</a></li>#}
+                                {#                                                <li><a href="search.html">Search</a></li>#}
+                                {#                                                <li><a href="login.html">Login</a></li>#}
+                                {#                                                <li><a href="register.html">Register</a></li>#}
+                                {#                                                <li><a href="forgot-password.html">Forgot Password</a></li>#}
+                                {#                                                <li><a href="thank-you.html">Thank You</a></li>#}
+                                {#                                                <li><a href="404.html">404</a></li>#}
+                                {#                                                <li><a href="dashboard.html">Dashboard</a></li>#}
+                                {#                                            </ul>#}
+                                {#                                        </div>#}
+                                {#                                    </div>#}
+                                {#                                </li>#}
                                 {#                                    <li class="nav-item dropdown"><a href="#" class="dropdown-toggle"#}
                                 {#                                                                     data-toggle="dropdown">Our Blog</a>#}
                                 {#                                        <div class="dropdown-menu">#}

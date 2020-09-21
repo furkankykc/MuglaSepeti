@@ -10,8 +10,9 @@ from django.views import View
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 
-from muglaSepetiApp.forms import RegisterForm, ChangeUserForm, ChangeProfileForm, CreateAddressForm, ChangePasswordForm
-from muglaSepetiApp.models import Bucket, Company, Menu, Entry, FoodCategory, Profile
+from muglaSepetiApp.forms import RegisterForm, ChangeUserForm, ChangeProfileForm, CreateAddressForm, ChangePasswordForm, \
+    RatingForm
+from muglaSepetiApp.models import Bucket, Company, Menu, Entry, FoodCategory, Profile, SiteConfig
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.forms import PasswordChangeForm
 
@@ -23,9 +24,17 @@ def test(request):
 
 def index(request):
     context = {
-
+        'companies': Company.objects.only('name', 'logo', 'description', 'slug').exclude(logo__exact='',
+                                                                                         logo__isnull=False)
     }
     return render(request, template_name='muglaSepeti/index.html', context=context)
+
+
+def about(request):
+    context = {
+
+    }
+    return render(request, template_name='muglaSepeti/about.html', context=context)
 
 
 def register(request):
@@ -51,11 +60,13 @@ def profile(request):
     userForm = ChangeUserForm(instance=request.user)
     addressForm = CreateAddressForm()
     passwordForm = ChangePasswordForm(request.user)
+    ratingForm = RatingForm()
     context = {
         'user_form': userForm,
         'profile_form': profileForm,
         'address_form': addressForm,
         'password_form': passwordForm,
+        'rating_form': ratingForm,
     }
     return render(request, template_name='registration/profile.html', context=context)
 
@@ -219,6 +230,18 @@ def change_pass(request):
             cd = form.cleaned_data
             form.save()
 
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+def do_comment(request):
+    if request.method == 'POST':
+        form = RatingForm(request.POST or None)
+        if form.is_valid():
+            cd = form.cleaned_data
+            u = form.save(commit=False)
+            u.bucket = Bucket.objects.get(pk=request.POST['bucket_id'])
+            u.owner = request.user
+            u.save()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 

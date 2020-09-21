@@ -1,5 +1,7 @@
 {% extends 'base/base.html' %}
 {% load static i18n %}
+{% block title %}{% trans 'Restoranlar' %}{% endblock %}
+{% block btitle %}{% trans 'Restoranlar' %}{% endblock %}
 {% block content %}
     <!-- Food Menu Start -->
     <div class="menu">
@@ -8,7 +10,7 @@
                 <div class="row ">
                     <!-- Title Content Start -->
                     <div class="col-sm-12 col-12 commontop text-center">
-                        <h4>{% trans 'Restorantlar' %}</h4>
+                        <h4>{% trans 'Restoranlar' %}</h4>
                         <div class="divider style-1 center">
                             <span class="hr-simple left"></span>
                             <i class="icofont icofont-ui-press hr-icon"></i>
@@ -17,7 +19,7 @@
                         {% if companies %}
                             <p style="background-color: white;">
                                 {% blocktrans %}
-                                    Şuanda açık olan restorantlarımız aşağıda listelenmiştir, afiyet olsun.
+                                    Şuanda açık olan restoranlarımız aşağıda listelenmiştir, afiyet olsun.
                                 {% endblocktrans %}
                             </p>
                         {% endif %}
@@ -56,30 +58,30 @@
                                         <div class="col-md-12 col-12">
                                             <!-- Box Start -->
                                             <div class="box">
-                                                    <div class="image" style="padding: 2px 1rem;">
-                                                        {% if company.logo %}
-                                                            <img src="{{ company.logo.url }}" alt="image" title="image" style="max-height: 130px;max-width: 130px;" class="img-fluid"/>
-                                                        {% endif %}
-                                                    </div>
-                                                    <div class="caption">
-                                                        {% if company.name %}
-                                                            <h4>{{ company.name }}</h4>
-                                                        {% endif %}
-                                                        {% if company.phone %}
-                                                            <p class="des">Telefon: {{ company.phone }}</p>
-                                                        {% endif %}
-                                                        {% if company.open_at and company.close_at %}
-                                                            <p class="des">Çalışma saatleri: {{ company.open_at }}
-                                                                - {{ company.close_at }}</p>
-                                                        {% endif %}
-                                                        {% if company.description %}
-                                                            <span>{{ company.description }}</span>
-                                                        {% endif %}
+                                                <div class="image" style="padding: 2px 1rem;">
+                                                    {% if company.logo %}
+                                                        <img src="{{ company.logo.url }}" alt="image" title="image" style="max-height: 130px;max-width: 130px;" class="img-fluid"/>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="caption">
+                                                    {% if company.name %}
+                                                        <h4>{{ company.name }}</h4>
+                                                    {% endif %}
+                                                    {% if company.phone %}
+                                                        <p class="des">Telefon: {{ company.phone }}</p>
+                                                    {% endif %}
+                                                    {% if company.open_at and company.close_at %}
+                                                        <p class="des">Çalışma saatleri: {{ company.open_at }}
+                                                            - {{ company.close_at }}</p>
+                                                    {% endif %}
+                                                    {% if company.description %}
+                                                        <span>{{ company.description }}</span>
+                                                    {% endif %}
                                                     <div class="price" style="top: unset;bottom: 18px">
                                                         <a href="{% url 'company_menu' company.slug %}" class="btn btn-theme btn-md btn-wide">{% trans 'Ziyaret Et' %}</a>
                                                     </div>
 
-                                                    </div>
+                                                </div>
 
 
                                             </div>
@@ -87,7 +89,7 @@
                                         </div>
                                     {% empty %}
                                         <div class="col-sm-12 col-12 commontop text-center">
-                                            <p style="background-color: white;">Şuanda açık olan hiçbir restorant
+                                            <p style="background-color: white;">Şuanda açık olan hiçbir restoran
                                                 bulunmamaktadır.</p></div>
                                     {% endfor %}
                                 </div>

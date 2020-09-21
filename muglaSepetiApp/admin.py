@@ -1,4 +1,7 @@
 from django.contrib import admin
+# from django.contrib.auth.models import Group
+from django.contrib.auth.admin import GroupAdmin, UserAdmin
+from django.contrib.auth.models import Group
 from django.template.defaultfilters import floatformat
 from django.urls import reverse
 from django.utils.safestring import mark_safe
@@ -47,7 +50,8 @@ class CustomAdminSite(admin.AdminSite):
 customAdminSite = CustomAdminSite()
 customAdminSite.register(BucketEntry)
 customAdminSite.register(Address)
-customAdminSite.register(User)
+customAdminSite.register(User, UserAdmin)
+customAdminSite.register(Group, GroupAdmin)
 customAdminSite.register(Profile)
 customAdminSite.register(Comment)
 admin.site = customAdminSite
@@ -62,7 +66,8 @@ class DefaultAdminModel(admin.ModelAdmin):
         if not request.user.is_superuser:
             # if user has not multiple companies
             if Company.objects.filter(owner=request.user).count() <= 1:
-                obj.owner = request.user
+                if hasattr(obj, 'owner'):
+                    obj.owner = request.user
         super(DefaultAdminModel, self).save_model(request, obj, form, change)
 
     def get_form(self, request, obj=None, **kwargs):
@@ -73,6 +78,12 @@ class DefaultAdminModel(admin.ModelAdmin):
         # if 'owner' in form.base_fields:
         #     form.base_fields['owner'].disabled = True
         #     form.base_fields['owner'].help_text = _("This field is not editable")
+
+        if 'company' in form.base_fields:
+            form.base_fields['company'].initial = 1
+            if Company.objects.filter(owner=request.user).count() <= 1:
+                form.base_fields['company'].disabled = True
+                form.base_fields['company'].help_text = _("This field is not editable")
 
         return form
 
@@ -107,13 +118,24 @@ class DefaultAdminModel(admin.ModelAdmin):
         return qs.filter(company__owner=request.user)
 
 
+@admin.register(SiteConfig, site=customAdminSite)
+class SiteConfigAdmin(DefaultAdminModel):
+    pass
+
+
+@admin.register(Config, site=customAdminSite)
+class ConfigAdmin(DefaultAdminModel):
+    pass
+
+
 @admin.register(Company, site=customAdminSite)
 class CompanyAdmin(DefaultAdminModel):
     list_display = ('name', 'active_menu', 'open_at', 'close_at', 'get_is_open', 'restaurant_url')
     prepopulated_fields = {'slug': ['name']}
 
     fields = (
-        'owner', 'slug', 'name', 'logo', 'address', 'active_menu', 'is_open', 'open_at', 'close_at', 'phone', 'email',
+        'owner', 'slug', 'name', 'description', 'logo', 'address', 'active_menu', 'is_open', 'open_at', 'close_at',
+        'phone', 'email',
         'instagram',
         'facebook', 'twitter')
 
@@ -121,16 +143,15 @@ class CompanyAdmin(DefaultAdminModel):
         return mark_safe(
             '<a class="button" target="blank_" href="{}">{}</a>'.format(reverse('company_menu', args=[obj.slug]),
                                                                         obj.slug))
-    #
-    # @staticmethod
-    # def is_currently_open(obj):
-    #     return obj.get_is_open()
 
     def get_form(self, request, obj=None, **kwargs):
         form = super(CompanyAdmin, self).get_form(request, obj, **kwargs)
+        if 'owner' in form.base_fields:
+            if obj is not None:
+                form.base_fields['owner'].queryset = User.objects.filter(is_staff=True)
         if 'active_menu' in form.base_fields:
             if obj is not None:
-                print(obj.id)
+                # print(obj.id)
                 form.base_fields['active_menu'].queryset = Menu.objects.filter(company__id=obj.id)
         return form
 
@@ -155,6 +176,7 @@ class MenuAdmin(DefaultAdminModel):
 
     def count_of_entries(self, obj):
         return obj.entry_list.count()
+    count_of_entries.short_description = "Ürün Sayısı"
 
 
 @admin.register(FoodGroup, site=customAdminSite)
@@ -171,6 +193,11 @@ class FoodCategoryAdmin(DefaultAdminModel):
 class EntryAdmin(DefaultAdminModel):
     list_filter = ('company', 'category')
     list_display = ('name', 'detail', 'price', 'company', 'category')
+
+
+@admin.register(PacketPrice, site=customAdminSite)
+class PacketAdmin(DefaultAdminModel):
+    list_display = ('name', 'price', 'company')
 
 
 def make_check(modeladmin, request, queryset):
