@@ -141,14 +141,14 @@ class Config(models.Model):
     about_fact_title_1 = models.CharField(max_length=20, null=True, blank=True, verbose_name=_("Statistic Title 1"))
     about_fact_value_1 = models.IntegerField(null=True, blank=True, verbose_name=_("Statistic Value 1"))
     about_fact_title_2 = models.CharField(max_length=20, null=True, blank=True, verbose_name=_("Statistic Title 2"))
-    about_fact_value_2 = models.IntegerField(null=True, blank=True, verbose_name=_("Statistic Value 1"))
+    about_fact_value_2 = models.IntegerField(null=True, blank=True, verbose_name=_("Statistic Value 2"))
     about_fact_title_3 = models.CharField(max_length=20, null=True, blank=True, verbose_name=_("Statistic Title 3"))
-    about_fact_value_3 = models.IntegerField(null=True, blank=True, verbose_name=_("Statistic Value 1"))
+    about_fact_value_3 = models.IntegerField(null=True, blank=True, verbose_name=_("Statistic Value 3"))
     about_fact_title_4 = models.CharField(max_length=20, null=True, blank=True, verbose_name=_("Statistic Title 4"))
-    about_fact_value_4 = models.IntegerField(null=True, blank=True, verbose_name=_("Statistic Value 1"))
+    about_fact_value_4 = models.IntegerField(null=True, blank=True, verbose_name=_("Statistic Value 4"))
 
     about_content_title = models.CharField(max_length=100, null=True, blank=True, verbose_name=_("Content Title"))
-    about_content_description = models.CharField(max_length=500, null=True, blank=True, verbose_name=_("Content Title"))
+    about_content_description = models.CharField(max_length=500, null=True, blank=True, verbose_name=_("Content Description"))
 
     about_info_title_1 = models.CharField(max_length=20, null=True, blank=True, verbose_name=_("Information Title 1"))
     about_info_description_1 = models.CharField(max_length=150, null=True, blank=True,

@@ -13,7 +13,7 @@ urlpatterns = [
     path('shop', views.index, name='shop'),
     path('restaurants/<slug:company_slug>/details/<int:entry_id>', views.entry_details, name='food'),
     path('login/', views.RememberLoginView.as_view(
-        authentication_form=LoginForm
+        authentication_form=LoginForm, redirect_authenticated_user=True
     ), name='login'),
     path('password_change/', auth_views.PasswordChangeView.as_view(), name='password_change'),
     path('password_change/done/', auth_views.PasswordChangeDoneView.as_view(), name='password_change_done'),

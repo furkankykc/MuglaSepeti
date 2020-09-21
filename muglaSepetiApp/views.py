@@ -55,6 +55,7 @@ def register(request):
     return render(request, template_name='registration/register.html', context=context)
 
 
+@login_required(login_url='login')
 def profile(request):
     profileForm = ChangeProfileForm(instance=request.user.profile)
     userForm = ChangeUserForm(instance=request.user)
@@ -84,6 +85,7 @@ def checkout(request):
     return render(request, template_name='muglaSepeti/checkout.html', context=context)
 
 
+@login_required(login_url='login')
 def cart_delete(request, bucket_pk, list_pk):
     bucket = Bucket.objects.get(profile__user=request.user, pk=bucket_pk)
     bucket_item = bucket.order_list.get(pk=list_pk)
@@ -93,6 +95,7 @@ def cart_delete(request, bucket_pk, list_pk):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
+@login_required(login_url='login')
 def cart_count_add(request, bucket_pk, list_pk):
     bucket = Bucket.objects.get(profile__user=request.user, pk=bucket_pk)
     bucket_item = bucket.order_list.get(pk=list_pk)
@@ -104,6 +107,7 @@ def cart_count_add(request, bucket_pk, list_pk):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
+@login_required(login_url='login')
 def cart_count_minus(request, bucket_pk, list_pk):
     bucket = Bucket.objects.get(profile__user=request.user, pk=bucket_pk)
     bucket_item = bucket.order_list.get(pk=list_pk)
@@ -147,6 +151,7 @@ def order_food(request):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
+@login_required(login_url='login')
 def order(request, pk):
     bucket = Bucket.objects.get(pk=pk)
     bucket.order(request.user.profile)
@@ -158,7 +163,7 @@ def order(request, pk):
         print(payment_type)
     bucket.save()
 
-    print("Sipariş edildi")
+    # print("Sipariş edildi")
     # redirect back to where it comes from
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
@@ -187,6 +192,7 @@ def cancel(request, pk):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
+@login_required(login_url='login')
 def update_user(request):
     if request.method == 'POST':
         obj = get_object_or_404(User, username=request.user.username)
@@ -198,6 +204,7 @@ def update_user(request):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
+@login_required(login_url='login')
 def update_info(request):
     if request.method == 'POST':
         obj = get_object_or_404(User, username=request.user.username)
@@ -210,6 +217,7 @@ def update_info(request):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
+@login_required(login_url='login')
 def add_address(request):
     if request.method == 'POST':
         form = CreateAddressForm(request.POST)
@@ -223,6 +231,7 @@ def add_address(request):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
+@login_required(login_url='login')
 def change_pass(request):
     if request.method == 'POST':
         form = ChangePasswordForm(request.POST)
@@ -233,6 +242,7 @@ def change_pass(request):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
+@login_required(login_url='login')
 def do_comment(request):
     if request.method == 'POST':
         form = RatingForm(request.POST or None)

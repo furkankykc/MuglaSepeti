@@ -237,7 +237,7 @@ class BucketAdmin(admin.ModelAdmin, ListStyleAdminMixin):
     # exclude = ['is_checked', 'is_ordered', 'is_delivered', 'is_on_the_way', 'is_deleted', 'checked_at', 'delivered_at',
     #            'deleted_at', 'on_the_way_at']
     list_display = (
-        'get_products', 'get_payment_type', 'delivery_note', 'order_address', 'order_phone', 'get_borrow',
+        'get_products', 'delivery_note', 'order_address', 'order_phone','get_payment_type', 'get_borrow',
         'get_order_time',
         'status')
     list_filter = ('company',)
