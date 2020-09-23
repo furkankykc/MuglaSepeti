@@ -16,6 +16,8 @@ from muglaSepetiApp.models import Bucket, Company, Menu, Entry, FoodCategory, Pr
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.forms import PasswordChangeForm
 
+from django.utils.translation import ugettext as _
+
 
 def test(request):
     page_url = "assets/index.html"
@@ -52,6 +54,7 @@ def register(request):
     context = {
         'form': form
     }
+    messages.success(request, _("Başarıyla Kayıt oldunuz. Devam etmek için giriş yapınız"))
     return render(request, template_name='registration/register.html', context=context)
 
 
@@ -75,6 +78,7 @@ def profile(request):
 def logout(request):
     from django.contrib.auth import logout
     logout(request)
+    messages.info(request, _("Başarıyla çıkış yapıldı"))
     return redirect(reverse('home'))
 
 
@@ -92,6 +96,7 @@ def cart_delete(request, bucket_pk, list_pk):
     if bucket_item:
         bucket.order_list.remove(bucket_item)
         bucket.save()
+        messages.success(request, "Ürün başarıyla silindi")
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
@@ -143,8 +148,13 @@ def order_food(request):
         entry_id = request.POST['entry_id']
         bucket = request.user.profile.get_bucket()
         entry = Entry.objects.get(id=entry_id)
-
-        bucket.add_entry(entry, int(quantity))
+        try:
+            bucket.add_entry(entry, int(quantity))
+            messages.success(request, "{}x{} {}".format(quantity, entry.name, _("sepete eklendi")))
+        except ValueError as e:
+            messages.error(request, _(
+                "Birden fazla restorandan aynı anda sipariş veremezsiniz. Lütfen aynı restorandan sipariş verin yada "
+                "sepetinizi temizleyin"))
         # [print(i.count) for i in bucket.order_list.all()]
     if order_now:
         return HttpResponseRedirect(reverse('checkout'))
@@ -160,12 +170,15 @@ def order(request, pk):
         order_note = request.POST['order_note']
         bucket.payment_type = payment_type
         bucket.delivery_note = order_note
-        print(payment_type)
-    bucket.save()
+        bucket.save()
+        messages.success(request,
+                         "{} {}").format(bucket.company.name,
+                                         _("firmasından almış olduğunuz yemekler başarıyla sipariş edildi."))
 
-    # print("Sipariş edildi")
-    # redirect back to where it comes from
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+        # print("Sipariş edildi")
+        # redirect back to where it comes from
+
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 def check(request, pk):
@@ -201,6 +214,7 @@ def update_user(request):
             cd = form.cleaned_data
             u = form.save(commit=False)
             u.save()
+            messages.success(request, "Profiliniz başarıyla güncellendi")
     return HttpResponseRedirect(request.META.get('HTTP_REFERER') + "#")
 
 
@@ -214,6 +228,8 @@ def update_info(request):
             cd = form.cleaned_data
             u = form.save(commit=False)
             u.save()
+
+            messages.success(request, _("Profiliniz başarıyla güncellendi"))
     return HttpResponseRedirect(request.META.get('HTTP_REFERER') + "#")
 
 
@@ -229,7 +245,7 @@ def add_address(request):
             address.owner = request.user.profile
             address.save()
 
-    messages.success(request, "Adres başarıyla eklendi")
+    messages.success(request, _("Adres başarıyla eklendi"))
     return HttpResponseRedirect(request.META.get('HTTP_REFERER') + "#")
 
 
@@ -240,6 +256,8 @@ def change_pass(request):
         if form.is_valid():
             cd = form.cleaned_data
             form.save()
+
+            messages.success(request, _("Şifreniz güncellendi"))
     return HttpResponseRedirect(request.META.get('HTTP_REFERER') + "#")
 
 
@@ -253,13 +271,12 @@ def do_comment(request):
             u.bucket = Bucket.objects.get(pk=request.POST['bucket_id'])
             u.owner = request.user
             u.save()
-            messages.success(request, "Yorum başarıyla eklendi")
+            messages.success(request, _("Yorum başarıyla eklendi"))
         else:
-            messages.success(request, "Yorum yapılamadı")
+            messages.success(request, _("Yorum yapılamadı"))
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-# not used only for example
 def get_more_tables(request):
     increment = int(request.GET['append_increment'])
     increment_to = increment + 10
@@ -317,7 +334,7 @@ class RememberLoginView(LoginView):
             if request.session.test_cookie_worked():
                 request.session.delete_test_cookie()
 
-            messages.success(request, "Başarıyla Giriş Yapıldı.")
+            messages.success(request, _("Başarıyla Giriş Yapıldı."))
             request.session.set_test_cookie()
             return self.form_valid(form)
         else:

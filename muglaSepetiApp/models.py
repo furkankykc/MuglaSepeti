@@ -1,6 +1,7 @@
 import os
 
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.core.validators import RegexValidator, FileExtensionValidator
 from django.db import models
 from django.db.models import F, Sum, Avg
@@ -428,7 +429,7 @@ class Bucket(models.Model):
         else:
             obj.count = obj.count + count
             if self.company != entry.company:
-                return
+                return ValidationError
 
         obj.save()
         self.save()
