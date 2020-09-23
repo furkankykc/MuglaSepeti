@@ -148,7 +148,8 @@ class Config(models.Model):
     about_fact_value_4 = models.IntegerField(null=True, blank=True, verbose_name=_("Statistic Value 4"))
 
     about_content_title = models.CharField(max_length=100, null=True, blank=True, verbose_name=_("Content Title"))
-    about_content_description = models.CharField(max_length=500, null=True, blank=True, verbose_name=_("Content Description"))
+    about_content_description = models.CharField(max_length=500, null=True, blank=True,
+                                                 verbose_name=_("Content Description"))
 
     about_info_title_1 = models.CharField(max_length=20, null=True, blank=True, verbose_name=_("Information Title 1"))
     about_info_description_1 = models.CharField(max_length=150, null=True, blank=True,
@@ -191,6 +192,7 @@ class Company(models.Model):
     slug = models.SlugField(blank=True, verbose_name=_("slug"))
     active_menu = models.ForeignKey('Menu', on_delete=models.CASCADE, blank=True, null=True,
                                     related_name='comp_active_menu', verbose_name=_("active menu"))
+    service_delay = models.DurationField(verbose_name=_("Service Delay"))
     phone = models.CharField(validators=[phone_regex], max_length=17, blank=True,
                              null=True, verbose_name=_("phone number"))
     email = models.CharField(validators=[email_regex], max_length=50, blank=True, verbose_name=_("email adress"))
@@ -298,7 +300,7 @@ class Entry(models.Model):
         return self.name
 
     def get_comments(self):
-        return Comment.objects.filter(bucket__order_list__entry_id=self.id)
+        return Comment.objects.filter(bucket__order_list__entry_id=self.id).order_by('-time')
 
 
 class Menu(models.Model):

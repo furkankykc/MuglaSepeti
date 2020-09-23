@@ -1,4 +1,4 @@
-from django.contrib import auth
+from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
@@ -201,7 +201,7 @@ def update_user(request):
             cd = form.cleaned_data
             u = form.save(commit=False)
             u.save()
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER') + "#")
 
 
 @login_required(login_url='login')
@@ -214,7 +214,7 @@ def update_info(request):
             cd = form.cleaned_data
             u = form.save(commit=False)
             u.save()
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER') + "#")
 
 
 @login_required(login_url='login')
@@ -228,7 +228,9 @@ def add_address(request):
             address = form.save(commit=False)
             address.owner = request.user.profile
             address.save()
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+    messages.success(request, "Adres başarıyla eklendi")
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER') + "#")
 
 
 @login_required(login_url='login')
@@ -238,8 +240,7 @@ def change_pass(request):
         if form.is_valid():
             cd = form.cleaned_data
             form.save()
-
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER') + "#")
 
 
 @login_required(login_url='login')
@@ -252,6 +253,9 @@ def do_comment(request):
             u.bucket = Bucket.objects.get(pk=request.POST['bucket_id'])
             u.owner = request.user
             u.save()
+            messages.success(request, "Yorum başarıyla eklendi")
+        else:
+            messages.success(request, "Yorum yapılamadı")
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
@@ -313,6 +317,7 @@ class RememberLoginView(LoginView):
             if request.session.test_cookie_worked():
                 request.session.delete_test_cookie()
 
+            messages.success(request, "Başarıyla Giriş Yapıldı.")
             request.session.set_test_cookie()
             return self.form_valid(form)
         else:

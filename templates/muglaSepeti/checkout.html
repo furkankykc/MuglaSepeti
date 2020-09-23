@@ -135,18 +135,21 @@
                             <a class="nav-link active" href="#tab-cart" data-toggle="tab"><span>1</span>{% trans 'ALISVERİŞ SEPETİ' %}
                             </a></li>
                         <li class="nav-item" style="margin-left: auto;">
-                            <a class="nav-link {% ifequal user.profile.get_bucket.order_list.count 0 %} disabled {% endifequal %}"
+                            <a id="link_info" class="nav-link {% ifequal user.profile.get_bucket.order_list.count 0 %} disabled {% endifequal %}"
                                     {% ifnotequal user.profile.get_bucket.order_list.count 0 %} href="#tab-info" {% endifnotequal %} data-toggle="tab"><span>2</span>{% trans 'ALIŞVERİŞ BİLGİLERİ' %}
                             </a></li>
-                        <li class="nav-item"><a class="nav-link" href="#tab-payment" data-toggle="tab"><span>3</span>payment
-                            method</a></li>
+                        <li id="link_payment" class="nav-item {% ifequal user.profile.get_bucket.order_list.count 0 %} disabled {% endifequal %}">
+                            <a class="nav-link"
+                                    {% ifnotequal user.profile.get_bucket.order_list.count 0 %} href="#tab-payment"  {% endifnotequal %} data-toggle="tab"><span>3</span>payment
+                                method</a></li>
                     </ul>
                     <div class="bor"></div>
                     <div class="tab-content border" style="padding: 15px 15px;">
                         <div class="tab-pane show active" id="tab-cart">
 
                             <div class="row">
-                                <h2 style="padding-left: 20px;">Sepetinizde <span>{{ user.profile.get_bucket.order_list.count }} adet </span>sipariş
+                                <h2 style="padding-left: 20px;">Sepetinizde
+                                    <span>{{ user.profile.get_bucket.order_list.count }} adet </span>sipariş
                                     var</h2>
                                 {% for item in user.profile.get_bucket.order_list.all %}
                                     <div class="col-md-12 col-12">
@@ -196,14 +199,18 @@
                                                 - {{ user.profile.get_bucket.get_borrow|floatformat }}₺</h3>
                                         {% endifnotequal %}
                                         <div class="buttons float-left">
-                                            <a href="{% url 'shop' %}" class="btn btn-theme btn-md btn-wide">{% trans 'GERİ DÖN' %}</a>
+                                            <a href="
+
+
+
+                                                    {% if user.profile.get_bucket.company %}{% url 'company_menu' user.profile.get_bucket.company.slug %} {% else %}{% url 'companies' %}{% endif %}" class="btn btn-theme btn-md btn-wide">{% trans 'GERİ DÖN' %}</a>
                                         </div>
                                         <div class="buttons float-right">
                                             <style>a.white {
                                                 color: white
                                             }</style>
                                             <a
-                                                    {% ifnotequal user.profile.get_bucket.order_list.count 0 %} href="#tab-info"  {% endifnotequal %} data-toggle="tab" class="btn btn-theme btn-md btn-wide {% ifequal user.profile.get_bucket.order_list.count 0 %} disabled white{% endifequal %}">{% trans 'Onayla' %}</a>
+                                                    {% ifnotequal user.profile.get_bucket.order_list.count 0 %}  onclick="document.getElementById('link_info').click();"   {% endifnotequal %} data-toggle="tab" class="btn btn-theme btn-md btn-wide white {% ifequal user.profile.get_bucket.order_list.count 0 %} disabled {% endifequal %}">{% trans 'Onayla' %}</a>
                                         </div>
                                     </div>
                                 {% endif %}
@@ -233,10 +240,11 @@
                                 <div class="col-md-12 col-12 text-center">
 
                                     <div class="buttons float-right">
-{#                                        <a href="#tab-cart" data-toggle="tab" class="btn btn-theme btn-md btn-wide">Geri</a>#}
+                                        {#                                        <a href="#tab-cart" data-toggle="tab" class="btn btn-theme btn-md btn-wide">Geri</a>#}
 
 
-                                        <a href="#tab-payment" data-toggle="tab" class="btn btn-theme btn-md btn-wide">Onayla</a>
+                                        <a
+                                                {% ifnotequal user.profile.get_bucket.order_list.count 0 %}  onclick="document.getElementById('link_payment').click();"   {% endifnotequal %} data-toggle="tab" class="btn btn-theme btn-md btn-wide white {% ifequal user.profile.get_bucket.order_list.count 0 %} disabled {% endifequal %}">Onayla</a>
                                     </div>
                                 </div>
                             </div>
@@ -268,7 +276,7 @@
                                     <div class="form-group row">
                                         <div class="col-md-12 col-12 text-center">
                                             <div class="buttons">
-{#                                                <a href="#tab-info" data-toggle="tab" class="btn btn-theme btn-md btn-wide">Geri</a>#}
+                                                {#                                                <a href="#tab-info" data-toggle="tab" class="btn btn-theme btn-md btn-wide">Geri</a>#}
 
                                                 <input type="submit" class="btn btn-theme btn-md btn-wide" value="{% trans 'SİPARİŞ ET' %}">
                                             </div>

@@ -134,7 +134,7 @@ class CompanyAdmin(DefaultAdminModel):
     prepopulated_fields = {'slug': ['name']}
 
     fields = (
-        'owner', 'slug', 'name', 'description', 'logo', 'address', 'active_menu', 'is_open', 'open_at', 'close_at',
+        'owner', 'slug', 'name', 'description', 'logo', 'address', 'active_menu','service_delay', 'is_open', 'open_at', 'close_at',
         'phone', 'email',
         'instagram',
         'facebook', 'twitter')

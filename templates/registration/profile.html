@@ -6,7 +6,14 @@
 {% block bheader %}{{ user.username }}{% endblock %}
 
 {% block content %}
-
+    <script>
+        window.addEventListener("load", function () {
+            if (window.location.href.split('#').length > 1) {
+                document.getElementById('link_profile').click();
+                console.log("asasdasdads");
+            }
+        });
+    </script>
     <!-- Login Start -->
     <div class="dashboard">
         <div class="container">
@@ -33,7 +40,7 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" data-toggle="tab" href="#profile" aria-expanded="true">
+                                        <a id="link_profile" class="nav-link" data-toggle="tab" href="#profile" aria-expanded="true">
                                             <i class="icofont icofont-dashboard-web"></i>
                                             <span>{% trans 'Profili Düzenle' %}</span>
                                         </a>

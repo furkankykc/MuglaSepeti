@@ -128,7 +128,7 @@ TIME_ZONE = 'Europe/Istanbul'
 USE_I18N = True
 
 USE_L10N = True
-
+LOGIN_URL = "/login"
 # Mail sending
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

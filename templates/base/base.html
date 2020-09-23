@@ -66,17 +66,20 @@
     {% endblock %}
     {% block extra_style %}
         <style>
-            .menu-inner{
+            .menu-inner {
                 background: url({{ config.menu_inner_background.url }}) no-repeat right bottom;
             }
-            .menu{
-               background: #f5f5f5 url({{ config.menu_background.url }}) no-repeat left bottom;
+
+            .menu {
+                background: #f5f5f5 url({{ config.menu_background.url }}) no-repeat left bottom;
             }
-            .bread-crumb{
+
+            .bread-crumb {
                 background: url({{ config.bread_crumb_background.url }}) no-repeat center center;
             }
         </style>
     {% endblock %}
+
     {% block breadcumb %}
         <!-- Breadcrumb Start -->
         <div class="bread-crumb">
