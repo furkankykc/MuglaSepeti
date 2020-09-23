@@ -7,7 +7,7 @@ import muglaSepetiApp.models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('muglaSepetiApp', '0026_auto_20200920_1958'),
+        ('muglaSepetiApp', '0025_config_logo'),
     ]
 
     operations = [
