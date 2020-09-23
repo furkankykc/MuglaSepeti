@@ -147,11 +147,6 @@ cython_debug/
 *.iml
 out
 gen
-muglaSepetiApp/migrations/0006_auto_20200813_1921.py
-muglaSepetiApp/migrations/0007_auto_20200813_2212.py
-muglaSepetiApp/migrations/0008_company_address.py
-muglaSepetiApp/migrations/0009_auto_20200813_2335.py
-muglaSepetiApp/migrations/0010_auto_20200813_2335.py
-muglaSepetiApp/migrations/0011_auto_20200814_0006.py
-muglaSepetiApp/migrations/0012_auto_20200814_0056.py
-muglaSepetiApp/migrations/0013_bucket_deleted_at.py
+!/dbbck.sqlite3
+muglaSepeti/local.py
+!/db.sqlite3
