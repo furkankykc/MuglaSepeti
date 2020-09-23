@@ -22,9 +22,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'j_0!f=(^3mx8^3t1x%(q^1%^h&2z*s*!u=^b)@sj@j9n157i42'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['muglasepeti.com', 'www.muglasepeti.com']
 
 # Application definition
 
@@ -64,11 +64,12 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+
+                'muglaSepetiApp.context_processors.site_config',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'muglaSepetiApp.context_processors.site_config',
             ],
         },
     },
@@ -146,7 +147,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 STATIC_URL = '/static/'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = (os.path.join('static'),)
-# STATIC_ROOT = ""
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# STATICFILES_DIRS = (os.path.join('static'),)
 LOGIN_REDIRECT_URL = 'home'
+try:
+    from local_settings import *
+except ImportError:
+    pass

@@ -89,6 +89,8 @@ class Config(models.Model):
                                 validators=[FileExtensionValidator(allowed_extensions=['ico'])], verbose_name=_("icon"))
 
     email = models.CharField(validators=[email_regex], max_length=50, blank=True, verbose_name=_("email address"))
+    # mail_before_text = models.CharField(max_length=500, blank=True, verbose_name=_("password reset text head"))
+    # mail_after_text = models.CharField(max_length=500, blank=True, verbose_name=_("password reset text end"))
     address = models.CharField(max_length=100, null=True, verbose_name=_("address"))
     logo = models.ImageField(upload_to=get_image_path, blank=True, null=True, verbose_name=_("Site Logo"))
     footer_logo = models.ImageField(upload_to=get_image_path, blank=True, null=True, verbose_name=_("Footer Logo"))
