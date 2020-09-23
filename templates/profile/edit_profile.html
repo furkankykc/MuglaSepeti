@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-lg-6">
             <div class="user-personal-info">
-                <h5>Personal Information</h5>
+                <h5>{% trans 'Personal Information' %}</h5>
                 <div class="user-info-body">
                     <form action="{% url 'update_user' %}" method="post">
                         {% csrf_token %}

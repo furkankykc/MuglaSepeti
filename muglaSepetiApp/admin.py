@@ -134,7 +134,8 @@ class CompanyAdmin(DefaultAdminModel):
     prepopulated_fields = {'slug': ['name']}
 
     fields = (
-        'owner', 'slug', 'name', 'description', 'logo', 'address', 'active_menu','service_delay', 'is_open', 'open_at', 'close_at',
+        'owner', 'slug', 'name', 'description', 'logo', 'address', 'active_menu', 'service_delay', 'is_open', 'open_at',
+        'close_at',
         'phone', 'email',
         'instagram',
         'facebook', 'twitter')
@@ -176,6 +177,7 @@ class MenuAdmin(DefaultAdminModel):
 
     def count_of_entries(self, obj):
         return obj.entry_list.count()
+
     count_of_entries.short_description = "Ürün Sayısı"
 
 
@@ -225,6 +227,9 @@ make_on_the_way.short_description = _("Mark selected orders as on the way")
 make_delivered.short_description = _("Mark selected orders as delivered")
 make_cancel.short_description = _("Mark selected orders as canceled")
 
+printit = """var url =window.location.origin;url+='{}';var myWindow = window.open(url,'','width=200,height=100'); myWindow.print();myWindow.addEventListener('afterprint',(event) =>myWindow.close()); 
+ """
+
 
 @admin.register(Bucket, site=customAdminSite)
 class BucketAdmin(admin.ModelAdmin, ListStyleAdminMixin):
@@ -237,7 +242,7 @@ class BucketAdmin(admin.ModelAdmin, ListStyleAdminMixin):
     # exclude = ['is_checked', 'is_ordered', 'is_delivered', 'is_on_the_way', 'is_deleted', 'checked_at', 'delivered_at',
     #            'deleted_at', 'on_the_way_at']
     list_display = (
-        'get_products', 'delivery_note', 'order_address', 'order_phone','get_payment_type', 'get_borrow',
+        'get_products', 'delivery_note', 'order_address', 'order_phone', 'get_payment_type', 'get_borrow',
         'get_order_time',
         'status')
     list_filter = ('company',)
@@ -272,14 +277,17 @@ class BucketAdmin(admin.ModelAdmin, ListStyleAdminMixin):
             return _("Canceled")
         elif not obj.is_checked:
             return mark_safe(
-                '<a class="btn-chck button" title="{}" name="index" href="{}">{}</a>'.format(
+                '<a class="btn-chck button" title="{}" name="chck" href="{}">{}</a>'.format(
                     _('Mark this order as checked'), reverse('check', args=([obj.pk])), _('Check'))) + mark_safe(
-                '<a class="button btn-cancel" title="{}" name="index" href="{}">{}</a>'.format(
+                '<a class="button btn-cancel" title="{}" name="cncl" href="{}">{}</a>'.format(
                     _('Mark this order as Canceled'), reverse('cancel', args=([obj.pk])), _('Cancel')))
         elif not obj.is_on_the_way:
             return mark_safe(
                 '<a class="button btn-prepare" title="{}" name="index" href="{}">{}</a>'.format(
-                    _('Mark this order as on the way'), reverse('on_the_way', args=([obj.pk])), _('On the way')))
+                    _('Mark this order as on the way'), reverse('on_the_way', args=([obj.pk])),
+                    _('On the way'))) + mark_safe(
+                '<a class="button btn-cancel" title="{}" name="Print" onclick="{}">{}</a>'.format(
+                    _('Print this order'), printit.format(reverse('print', args=([obj.pk]))), _('Print')))
         elif not obj.is_delivered:
             return mark_safe(
                 '<a class="button btn-delivered" title="{}" name="index" href="{}">{}</a>'.format(

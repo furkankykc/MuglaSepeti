@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-23 07:15+0300\n"
+"POT-Creation-Date: 2020-09-23 09:54+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -131,294 +131,294 @@ msgstr ""
 msgid "Şuanki Adresinizi Seçiniz"
 msgstr ""
 
-#: muglaSepetiApp/models.py:14
+#: muglaSepetiApp/models.py:15
 msgid "Phone number must be entered in the format"
 msgstr "Telefon numarası doğru formatta girilmeli"
 
-#: muglaSepetiApp/models.py:15
+#: muglaSepetiApp/models.py:16
 msgid "Up to 15 digits allowed"
 msgstr "15 karakter limiti vardır"
 
-#: muglaSepetiApp/models.py:17
+#: muglaSepetiApp/models.py:18
 msgid "Email address must be entered in the format"
 msgstr "Email adresi doğru formatta girilmeli"
 
-#: muglaSepetiApp/models.py:27 muglaSepetiApp/models.py:338
+#: muglaSepetiApp/models.py:28 muglaSepetiApp/models.py:339
 msgid "Address"
 msgstr "adres"
 
-#: muglaSepetiApp/models.py:28
+#: muglaSepetiApp/models.py:29
 msgid "Addresses"
 msgstr "adresler"
 
-#: muglaSepetiApp/models.py:30 muglaSepetiApp/models.py:189
-#: muglaSepetiApp/models.py:253 muglaSepetiApp/models.py:265
-#: muglaSepetiApp/models.py:283
+#: muglaSepetiApp/models.py:31 muglaSepetiApp/models.py:190
+#: muglaSepetiApp/models.py:254 muglaSepetiApp/models.py:266
+#: muglaSepetiApp/models.py:284
 msgid "name"
 msgstr "İsim"
 
-#: muglaSepetiApp/models.py:31
+#: muglaSepetiApp/models.py:32
 msgid "location"
 msgstr "konum"
 
-#: muglaSepetiApp/models.py:32 muglaSepetiApp/models.py:188
-#: muglaSepetiApp/models.py:267 muglaSepetiApp/models.py:465
+#: muglaSepetiApp/models.py:33 muglaSepetiApp/models.py:189
+#: muglaSepetiApp/models.py:268 muglaSepetiApp/models.py:466
 msgid "owner"
 msgstr "sahip"
 
-#: muglaSepetiApp/models.py:40
+#: muglaSepetiApp/models.py:41
 msgid "Profile"
 msgstr "profil"
 
-#: muglaSepetiApp/models.py:41
+#: muglaSepetiApp/models.py:42
 msgid "Profiles"
 msgstr "profiller"
 
-#: muglaSepetiApp/models.py:43
+#: muglaSepetiApp/models.py:44
 msgid "user"
 msgstr "kullanıcı"
 
-#: muglaSepetiApp/models.py:45 muglaSepetiApp/models.py:91
-#: muglaSepetiApp/models.py:199
+#: muglaSepetiApp/models.py:46 muglaSepetiApp/models.py:92
+#: muglaSepetiApp/models.py:200
 msgid "address"
 msgstr "adres"
 
-#: muglaSepetiApp/models.py:46
+#: muglaSepetiApp/models.py:47
 msgid "birth date"
 msgstr "doğum günü"
 
-#: muglaSepetiApp/models.py:48 muglaSepetiApp/models.py:86
-#: muglaSepetiApp/models.py:197
+#: muglaSepetiApp/models.py:49 muglaSepetiApp/models.py:87
+#: muglaSepetiApp/models.py:198
 msgid "phone number"
 msgstr "telefon numarası"
 
-#: muglaSepetiApp/models.py:49 muglaSepetiApp/models.py:90
+#: muglaSepetiApp/models.py:50 muglaSepetiApp/models.py:91
 msgid "email address"
 msgstr "email adresi"
 
-#: muglaSepetiApp/models.py:88
+#: muglaSepetiApp/models.py:89
 msgid "icon"
 msgstr ""
 
-#: muglaSepetiApp/models.py:92
+#: muglaSepetiApp/models.py:93
 msgid "Site Logo"
 msgstr ""
 
-#: muglaSepetiApp/models.py:93
+#: muglaSepetiApp/models.py:94
 msgid "Footer Logo"
 msgstr ""
 
-#: muglaSepetiApp/models.py:94
+#: muglaSepetiApp/models.py:95
 msgid "Site Description"
 msgstr "Site Açıklaması"
 
-#: muglaSepetiApp/models.py:95 muglaSepetiApp/models.py:152
+#: muglaSepetiApp/models.py:96 muglaSepetiApp/models.py:153
 msgid "Content Description"
 msgstr "İçerik Açıklaması"
 
-#: muglaSepetiApp/models.py:96
+#: muglaSepetiApp/models.py:97
 msgid "Slider Title"
 msgstr "Slider Başlığı"
 
-#: muglaSepetiApp/models.py:97
+#: muglaSepetiApp/models.py:98
 msgid "Slider Description"
 msgstr "Slider Açıklaması"
 
-#: muglaSepetiApp/models.py:99
+#: muglaSepetiApp/models.py:100
 msgid "Slider Image 1"
 msgstr "Slider Resmi 1"
 
-#: muglaSepetiApp/models.py:101
+#: muglaSepetiApp/models.py:102
 msgid "Slider Image 2"
 msgstr "Slider Resmi 2"
 
-#: muglaSepetiApp/models.py:103
+#: muglaSepetiApp/models.py:104
 msgid "Slider Image 3"
 msgstr "Slider Resmi 3"
 
-#: muglaSepetiApp/models.py:105
+#: muglaSepetiApp/models.py:106
 msgid "Slider Image 4"
 msgstr "Slider Resmi 4"
 
-#: muglaSepetiApp/models.py:109
+#: muglaSepetiApp/models.py:110
 msgid "Menu Background"
 msgstr "Sol Menü Arkaplan"
 
-#: muglaSepetiApp/models.py:114
+#: muglaSepetiApp/models.py:115
 msgid "Menu Inner Background"
 msgstr "Sağ Menü Arkaplan"
 
-#: muglaSepetiApp/models.py:117
+#: muglaSepetiApp/models.py:118
 msgid "Breadcrumb Background"
 msgstr "Breadcrumb Arkaplan"
 
-#: muglaSepetiApp/models.py:121
+#: muglaSepetiApp/models.py:122
 msgid "Order Background"
 msgstr "Sipariş Arkaplan"
 
-#: muglaSepetiApp/models.py:132
+#: muglaSepetiApp/models.py:133
 #, fuzzy
 #| msgid "product image"
 msgid "About Image 1"
 msgstr "Hakkımızda Resim 1"
 
-#: muglaSepetiApp/models.py:134
+#: muglaSepetiApp/models.py:135
 #, fuzzy
 #| msgid "product image"
 msgid "About Image 2"
 msgstr "Hakkımızda Resim 2"
 
-#: muglaSepetiApp/models.py:136
+#: muglaSepetiApp/models.py:137
 #, fuzzy
 #| msgid "product image"
 msgid "About Image 3"
 msgstr "Hakkımızda Resim 3"
 
-#: muglaSepetiApp/models.py:138
+#: muglaSepetiApp/models.py:139
 msgid "About Image Large"
 msgstr "Hakkımızda Büyük Resim"
 
-#: muglaSepetiApp/models.py:140
+#: muglaSepetiApp/models.py:141
 msgid "About Quotes Background "
 msgstr "Hakkımızda Sözler Arkaplan"
 
-#: muglaSepetiApp/models.py:141
+#: muglaSepetiApp/models.py:142
 msgid "Statistic Title 1"
 msgstr "İstatistik Başlığı 1"
 
-#: muglaSepetiApp/models.py:142
+#: muglaSepetiApp/models.py:143
 msgid "Statistic Value 1"
 msgstr "İstatistik Değeri 1"
 
-#: muglaSepetiApp/models.py:143
+#: muglaSepetiApp/models.py:144
 msgid "Statistic Title 2"
 msgstr "İstatistik Başlığı 2"
 
-#: muglaSepetiApp/models.py:144
+#: muglaSepetiApp/models.py:145
 msgid "Statistic Value 2"
 msgstr "İstatistik Değeri 2"
 
-#: muglaSepetiApp/models.py:145
+#: muglaSepetiApp/models.py:146
 msgid "Statistic Title 3"
 msgstr "İstatistik Başlığı 3"
 
-#: muglaSepetiApp/models.py:146
+#: muglaSepetiApp/models.py:147
 msgid "Statistic Value 3"
 msgstr "İstatistik Değeri 3"
 
-#: muglaSepetiApp/models.py:147
+#: muglaSepetiApp/models.py:148
 msgid "Statistic Title 4"
 msgstr "İstatistik Başlığı 4"
 
-#: muglaSepetiApp/models.py:148
+#: muglaSepetiApp/models.py:149
 msgid "Statistic Value 4"
 msgstr "İstatistik Değeri 4"
 
-#: muglaSepetiApp/models.py:150
+#: muglaSepetiApp/models.py:151
 msgid "Content Title"
 msgstr "Bilgilendirme Açıklaması"
 
-#: muglaSepetiApp/models.py:154
+#: muglaSepetiApp/models.py:155
 msgid "Information Title 1"
 msgstr "Bilgilendirme Başlığı 1"
 
-#: muglaSepetiApp/models.py:156
+#: muglaSepetiApp/models.py:157
 msgid "Information Description 1"
 msgstr "Bilgilendirme Açıklaması 1"
 
-#: muglaSepetiApp/models.py:157
+#: muglaSepetiApp/models.py:158
 msgid "Information Title 2"
 msgstr "Bilgilendirme Başlığı 2"
 
-#: muglaSepetiApp/models.py:159
+#: muglaSepetiApp/models.py:160
 msgid "Information Description 2"
 msgstr "Bilgilendirme Açıklaması 2"
 
-#: muglaSepetiApp/models.py:160
+#: muglaSepetiApp/models.py:161
 msgid "Information Title 3"
 msgstr "Bilgilendirme Başlığı 3"
 
-#: muglaSepetiApp/models.py:162
+#: muglaSepetiApp/models.py:163
 msgid "Information Description 3"
 msgstr "Bilgilendirme Açıklaması 3"
 
-#: muglaSepetiApp/models.py:163
+#: muglaSepetiApp/models.py:164
 msgid "Quotes Title"
 msgstr "Sözler Başlığı"
 
-#: muglaSepetiApp/models.py:164
+#: muglaSepetiApp/models.py:165
 msgid "Quote 1"
 msgstr "Söz 1"
 
-#: muglaSepetiApp/models.py:165 muglaSepetiApp/models.py:167
-#: muglaSepetiApp/models.py:169
+#: muglaSepetiApp/models.py:166 muglaSepetiApp/models.py:168
+#: muglaSepetiApp/models.py:170
 msgid "Type writer name end of the text heading with '-' Ex:-Furkankykc"
 msgstr ""
 "Yazan kişinin ismini başına '-' işareti koyarak mesajın sonuna yazınız Örnk:-"
 "Furkankykc"
 
-#: muglaSepetiApp/models.py:166
+#: muglaSepetiApp/models.py:167
 msgid "Quote 2"
 msgstr "Söz 2"
 
-#: muglaSepetiApp/models.py:168
+#: muglaSepetiApp/models.py:169
 msgid "Quote 3"
 msgstr "Söz 3"
 
-#: muglaSepetiApp/models.py:176 muglaSepetiApp/models.py:311
+#: muglaSepetiApp/models.py:177 muglaSepetiApp/models.py:312
 msgid "Name"
 msgstr "İsim"
 
-#: muglaSepetiApp/models.py:177
+#: muglaSepetiApp/models.py:178
 msgid "Site Config"
 msgstr "Site Ayarları"
 
-#: muglaSepetiApp/models.py:185 muglaSepetiApp/models.py:313
-#: muglaSepetiApp/models.py:340
+#: muglaSepetiApp/models.py:186 muglaSepetiApp/models.py:314
+#: muglaSepetiApp/models.py:341
 msgid "Company"
 msgstr "şirket"
 
-#: muglaSepetiApp/models.py:186
+#: muglaSepetiApp/models.py:187
 msgid "Companies"
 msgstr "şirketler"
 
-#: muglaSepetiApp/models.py:190
+#: muglaSepetiApp/models.py:191
 msgid "description"
 msgstr "açıklama"
 
-#: muglaSepetiApp/models.py:191
+#: muglaSepetiApp/models.py:192
 msgid "logo"
 msgstr "logo"
 
-#: muglaSepetiApp/models.py:192
+#: muglaSepetiApp/models.py:193
 msgid "slug"
 msgstr "slug"
 
-#: muglaSepetiApp/models.py:194
+#: muglaSepetiApp/models.py:195
 msgid "active menu"
 msgstr "aktif menü"
 
-#: muglaSepetiApp/models.py:195
+#: muglaSepetiApp/models.py:196
 msgid "Service Delay"
 msgstr ""
 
-#: muglaSepetiApp/models.py:198
+#: muglaSepetiApp/models.py:199
 msgid "email adress"
 msgstr "email adresi"
 
-#: muglaSepetiApp/models.py:200
+#: muglaSepetiApp/models.py:201
 msgid "open time"
 msgstr "açılış saati"
 
-#: muglaSepetiApp/models.py:201
+#: muglaSepetiApp/models.py:202
 msgid "close time"
 msgstr "kapanış saati"
 
-#: muglaSepetiApp/models.py:202
+#: muglaSepetiApp/models.py:203
 msgid "is Open"
 msgstr "Açık mı"
 
-#: muglaSepetiApp/models.py:203
+#: muglaSepetiApp/models.py:204
 msgid ""
 "if this box not checked your company wont open even if it currently open-"
 "hours"
@@ -426,247 +426,293 @@ msgstr ""
 "Eğer bu kutu işaretli değilse açılış saatine bakmaksızın şirketiniz kapalı "
 "gözükecektir"
 
-#: muglaSepetiApp/models.py:204
+#: muglaSepetiApp/models.py:205
 msgid "instagram address"
 msgstr "instagram adresi"
 
-#: muglaSepetiApp/models.py:205
+#: muglaSepetiApp/models.py:206
 msgid "facebook address"
 msgstr "facebook adresi"
 
-#: muglaSepetiApp/models.py:206
+#: muglaSepetiApp/models.py:207
 msgid "twitter address"
 msgstr "twitter adresi"
 
-#: muglaSepetiApp/models.py:207
+#: muglaSepetiApp/models.py:208
 msgid "tripadvisor address"
 msgstr "tripadvisor adresi"
 
-#: muglaSepetiApp/models.py:208
+#: muglaSepetiApp/models.py:209
 msgid "youtube address"
 msgstr "youtube adresi"
 
-#: muglaSepetiApp/models.py:209
+#: muglaSepetiApp/models.py:210
 msgid "pinterest address"
 msgstr "pinterest adresi"
 
-#: muglaSepetiApp/models.py:242
+#: muglaSepetiApp/models.py:243
 msgid "Şuanda Açık mı?"
 msgstr ""
 
-#: muglaSepetiApp/models.py:250
+#: muglaSepetiApp/models.py:251
 msgid "Product Group"
 msgstr "ürün grubu"
 
-#: muglaSepetiApp/models.py:251
+#: muglaSepetiApp/models.py:252
 msgid "Product Groups"
 msgstr "ürün grupları"
 
-#: muglaSepetiApp/models.py:254 muglaSepetiApp/models.py:288
-#: muglaSepetiApp/models.py:353
+#: muglaSepetiApp/models.py:255 muglaSepetiApp/models.py:289
+#: muglaSepetiApp/models.py:354
 msgid "company"
 msgstr "şirket"
 
-#: muglaSepetiApp/models.py:262
+#: muglaSepetiApp/models.py:263
 msgid "Product Category"
 msgstr "ürün kategorisi"
 
-#: muglaSepetiApp/models.py:263
+#: muglaSepetiApp/models.py:264
 msgid "Product Categories"
 msgstr "ürün kategorileri"
 
-#: muglaSepetiApp/models.py:266
+#: muglaSepetiApp/models.py:267
 msgid "category image"
 msgstr "kategori resmi"
 
-#: muglaSepetiApp/models.py:268
+#: muglaSepetiApp/models.py:269
 msgid "group"
 msgstr "grup"
 
-#: muglaSepetiApp/models.py:280 muglaSepetiApp/models.py:324
+#: muglaSepetiApp/models.py:281 muglaSepetiApp/models.py:325
 msgid "Product"
 msgstr "ürün"
 
-#: muglaSepetiApp/models.py:281
+#: muglaSepetiApp/models.py:282
 msgid "Products"
 msgstr "ürünler"
 
-#: muglaSepetiApp/models.py:284
+#: muglaSepetiApp/models.py:285
 msgid "detail"
 msgstr "detay"
 
-#: muglaSepetiApp/models.py:285
+#: muglaSepetiApp/models.py:286
 msgid "price"
 msgstr "fiyat"
 
-#: muglaSepetiApp/models.py:286
+#: muglaSepetiApp/models.py:287
 msgid "product image"
 msgstr "ürün resmi"
 
-#: muglaSepetiApp/models.py:287
+#: muglaSepetiApp/models.py:288
 msgid "category"
 msgstr "kategori"
 
-#: muglaSepetiApp/models.py:308
+#: muglaSepetiApp/models.py:309
 msgid "Menu"
 msgstr "menü"
 
-#: muglaSepetiApp/models.py:309
+#: muglaSepetiApp/models.py:310
 msgid "Menus"
 msgstr "menüler"
 
-#: muglaSepetiApp/models.py:312
+#: muglaSepetiApp/models.py:313
 msgid "Entry list"
 msgstr "Ürün listesi"
 
-#: muglaSepetiApp/models.py:321
+#: muglaSepetiApp/models.py:322
 msgid "Bucket Product"
 msgstr "Sepet ürünü"
 
-#: muglaSepetiApp/models.py:322
+#: muglaSepetiApp/models.py:323
 msgid "Bucket Products"
 msgstr "Sepet ürünleri"
 
-#: muglaSepetiApp/models.py:326
+#: muglaSepetiApp/models.py:327
 msgid "Total Bucket Price"
 msgstr "Sepet toplamı"
 
-#: muglaSepetiApp/models.py:327
+#: muglaSepetiApp/models.py:328
 msgid "Count"
 msgstr "miktar"
 
-#: muglaSepetiApp/models.py:335
+#: muglaSepetiApp/models.py:336
 msgid "Minimum Packet Price"
 msgstr "Minimum Sipariş Fiyatı"
 
-#: muglaSepetiApp/models.py:336
+#: muglaSepetiApp/models.py:337
 msgid "Minimum Packet Prices"
 msgstr "Minimum Sipariş Fiyatları"
 
-#: muglaSepetiApp/models.py:339
+#: muglaSepetiApp/models.py:340
 msgid "Minimum Price"
 msgstr "Minimum Fiyat"
 
-#: muglaSepetiApp/models.py:348
+#: muglaSepetiApp/models.py:349
 msgid "Order"
 msgstr "sipariş"
 
-#: muglaSepetiApp/models.py:349
+#: muglaSepetiApp/models.py:350
 msgid "Orders"
 msgstr "siparişler"
 
-#: muglaSepetiApp/models.py:352
+#: muglaSepetiApp/models.py:353
 msgid "profile"
 msgstr "profil"
 
-#: muglaSepetiApp/models.py:354
+#: muglaSepetiApp/models.py:355
 msgid "delivery note"
 msgstr "Sipariş Notu"
 
-#: muglaSepetiApp/models.py:355
+#: muglaSepetiApp/models.py:356
 msgid "order list"
 msgstr "sipariş listesi"
 
-#: muglaSepetiApp/models.py:356
+#: muglaSepetiApp/models.py:357
 msgid "order address"
 msgstr "sipariş adresi"
 
-#: muglaSepetiApp/models.py:357
+#: muglaSepetiApp/models.py:358
 msgid "orderer's phone"
 msgstr "Müşteri telefonu"
 
-#: muglaSepetiApp/models.py:358
+#: muglaSepetiApp/models.py:359
 msgid "check time"
 msgstr "Onaylanma zamanı"
 
-#: muglaSepetiApp/models.py:359
+#: muglaSepetiApp/models.py:360
 msgid "order time"
 msgstr "Sipariş Zamanı"
 
-#: muglaSepetiApp/models.py:360
+#: muglaSepetiApp/models.py:361
 msgid "on the way time"
 msgstr "Yola çıkma zamanı"
 
-#: muglaSepetiApp/models.py:361
+#: muglaSepetiApp/models.py:362
 msgid "deliver time"
 msgstr "Tesilim edilme zamanı"
 
-#: muglaSepetiApp/models.py:362
+#: muglaSepetiApp/models.py:363
 msgid "Cancel time"
 msgstr "İptal edilme zamanı"
 
-#: muglaSepetiApp/models.py:363
+#: muglaSepetiApp/models.py:364
 msgid "is ordered"
 msgstr "sipariş edildi mi"
 
-#: muglaSepetiApp/models.py:364
+#: muglaSepetiApp/models.py:365
 msgid "is checked"
 msgstr "Onaylandı mı"
 
-#: muglaSepetiApp/models.py:365
+#: muglaSepetiApp/models.py:366
 msgid "is on the way"
 msgstr "Yola çıktı mı"
 
-#: muglaSepetiApp/models.py:366
+#: muglaSepetiApp/models.py:367
 msgid "is delivered"
 msgstr "Teslim edildi mi"
 
-#: muglaSepetiApp/models.py:367
+#: muglaSepetiApp/models.py:368
 msgid "is deleted"
 msgstr "silindi mi"
 
-#: muglaSepetiApp/models.py:370
+#: muglaSepetiApp/models.py:371
 msgid "Cash"
 msgstr "Nakit"
 
-#: muglaSepetiApp/models.py:371
+#: muglaSepetiApp/models.py:372
 msgid "Credit Card"
 msgstr "Kredi Kartı"
 
-#: muglaSepetiApp/models.py:446
+#: muglaSepetiApp/models.py:447
 msgid "Price"
 msgstr "Fiyat"
 
-#: muglaSepetiApp/models.py:447
+#: muglaSepetiApp/models.py:448
 msgid "Payment Type"
 msgstr "Ödeme Tipi"
 
-#: muglaSepetiApp/models.py:455
+#: muglaSepetiApp/models.py:456
 msgid "Comment"
 msgstr "Yorum"
 
-#: muglaSepetiApp/models.py:456
+#: muglaSepetiApp/models.py:457
 msgid "Comments"
 msgstr "Yorumlar"
 
-#: muglaSepetiApp/models.py:459
+#: muglaSepetiApp/models.py:460
 msgid "Beğenmedim"
 msgstr ""
 
-#: muglaSepetiApp/models.py:460
+#: muglaSepetiApp/models.py:461
 msgid "İdare eder"
 msgstr ""
 
-#: muglaSepetiApp/models.py:461
+#: muglaSepetiApp/models.py:462
 msgid "İyiydi işte"
 msgstr ""
 
-#: muglaSepetiApp/models.py:462
+#: muglaSepetiApp/models.py:463
 msgid "Güzeldi"
 msgstr ""
 
-#: muglaSepetiApp/models.py:463
+#: muglaSepetiApp/models.py:464
 msgid "Mükemmeldi"
 msgstr ""
 
-#: muglaSepetiApp/models.py:467
+#: muglaSepetiApp/models.py:468
 #, fuzzy
 #| msgid "Bucket Product"
 msgid "Bucket"
 msgstr "Sepet ürünü"
 
-#: muglaSepetiApp/models.py:470
+#: muglaSepetiApp/models.py:471
 msgid "comment"
+msgstr ""
+
+#: muglaSepetiApp/views.py:57
+msgid "Başarıyla Kayıt oldunuz. Devam etmek için giriş yapınız"
+msgstr ""
+
+#: muglaSepetiApp/views.py:81
+msgid "Başarıyla çıkış yapıldı"
+msgstr ""
+
+#: muglaSepetiApp/views.py:153
+msgid "sepete eklendi"
+msgstr ""
+
+#: muglaSepetiApp/views.py:156
+msgid ""
+"Birden fazla restorandan aynı anda sipariş veremezsiniz. Lütfen aynı "
+"restorandan sipariş verin yada sepetinizi temizleyin"
+msgstr ""
+
+#: muglaSepetiApp/views.py:176
+msgid "firmasından almış olduğunuz yemekler başarıyla sipariş edildi."
+msgstr ""
+
+#: muglaSepetiApp/views.py:232
+msgid "Profiliniz başarıyla güncellendi"
+msgstr ""
+
+#: muglaSepetiApp/views.py:248
+msgid "Adres başarıyla eklendi"
+msgstr ""
+
+#: muglaSepetiApp/views.py:260
+msgid "Şifreniz güncellendi"
+msgstr ""
+
+#: muglaSepetiApp/views.py:274
+msgid "Yorum başarıyla eklendi"
+msgstr ""
+
+#: muglaSepetiApp/views.py:276
+msgid "Yorum yapılamadı"
+msgstr ""
+
+#: muglaSepetiApp/views.py:337
+msgid "Başarıyla Giriş Yapıldı."
 msgstr ""
 
 #: templates/base/base.html:90
@@ -833,6 +879,10 @@ msgstr ""
 #: templates/muglaSepeti/index.html:4
 msgid "Ana Sayfa"
 msgstr ""
+
+#: templates/profile/edit_profile.html:8
+msgid "Personal Information"
+msgstr "Kişisel Bilgiler"
 
 #: templates/profile/edit_profile.html:25
 msgid "BİLGİLERİMİ GÜNCELLE"

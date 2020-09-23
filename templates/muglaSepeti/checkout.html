@@ -139,7 +139,7 @@
                                     {% ifnotequal user.profile.get_bucket.order_list.count 0 %} href="#tab-info" {% endifnotequal %} data-toggle="tab"><span>2</span>{% trans 'ALIŞVERİŞ BİLGİLERİ' %}
                             </a></li>
                         <li id="link_payment" class="nav-item {% ifequal user.profile.get_bucket.order_list.count 0 %} disabled {% endifequal %}">
-                            <a class="nav-link"
+                            <a class="nav-link {% ifequal user.profile.get_bucket.order_list.count 0 %} disabled {% endifequal %}"
                                     {% ifnotequal user.profile.get_bucket.order_list.count 0 %} href="#tab-payment"  {% endifnotequal %} data-toggle="tab"><span>3</span>payment
                                 method</a></li>
                     </ul>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>receipt</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css">
+    <link rel="stylesheet" href="../paper.css">
+    <style>
+        @page {
+            size: 58mm 100mm
+        }
+
+        /* output size */
+        body.receipt .sheet {
+            width: 58mm;
+            height: 100mm
+        }
+
+        /* sheet size */
+        @media print {
+            body.receipt {
+                width: 58mm
+            }
+        }
+
+        /* fix for Chrome */
+    </style>
+</head>
+
+<body class="receipt">
+<section class="sheet padding-10mm">
+    <h4>{{ document.company.name }}</h4>
+    <p><b>Müşteri: </b>{{ document.profile.user.first_name }} {{ document.profile.user.last_name }}</p>
+    <p><b>Telefon: </b>{{ document.order_phone }}</p>
+    <p><b>Adres: </b>{{ document.order_address }}</p>
+    <p><b>Sipariş Notu: </b>{{ document.delivery_note }}</p>
+    <p><b>Ürünler:</b>
+        {% for i in document.order_list.all %}
+            <p><b>-</b>{{ i }}</p>
+        {% endfor %}
+    <p><b>Toplam: </b>{{ document.get_borrow|floatformat }} ₺
+    </p>
+    <p><b>Ödeme Tipi: </b>{{ document.get_payment_type }}</p>
+
+    <p style="float: right">{{ document.ordered_at }}</p>
+
+</section>
+</body>
+</html>

@@ -181,6 +181,10 @@ def order(request, pk):
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
+def print(request, pk):
+    return render(request, "components/print.html", {"document": Bucket.objects.get(pk=pk)})
+
+
 def check(request, pk):
     Bucket.objects.get(pk=pk).check_order()
     # redirect back to where it comes from
