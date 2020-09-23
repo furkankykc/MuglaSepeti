@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-23 09:54+0300\n"
+"POT-Creation-Date: 2020-09-23 11:19+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -39,75 +39,84 @@ msgstr "Filtre"
 msgid "This field is not editable"
 msgstr "Bu alan düzenlenebilir değil"
 
-#: muglaSepetiApp/admin.py:223
+#: muglaSepetiApp/admin.py:225
 msgid "Mark selected orders as checked"
 msgstr "Şeçilen siparişleri onayla"
 
-#: muglaSepetiApp/admin.py:224
+#: muglaSepetiApp/admin.py:226
 msgid "Mark selected orders as on the way"
 msgstr "Seçilen siparişleri yolda olarak işaretle"
 
-#: muglaSepetiApp/admin.py:225
+#: muglaSepetiApp/admin.py:227
 msgid "Mark selected orders as delivered"
 msgstr "Seçilen siparişleri teslim edildi olarak işaretle"
 
-#: muglaSepetiApp/admin.py:226
+#: muglaSepetiApp/admin.py:228
 msgid "Mark selected orders as canceled"
 msgstr "Seçilen siparişleri iptal edildi olarak işaretle"
 
-#: muglaSepetiApp/admin.py:254
+#: muglaSepetiApp/admin.py:259
 msgid "Order time"
 msgstr "Sipariş Zamanı"
 
-#: muglaSepetiApp/admin.py:255
+#: muglaSepetiApp/admin.py:260
 msgid "Borrow"
 msgstr "Ücret"
 
-#: muglaSepetiApp/admin.py:272
+#: muglaSepetiApp/admin.py:277
 msgid "Canceled"
 msgstr "İptal Edildi"
 
-#: muglaSepetiApp/admin.py:276
+#: muglaSepetiApp/admin.py:281
 msgid "Mark this order as checked"
 msgstr "Bu siparişi onayla"
 
-#: muglaSepetiApp/admin.py:276
+#: muglaSepetiApp/admin.py:281
 msgid "Check"
 msgstr "Onayla"
 
-#: muglaSepetiApp/admin.py:278
+#: muglaSepetiApp/admin.py:283
 msgid "Mark this order as Canceled"
 msgstr "Bu siparişi iptal edildi olarak işaretle"
 
-#: muglaSepetiApp/admin.py:278
+#: muglaSepetiApp/admin.py:283
 msgid "Cancel"
 msgstr "İptal Et"
 
-#: muglaSepetiApp/admin.py:282
+#: muglaSepetiApp/admin.py:287
 msgid "Mark this order as on the way"
 msgstr "Bu siparişi yolda olarak işaretle"
 
-#: muglaSepetiApp/admin.py:282
+#: muglaSepetiApp/admin.py:288
 msgid "On the way"
 msgstr "Yolda"
 
-#: muglaSepetiApp/admin.py:286
+#: muglaSepetiApp/admin.py:290
+
+msgid "Print this order"
+msgstr "Bu siparişi yazdır"
+
+#: muglaSepetiApp/admin.py:290
+msgid "Print"
+msgstr "Yazdır"
+
+#: muglaSepetiApp/admin.py:294
 msgid "Mark this order as delivered"
 msgstr "Bu siparişi  teslim edildi olarak işaretle"
 
-#: muglaSepetiApp/admin.py:286 muglaSepetiApp/admin.py:287
+#: muglaSepetiApp/admin.py:294 muglaSepetiApp/admin.py:295
 msgid "Delivered"
 msgstr "Tesilim Edildi"
 
-#: muglaSepetiApp/admin.py:293
+#: muglaSepetiApp/admin.py:301
 msgid "Sipariş Edilen Ürünler"
 msgstr ""
 
-#: muglaSepetiApp/admin.py:303
+#: muglaSepetiApp/admin.py:311
 msgid "Muğla Sepeti"
 msgstr ""
 
-#: muglaSepetiApp/admin.py:303
+#: muglaSepetiApp/admin.py:311
 msgid "Sipariş Paneli"
 msgstr ""
 
@@ -400,7 +409,7 @@ msgstr "aktif menü"
 
 #: muglaSepetiApp/models.py:196
 msgid "Service Delay"
-msgstr ""
+msgstr "Sipariş süresi"
 
 #: muglaSepetiApp/models.py:199
 msgid "email adress"
@@ -691,27 +700,27 @@ msgstr ""
 msgid "firmasından almış olduğunuz yemekler başarıyla sipariş edildi."
 msgstr ""
 
-#: muglaSepetiApp/views.py:232
+#: muglaSepetiApp/views.py:236
 msgid "Profiliniz başarıyla güncellendi"
 msgstr ""
 
-#: muglaSepetiApp/views.py:248
+#: muglaSepetiApp/views.py:252
 msgid "Adres başarıyla eklendi"
 msgstr ""
 
-#: muglaSepetiApp/views.py:260
+#: muglaSepetiApp/views.py:264
 msgid "Şifreniz güncellendi"
 msgstr ""
 
-#: muglaSepetiApp/views.py:274
+#: muglaSepetiApp/views.py:278
 msgid "Yorum başarıyla eklendi"
 msgstr ""
 
-#: muglaSepetiApp/views.py:276
+#: muglaSepetiApp/views.py:280
 msgid "Yorum yapılamadı"
 msgstr ""
 
-#: muglaSepetiApp/views.py:337
+#: muglaSepetiApp/views.py:341
 msgid "Başarıyla Giriş Yapıldı."
 msgstr ""
 

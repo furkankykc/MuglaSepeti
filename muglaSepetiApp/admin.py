@@ -283,11 +283,11 @@ class BucketAdmin(admin.ModelAdmin, ListStyleAdminMixin):
                     _('Mark this order as Canceled'), reverse('cancel', args=([obj.pk])), _('Cancel')))
         elif not obj.is_on_the_way:
             return mark_safe(
+                '<a class="button btn-chck" title="{}" name="Print" onclick="{}">{}</a>'.format(
+                    _('Print this order'), printit.format(reverse('print', args=([obj.pk]))), _('Print'))) + mark_safe(
                 '<a class="button btn-prepare" title="{}" name="index" href="{}">{}</a>'.format(
                     _('Mark this order as on the way'), reverse('on_the_way', args=([obj.pk])),
-                    _('On the way'))) + mark_safe(
-                '<a class="button btn-cancel" title="{}" name="Print" onclick="{}">{}</a>'.format(
-                    _('Print this order'), printit.format(reverse('print', args=([obj.pk]))), _('Print')))
+                    _('On the way')))
         elif not obj.is_delivered:
             return mark_safe(
                 '<a class="button btn-delivered" title="{}" name="index" href="{}">{}</a>'.format(
