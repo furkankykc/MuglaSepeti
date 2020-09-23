@@ -8,7 +8,7 @@ import muglaSepetiApp.models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('muglaSepetiApp', '0029_auto_20200921_0037'),
+        ('muglaSepetiApp', '0028_auto_20200920_2112'),
     ]
 
     operations = [
