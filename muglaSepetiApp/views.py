@@ -243,8 +243,6 @@ def add_address(request):
         form = CreateAddressForm(request.POST)
         if form.is_valid():
             cd = form.cleaned_data
-
-            print("cdddd = ", cd)
             address = form.save(commit=False)
             address.owner = request.user.profile
             address.save()
