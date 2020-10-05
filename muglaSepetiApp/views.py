@@ -12,7 +12,7 @@ from django.views.decorators.csrf import csrf_protect
 
 from muglaSepetiApp.forms import RegisterForm, ChangeUserForm, ChangeProfileForm, CreateAddressForm, ChangePasswordForm, \
     RatingForm
-from muglaSepetiApp.models import Bucket, Company, Menu, Entry, FoodCategory, Profile, SiteConfig
+from muglaSepetiApp.models import Bucket, Company, Menu, Entry, FoodCategory, Profile, SiteConfig, Annoucment
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.forms import PasswordChangeForm
 
@@ -100,6 +100,14 @@ def cart_delete(request, bucket_pk, list_pk):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
+def apply_cancel(request):
+    if request.method == "POST":
+        if 'cancel_note' in request.POST:
+            cancel_note = request.POST['cancel_note']
+            order_id = request.POST['id']
+            print(f'cancel note is : {cancel_note}')
+
+
 @login_required(login_url='login')
 def cart_count_add(request, bucket_pk, list_pk):
     bucket = Bucket.objects.get(profile__user=request.user, pk=bucket_pk)
@@ -133,7 +141,8 @@ def entry_details(request, company_slug, entry_id):
 
 def companies(request):
     context = {
-        'companies': Company.get_open_companies()
+        'companies': Company.get_open_companies(),
+        'annoucments': Annoucment.objects.filter(is_active=True)
     }
     return render(request, template_name='muglaSepeti/company_list.html', context=context)
 
@@ -171,9 +180,8 @@ def order(request, pk):
         bucket.payment_type = payment_type
         bucket.delivery_note = order_note
         bucket.save()
-        messages.success(request,
-                         "{} {}").format(bucket.company.name,
-                                         _("firmasından almış olduğunuz yemekler başarıyla sipariş edildi."))
+        messages.success(request, "{} {}".format(bucket.company.name,
+                                                 _("firmasından almış olduğunuz yemekler başarıyla sipariş edildi.")))
 
         # print("Sipariş edildi")
         # redirect back to where it comes from
@@ -181,7 +189,7 @@ def order(request, pk):
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-def print(request, pk):
+def print_payment(request, pk):
     return render(request, "components/print.html", {"document": Bucket.objects.get(pk=pk)})
 
 
@@ -308,7 +316,7 @@ def company_menu(request, company_slug, category_id=None):
     if (category_id):
         entries = company.active_menu.entry_list.filter(category=category_id)
     else:
-        entries = company.active_menu.entry_list.all()
+        entries = company.active_menu.entry_list.filter(is_disabled=False)
     context = {
         'company': company,
         'categories': categories,

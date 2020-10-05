@@ -204,6 +204,8 @@ class Company(models.Model):
     close_at = models.TimeField(default=timezone.now, verbose_name=_("close time"))
     is_open = models.BooleanField(default=False, verbose_name=_("is Open"), help_text=_(
         "if this box not checked your company wont open even if it currently open-hours"))
+    is_busy = models.BooleanField(default=False, verbose_name=_("is Busy"), help_text=_(
+        "if this box is checked your company status will be changed to busy which mean you might not be able to send packet to buyer on right time"))
     instagram = models.URLField(blank=True, verbose_name=_("instagram address"))
     facebook = models.URLField(blank=True, verbose_name=_("facebook address"))
     twitter = models.URLField(blank=True, verbose_name=_("twitter address"))
@@ -287,6 +289,8 @@ class Entry(models.Model):
     detail = models.CharField(max_length=100, verbose_name=_('detail'), blank=True, null=True)
     price = models.FloatField(verbose_name=_('price'))
     image = models.ImageField(upload_to=get_image_path, blank=True, null=True, verbose_name=_('product image'))
+    is_disabled = models.BooleanField(default=False, verbose_name=_('Hide product'), help_text=_(
+        'if your product is out of stack select this option to hide from products'))
     category = models.ForeignKey(FoodCategory, on_delete=models.CASCADE, verbose_name=_('category'))
     company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='comp_entry', verbose_name=_('company'))
 
@@ -481,3 +485,9 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.comment
+
+
+class Annoucment(models.Model):
+    title = models.CharField(max_length=50, verbose_name=_("Title"))
+    message = models.CharField(max_length=250, verbose_name=_("Message"))
+    is_active = models.BooleanField(default=True, verbose_name=("is annoucment active"))

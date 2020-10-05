@@ -1,5 +1,5 @@
 {% extends 'base/base.html' %}
-{% load static i18n templatetags %}
+{% load static i18n templatetags humanize%}
 
 
 {% block breadcrumb %}
@@ -30,7 +30,14 @@
                         <div class="search">
                             <!-- Search Filter Start -->
                             <p>{% trans 'Telefon' %}: {{ company.phone }}</p>
-                            <p>{% trans 'Hakkımızda' %}: {{ company.description }}</p>
+                            {% if company.is_busy %}
+                                <p style="background-color: darkorange;padding: 5px;">{% trans 'Bu firma şuanda çok yoğun siparişinizi zamanında teslim edemeyebilir.' %}</p>
+                            {% endif %}
+                            {% if company.service_delay %}
+                                <p style="text-align: center;">Sipariş süresi {{ company.service_delay|naturalduration }}</p>
+                            {% endif %}
+{#                        {% trans 'Hakkımızda' %}: #}
+                            <p>{{ company.description }}</p>
 
                             <!-- Search Filter End -->
                         </div>

@@ -134,7 +134,17 @@ class CompanyAdmin(DefaultAdminModel):
     prepopulated_fields = {'slug': ['name']}
 
     fields = (
-        'owner', 'slug', 'name', 'description', 'logo', 'address', 'active_menu', 'service_delay', 'is_open', 'open_at',
+        'owner',
+        'slug',
+        'name',
+        'description',
+        'logo',
+        'address',
+        'active_menu',
+        'service_delay',
+        'is_open',
+        'is_busy',
+        'open_at',
         'close_at',
         'phone', 'email',
         'instagram',
@@ -242,7 +252,12 @@ class BucketAdmin(admin.ModelAdmin, ListStyleAdminMixin):
     # exclude = ['is_checked', 'is_ordered', 'is_delivered', 'is_on_the_way', 'is_deleted', 'checked_at', 'delivered_at',
     #            'deleted_at', 'on_the_way_at']
     list_display = (
-        'get_products', 'delivery_note', 'order_address', 'order_phone', 'get_payment_type', 'get_borrow',
+        'get_products',
+        'delivery_note',
+        'order_address',
+        'order_phone',
+        'get_payment_type',
+        'get_borrow',
         'get_order_time',
         'status')
     list_filter = ('company',)
@@ -271,7 +286,17 @@ class BucketAdmin(admin.ModelAdmin, ListStyleAdminMixin):
             return "orange"
 
         return 'yellow'
-
+    # return mark_safe(
+    #     """<form action="{}" method="POST">{}
+    #             <label>
+    #                 <input name="cancel_note" type="text"/>
+    #             </label>
+    #         <input type="hidden" name="id" value={}/>
+    #         <button type="submit" class="btn-chck button" title="{}" name="submit-cancel">{}</button>
+    #         </form>
+    #     """.format(reverse('apply_cancel_note'), csrf_token,
+    #                obj.pk,
+    #                _('Apply a note for canceled order'), _('Apply Note')))
     def status(self, obj):
         if obj.is_deleted:
             return _("Canceled")

@@ -132,16 +132,29 @@
                 <div class="col-sm-12">
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#tab-cart" data-toggle="tab"><span>1</span>{% trans 'ALISVERİŞ SEPETİ' %}
+                            <a id="link_bucket" class="nav-link active" href="#tab-cart" data-toggle="tab"><span>1</span>{% trans 'ALISVERİŞ SEPETİ' %}
                             </a></li>
                         <li class="nav-item" style="margin-left: auto;">
                             <a id="link_info" class="nav-link {% ifequal user.profile.get_bucket.order_list.count 0 %} disabled {% endifequal %}"
                                     {% ifnotequal user.profile.get_bucket.order_list.count 0 %} href="#tab-info" {% endifnotequal %} data-toggle="tab"><span>2</span>{% trans 'ALIŞVERİŞ BİLGİLERİ' %}
                             </a></li>
-                        <li id="link_payment" class="nav-item {% ifequal user.profile.get_bucket.order_list.count 0 %} disabled {% endifequal %}">
-                            <a class="nav-link {% ifequal user.profile.get_bucket.order_list.count 0 %} disabled {% endifequal %}"
-                                    {% ifnotequal user.profile.get_bucket.order_list.count 0 %} href="#tab-payment"  {% endifnotequal %} data-toggle="tab"><span>3</span>payment
-                                method</a></li>
+                        {% if not  user.first_name and user.last_name %}
+                            <script>
+                            console.log("True")
+                            </script>
+                            {% else %}
+                            <script>
+                            console.log("False")
+                            </script>
+                        {% endif %}
+                        <li class="nav-item">
+                            <a id="link_payment" class="nav-link
+
+                                    {% if not user.first_name and user.last_name %}disabled {% else %} {% ifequal user.profile.get_bucket.order_list.count 0 %} disabled{% endifequal %} {% endif %}"
+                                    {% if  user.first_name and user.last_name %}
+                                        {% ifnotequal user.profile.get_bucket.order_list.count 0 %} href="#tab-payment"
+                                        {% endifnotequal %}{% endif %} data-toggle="tab"><span>3</span>{% trans 'ÖDEME' %}
+                            </a></li>
                     </ul>
                     <div class="bor"></div>
                     <div class="tab-content border" style="padding: 15px 15px;">
@@ -203,6 +216,15 @@
 
 
 
+
+
+
+
+
+
+
+
+
                                                     {% if user.profile.get_bucket.company %}{% url 'company_menu' user.profile.get_bucket.company.slug %} {% else %}{% url 'companies' %}{% endif %}" class="btn btn-theme btn-md btn-wide">{% trans 'GERİ DÖN' %}</a>
                                         </div>
                                         <div class="buttons float-right">
@@ -229,10 +251,12 @@
                                 <div class="col-lg-5 col-md-6 col-12">
 
                                     <h4>{% trans 'irtibat bilgileri' %}</h4>
-                                    <label> Teslim alacak kişi :</label>
-                                    {% if user.first_name or user.last_name %}{{ user.first_name }}
+
+                                    {% if user.first_name and user.last_name %}
+                                        <label> Teslim alacak kişi :</label>{{ user.first_name }}
                                         {{ user.last_name }}{% else %}
-                                        {% trans 'Lütfen kullanıcı adınızı soyadınızı profil bölümünden doldurun' %}{% endif %}<br>
+                                        {% trans 'Lütfen kullanıcı adınızı soyadınızı profil bölümünden doldurun' %}{% endif %}
+                                    <br>
                                     <label>İrtibat numarası : </label>{{ user.profile.phone }}<br>
                                 </div>
                                 <div class="col-lg-5 col-md-6 col-12">
@@ -242,9 +266,12 @@
                                     <div class="buttons float-right">
                                         {#                                        <a href="#tab-cart" data-toggle="tab" class="btn btn-theme btn-md btn-wide">Geri</a>#}
 
-
-                                        <a
-                                                {% ifnotequal user.profile.get_bucket.order_list.count 0 %}  onclick="document.getElementById('link_payment').click();"   {% endifnotequal %} data-toggle="tab" class="btn btn-theme btn-md btn-wide white {% ifequal user.profile.get_bucket.order_list.count 0 %} disabled {% endifequal %}">Onayla</a>
+                                        {% if user.first_name and user.last_name %}
+                                            <a
+                                                    {% ifnotequal user.profile.get_bucket.order_list.count 0 %}  onclick="document.getElementById('link_payment').click();"   {% endifnotequal %} data-toggle="tab" class="btn btn-theme btn-md btn-wide white {% ifequal user.profile.get_bucket.order_list.count 0 %} disabled {% endifequal %}">Onayla</a>
+                                        {% else %}
+                                            <a class="btn btn-theme btn-md btn-wide white" href="{% url 'profile' %}">{% trans 'Profile Git' %}</a>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>

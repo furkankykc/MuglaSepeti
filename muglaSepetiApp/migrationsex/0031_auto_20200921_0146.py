@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterField(
             model_name='config',
-            name='breadcrumbBackground',
+            name='bread_crumb_background',
             field=models.ImageField(blank=True, null=True, upload_to=muglaSepetiApp.models.get_image_path, verbose_name='Breadcrumb Background'),
         ),
     ]

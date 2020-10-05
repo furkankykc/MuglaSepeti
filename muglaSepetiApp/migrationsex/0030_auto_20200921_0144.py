@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterField(
             model_name='config',
-            name='breadcrumbBackground',
+            name='bread_crumb_background',
             field=models.ImageField(blank=True, null=True, upload_to=muglaSepetiApp.models.get_image_path, validators=[django.core.validators.FileExtensionValidator(allowed_extensions=['png'])], verbose_name='Breadcrumb Background'),
         ),
         migrations.AlterField(

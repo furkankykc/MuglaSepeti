@@ -1,12 +1,17 @@
 {% extends 'admin/change_list.html' %}
+{% load static %}
 {% block title %}
 {% endblock %}
 {% block extrastyle %}
     {{ block.super }}
+
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
     <script>
+        var audio = new Audio('{% static 'sound/audio_file.wav' %}');
+        audio.loop = true;
         var append_increment = 0;
+        // Every 30 sec to control for new data
         setInterval(function () {
             $.ajax({
                 type: "GET",
@@ -22,6 +27,19 @@
                     $('.counter').replaceWith(counter);
                     append_increment += 10;
                     console.log("data:", success.toString())
+                    //Check for checkbutton
+                    var is_check_appeared = document.getElementsByName("chck").length > 0;
+                    // if a check button appeared ring the bell bell
+                    if (is_check_appeared) {
+
+                        try {
+                            audio.play();
+                            console.log("playing sound");
+                        } catch (e) {
+                            print(e);
+                            audio.play();
+                        }
+                    }
                 });
         }, 30000)
     </script>

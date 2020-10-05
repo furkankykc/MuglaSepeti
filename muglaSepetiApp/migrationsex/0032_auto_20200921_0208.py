@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.RenameField(
             model_name='config',
-            old_name='breadcrumbBackground',
+            old_name='bread_crumb_background',
             new_name='bread_crumb_background',
         ),
         migrations.RenameField(
