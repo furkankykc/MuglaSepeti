@@ -54,6 +54,9 @@ customAdminSite.register(User, UserAdmin)
 customAdminSite.register(Group, GroupAdmin)
 customAdminSite.register(Profile)
 customAdminSite.register(Comment)
+customAdminSite.register(Collation)
+customAdminSite.register(CollationNode)
+customAdminSite.register(CollationList)
 admin.site = customAdminSite
 
 

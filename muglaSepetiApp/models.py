@@ -288,6 +288,8 @@ class Entry(models.Model):
     name = models.CharField(max_length=50, verbose_name=_('name'))
     detail = models.CharField(max_length=100, verbose_name=_('detail'), blank=True, null=True)
     price = models.FloatField(verbose_name=_('price'))
+    collation = models.ForeignKey('CollationList', on_delete=models.CASCADE, blank=True, null=True,
+                                  verbose_name=_('collation'))
     image = models.ImageField(upload_to=get_image_path, blank=True, null=True, verbose_name=_('product image'))
     is_disabled = models.BooleanField(default=False, verbose_name=_('Hide product'), help_text=_(
         'if your product is out of stack select this option to hide from products'))
@@ -331,7 +333,15 @@ class BucketEntry(models.Model):
     entry = models.ForeignKey(Entry, on_delete=models.CASCADE, verbose_name=_("Product"))
     # ara toplam olmadan gereksiz
     price = models.FloatField(default=0, verbose_name=_("Total Bucket Price"))
+    collation = models.ForeignKey('BucketCollation', on_delete=models.CASCADE, null=True, blank=True)
     count = models.IntegerField(default=1, verbose_name=_("Count"))
+
+    def set_collation(self, collation):
+        self.collation = collation
+
+    ##todo burdan  sonrasını bağlamadım  price ye ekliyor bırakıyor aparatif form u hazırlayıp her aperatifi olan bucket entry icin eklemek lazım
+    def calc_price(self):
+        self.price = self.collation.calculate_extra_price()
 
     def __str__(self):
         return '{}x{}'.format(self.count, self.entry.name)
@@ -491,3 +501,51 @@ class Annoucment(models.Model):
     title = models.CharField(max_length=50, verbose_name=_("Title"))
     message = models.CharField(max_length=250, verbose_name=_("Message"))
     is_active = models.BooleanField(default=True, verbose_name=("is annoucment active"))
+
+
+class Collation(models.Model):
+    name = models.CharField(max_length=40, verbose_name=_('Name'))
+    price = models.FloatField(verbose_name=_('Price'))
+
+    def __str__(self):
+        return self.name
+
+
+class CollationNode(models.Model):
+    collation = models.ForeignKey(Collation, on_delete=models.CASCADE, verbose_name=_('Collation'))
+    is_already_added = models.BooleanField(default=False,
+                                           verbose_name=_('is this material already in your food menu price'))
+
+    def __str__(self):
+        return f'{self.collation.name} , {self.is_already_added}'
+
+
+class CollationList(models.Model):
+    name = models.CharField(max_length=20, verbose_name=_('name'))
+    collation_list = models.ManyToManyField(CollationNode, verbose_name=_('Collation List'))
+
+    def get_extras(self):
+        return self.collation_list.filter(is_already_added=False)
+
+    def get_status(self, col_ids: list):
+        col_list = self.collation_list.filter(collation_id__in=col_ids)
+        final_string = ""
+        for col in col_list:
+            final_string += f'{col.collation.name}: '
+            if col.is_already_added:
+                final_string += f'Olmasın\n'
+            else:
+                final_string += f'Extra istiyorum\n'
+
+    def __str__(self):
+        return self.name
+
+
+class BucketCollation(models.Model):
+    collation = models.ForeignKey(CollationList, on_delete=models.CASCADE)
+    collation_list = models.ManyToManyField(CollationNode, verbose_name=_('Collation List'))
+
+    def calculate_extra_price(self):
+        return self.collation.get_extras().filter(
+            collation_id__in=self.collation_list.filter(is_already_added=True).values_list('pk', flat=True)).aggregate(
+            Sum('collation__price'))['collation__price__sum']
