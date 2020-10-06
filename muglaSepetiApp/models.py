@@ -50,12 +50,12 @@ class Profile(models.Model):
     email = models.CharField(validators=[email_regex], max_length=50, blank=True, verbose_name=_("email address"))
 
     @receiver(post_save, sender=User)
-    def create_user_profile(sender, instance, created, **kwargs):
+    def create_user_profile(self, instance, created, **kwargs):
         if created:
             Profile.objects.create(user=instance)
 
     @receiver(post_save, sender=User)
-    def save_user_profile(sender, instance, **kwargs):
+    def save_user_profile(self, instance, **kwargs):
         instance.profile.save()
 
     def get_bucket(self):
@@ -205,7 +205,8 @@ class Company(models.Model):
     is_open = models.BooleanField(default=False, verbose_name=_("is Open"), help_text=_(
         "if this box not checked your company wont open even if it currently open-hours"))
     is_busy = models.BooleanField(default=False, verbose_name=_("is Busy"), help_text=_(
-        "if this box is checked your company status will be changed to busy which mean you might not be able to send packet to buyer on right time"))
+        "if this box is checked your company status will be changed to busy which mean you might not be able to send "
+        "packet to buyer on right time"))
     instagram = models.URLField(blank=True, verbose_name=_("instagram address"))
     facebook = models.URLField(blank=True, verbose_name=_("facebook address"))
     twitter = models.URLField(blank=True, verbose_name=_("twitter address"))
@@ -339,9 +340,11 @@ class BucketEntry(models.Model):
     def set_collation(self, collation):
         self.collation = collation
 
-    ##todo burdan  sonrasını bağlamadım  price ye ekliyor bırakıyor aparatif form u hazırlayıp her aperatifi olan bucket entry icin eklemek lazım
+    # todo burdan  sonrasını bağlamadım  price ye ekliyor bırakıyor aparatif form u hazırlayıp her aperatifi olan
+    #  bucket entry icin eklemek lazım
     def calc_price(self):
-        self.price = self.collation.calculate_extra_price()
+        if self.collation is not None:
+            self.price = self.collation.calculate_extra_price(), 0
 
     def __str__(self):
         return '{}x{}'.format(self.count, self.entry.name)
@@ -440,18 +443,21 @@ class Bucket(models.Model):
         if _:
             self.company = obj.entry.company
             obj.count = count
-            obj.price = entry.price
             obj.entry = entry
+            collation_list = entry.collation.collation_list.all()
+            obj.collation = BucketCollation(collation=entry.collation)
+            obj.collation.save()
+            obj.collation.collation_list.set(collation_list)
+            obj.collation.save()
         else:
             obj.count = obj.count + count
             if self.company != entry.company:
                 return ValidationError
-
         obj.save()
         self.save()
 
     def get_borrow(self):
-        item_sum = Sum(F('price') * F('count'), output_field=models.FloatField())
+        item_sum = Sum(F('entry__price') * F('count') + F('price'), output_field=models.FloatField())
         borrow = self.order_list.aggregate(amount=item_sum, ).get('amount', 0)
         return borrow
 
@@ -500,7 +506,7 @@ class Comment(models.Model):
 class Annoucment(models.Model):
     title = models.CharField(max_length=50, verbose_name=_("Title"))
     message = models.CharField(max_length=250, verbose_name=_("Message"))
-    is_active = models.BooleanField(default=True, verbose_name=("is annoucment active"))
+    is_active = models.BooleanField(default=True, verbose_name=_("is annoucment active"))
 
 
 class Collation(models.Model):

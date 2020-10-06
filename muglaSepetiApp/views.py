@@ -108,6 +108,7 @@ def apply_cancel(request):
             print(f'cancel note is : {cancel_note}')
 
 
+# todo minus add düzeltilip model ile ilgili olan işlemler modele alınacak, var olan add_entry fonksiyonu kullanılacak
 @login_required(login_url='login')
 def cart_count_add(request, bucket_pk, list_pk):
     bucket = Bucket.objects.get(profile__user=request.user, pk=bucket_pk)
@@ -120,6 +121,7 @@ def cart_count_add(request, bucket_pk, list_pk):
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
+# todo minus add düzeltilip model ile ilgili olan işlemler modele alınacak, var olan add_entry fonksiyonu kullanılacak
 @login_required(login_url='login')
 def cart_count_minus(request, bucket_pk, list_pk):
     bucket = Bucket.objects.get(profile__user=request.user, pk=bucket_pk)

@@ -3,7 +3,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 
-from muglaSepetiApp.models import Profile, Address, Comment
+from muglaSepetiApp.models import Profile, Address, Comment, CollationList, BucketCollation
 
 
 class InputForm(forms.Form):
@@ -99,3 +99,9 @@ class RatingForm(forms.ModelForm, InputForm):
         model = Comment
         fields = ('rating', 'comment')
         # fields = '__all__'
+
+
+class CollationListForm(forms.ModelForm, InputForm):
+    class Meta:
+        model = BucketCollation
+        fields = ('collation_list',)
