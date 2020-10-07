@@ -180,12 +180,14 @@
                                             <div class="caption">
 
                                                 <h4>{{ item.entry.name }}</h4>
-                                                {% for collation in item.collation.collation_list.all %}
-
-                                                    <label>
-                                                        {{ collation.collation.name }}
-                                                        <input class="radio-inline" type="checkbox" {% if collation.is_already_added %}checked {% endif %}/>
-                                                    </label>
+                                                {% for collation in item.entry.collation.collation_list.all %}
+                                                    <li>
+                                                        <label>
+                                                            {{ collation.collation.name }}
+                                                            <input class="radio-inline" type="checkbox" {% if collation.is_already_added %}checked {% endif %}/>
+                                                            {% if not collation.is_already_added %}+{{ collation.collation.price|floatformat }}₺{% endif %}
+                                                        </label>
+                                                    </li>
                                                 {% empty %}
                                                     <p>Aperatif yok</p>
                                                 {% endfor %}
@@ -221,6 +223,8 @@
                                         {% endifnotequal %}
                                         <div class="buttons float-left">
                                             <a href="
+
+
 
 
 

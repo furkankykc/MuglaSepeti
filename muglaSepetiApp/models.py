@@ -337,14 +337,24 @@ class BucketEntry(models.Model):
     collation = models.ForeignKey('BucketCollation', on_delete=models.CASCADE, null=True, blank=True)
     count = models.IntegerField(default=1, verbose_name=_("Count"))
 
-    def set_collation(self, collation):
+    def set_collation(self, colForm):
+        collationInstance = colForm
+        collation = BucketCollation(collationInstance)
+        collation.save()
         self.collation = collation
+        self.collation.save()
+        self.save()
 
     # todo burdan  sonrasını bağlamadım  price ye ekliyor bırakıyor aparatif form u hazırlayıp her aperatifi olan
     #  bucket entry icin eklemek lazım
     def calc_price(self):
         if self.collation is not None:
-            self.price = self.collation.calculate_extra_price(), 0
+            self.price = self.collation.calculate_extra_price(self.entry.collation), 0
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        self.calc_price()
+        super(BucketEntry, self).save()
 
     def __str__(self):
         return '{}x{}'.format(self.count, self.entry.name)
@@ -444,11 +454,11 @@ class Bucket(models.Model):
             self.company = obj.entry.company
             obj.count = count
             obj.entry = entry
-            collation_list = entry.collation.collation_list.all()
-            obj.collation = BucketCollation(collation=entry.collation)
-            obj.collation.save()
-            obj.collation.collation_list.set(collation_list)
-            obj.collation.save()
+            # collation_list = entry.collation.collation_list.all()
+            # obj.collation = BucketCollation(collation=entry.collation)
+            # obj.collation.save()
+            # obj.collation.collation_list.set(collation_list)
+            # obj.collation.save()
         else:
             obj.count = obj.count + count
             if self.company != entry.company:
@@ -548,10 +558,9 @@ class CollationList(models.Model):
 
 
 class BucketCollation(models.Model):
-    collation = models.ForeignKey(CollationList, on_delete=models.CASCADE)
     collation_list = models.ManyToManyField(CollationNode, verbose_name=_('Collation List'))
 
-    def calculate_extra_price(self):
-        return self.collation.get_extras().filter(
+    def calculate_extra_price(self, collation):
+        return collation.get_extras().filter(
             collation_id__in=self.collation_list.filter(is_already_added=True).values_list('pk', flat=True)).aggregate(
             Sum('collation__price'))['collation__price__sum']
