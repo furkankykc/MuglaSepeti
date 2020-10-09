@@ -1,12 +1,13 @@
 {% load i18n %}
 {% if messages %}
     {% for message in messages %}
-        <div class="alert alert-{% trans message.tags %} alert-dismissible text-center" role="alert" style="margin-bottom: unset;">
+        <div id="alert" class="alert alert-{% trans message.tags %} alert-dismissible text-center" role="alert" style="margin-bottom: unset;">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
             <strong>{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Error{% else %}
-                {% endif %}!</strong> {{ message }}
+            {% endif %}!</strong> {{ message }}
         </div>
     {% endfor %}
+
 {% endif %}

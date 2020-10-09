@@ -125,6 +125,38 @@
             color: #e54c2a;
         }
     </style>
+    <script>
+    {#todo its too buggy #}
+        var base_price = 0;
+        var total_base_price = 0;
+
+        function calcExtraPrice() {
+            var extras = document.getElementsByClassName("extra");
+            var price = 0;
+            for (let i of extras) {
+                var s = i.getElementsByTagName("input");
+                let sval = s[0];
+                console.log(sval);
+                if (sval.checked) {
+                    let spanprice = i.getElementsByClassName("extra-price");
+                    if (spanprice.length > 0) {
+                        price += parseFloat(spanprice[0].innerHTML);
+                    }
+                }
+                var total_price = i.parentElement.parentElement.getElementsByClassName("price")[0].getElementsByTagName("p")[0].getElementsByTagName("span")[0].innerHTML;
+                var total_total_price = document.getElementsByClassName("total_price")[0].innerHTML;
+                if (base_price === 0)
+                    base_price = total_price;
+                if (total_base_price === 0)
+                    total_base_price = total_total_price;
+                var total_new_price = parseFloat(base_price) + parseFloat(price);
+                var total_total_new_price = parseFloat(total_base_price) + parseFloat(price);
+                i.parentElement.parentElement.getElementsByClassName("price")[0].getElementsByTagName("p")[0].getElementsByTagName("span")[0].innerHTML = total_new_price;
+                document.getElementsByClassName("total_price")[0].innerHTML = total_total_new_price;
+            }
+            console.log(price);
+        }
+    </script>
     <!-- Cart Start  -->
     <div class="mycart">
         <div class="container">
@@ -182,10 +214,14 @@
                                                 <h4>{{ item.entry.name }}</h4>
                                                 {% for collation in item.entry.collation.collation_list.all %}
                                                     <li>
-                                                        <label>
+                                                        <label class="extra">
+
+                                                            <input class="radio-inline" onclick="calcExtraPrice()" type="checkbox" {% if collation.is_already_added %}checked {% endif %}/>
+
                                                             {{ collation.collation.name }}
-                                                            <input class="radio-inline" type="checkbox" {% if collation.is_already_added %}checked {% endif %}/>
-                                                            {% if not collation.is_already_added %}+{{ collation.collation.price|floatformat }}₺{% endif %}
+                                                            {% if not collation.is_already_added %}+
+                                                                <span class="extra-price">{{ collation.collation.price|floatformat }}</span>
+                                                                ₺{% endif %}
                                                         </label>
                                                     </li>
                                                 {% empty %}
@@ -200,7 +236,8 @@
                                                 </div>
 
                                                 <div class="price" style="top: unset;bottom: 50px;">
-                                                    <p style="margin-top: 1rem;margin-bottom: 0;">{{ item.entry.price|floatformat }}₺</p>
+                                                    <p style="margin-top: 1rem;margin-bottom: 0;">
+                                                        <span>{{ item.entry.price|floatformat }}</span>₺</p>
                                                 </div>
                                             </div>
 
@@ -219,10 +256,23 @@
                                     <div class="col-12">
                                         {% ifnotequal user.profile.get_bucket.order_list.count 0 %}
                                             <h3 class="text-right">Toplam
-                                                - {{ user.profile.get_bucket.get_borrow|floatformat }}₺</h3>
+                                                -
+                                                <span class="total_price">{{ user.profile.get_bucket.get_borrow|floatformat }}</span>₺
+                                            </h3>
                                         {% endifnotequal %}
                                         <div class="buttons float-left">
                                             <a href="
+
+
+
+
+
+
+
+
+
+
+
 
 
 
