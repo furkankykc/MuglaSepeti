@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('muglaSepetiApp.urls')),
     # path('accounts/', include('django.contrib.auth.urls')),
+    path('', include('pwa.urls')),  # You MUST use an empty string as the URL prefix
 
 ]
 if settings.DEBUG:

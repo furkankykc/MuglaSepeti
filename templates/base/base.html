@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-{% load static i18n %}
+{% load static i18n pwa %}
 
 <head>
     <meta charset="utf-8"/>
@@ -9,9 +9,16 @@
     <meta name="theme-color" content="#e54c2a">
     <!-- Favicon -->
     <link type="image/x-icon" rel="shortcut icon" href="{{ config.favicon.url }}"/>
+
+
+    <!-- Enables 'Add to Homescreen' for Android -->
+    <meta name="viewport" content="width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="{% static 'iconpack/manifest.json' %}">
     <title>{% block title %}Home{% endblock %} - MUĞLA SEPETİ</title>
     <meta name="description"
           content="MuğlaSepeti - Yerel Restoran Sipariş Sistemi">
+    {% progressive_web_app_meta %}
 
     <!-- Bootstrap stylesheet -->
     <link href="{% static 'assets/libs/bootstrap-4.5.0/css/bootstrap.min.css' %}" rel="stylesheet">
@@ -32,7 +39,39 @@
     <link href="#" data-style="styles" rel="stylesheet">
 </head>
 <body class="">
+<script>
+    buttonInstall.addEventListener('click', (e) => {
+        // Hide the app provided install promotion
+        hideMyInstallPromotion();
+        // Show the install prompt
+        deferredPrompt.prompt();
+        // Wait for the user to respond to the prompt
+        deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === 'accepted') {
+                console.log('User accepted the install prompt');
+            } else {
+                console.log('User dismissed the install prompt');
+            }
+        });
+    });
+    window.addEventListener('DOMContentLoaded', () => {
+        let displayMode = 'browser tab';
+        if (navigator.standalone) {
+            displayMode = 'standalone-ios';
+        }
+        if (window.matchMedia('(display-mode: standalone)').matches) {
+            displayMode = 'standalone';
+        }
+        // Log launch display mode to analytics
+        console.log('DISPLAY_MODE_LAUNCH:', displayMode);
+    });
+    window.addEventListener('appinstalled', (evt) => {
+        // Log install to analytics
+        console.log('INSTALL: Success');
+    });
+</script>
 <div class="wrapper">
+
     <!--[if lt IE 8]>
     <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a
             href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
@@ -77,6 +116,11 @@
             .bread-crumb {
                 background: url({{ config.bread_crumb_background.url }}) no-repeat center center;
             }
+            .floating-action-button {
+  position: relative;
+  top: 100px;
+  margin-left: 50px;
+}
         </style>
     {% endblock %}
 

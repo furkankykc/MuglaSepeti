@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'muglaSepetiApp.apps.MuglasepetiappConfig',
     'django.contrib.humanize',
     'django.forms',
+    'pwa',
 ]
 
 MIDDLEWARE = [
