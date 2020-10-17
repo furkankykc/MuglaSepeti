@@ -337,19 +337,25 @@ class BucketEntry(models.Model):
     collation = models.ForeignKey('BucketCollation', on_delete=models.CASCADE, null=True, blank=True)
     count = models.IntegerField(default=1, verbose_name=_("Count"))
 
-    def set_collation(self, colForm):
-        collationInstance = colForm
-        collation = BucketCollation(collationInstance)
-        collation.save()
-        self.collation = collation
+    def set_collation(self, colInstance):
+        print("collation updating")
+        if self.collation is None:
+            self.collation = BucketCollation()
+            self.collation.save()
+        self.collation.collation_list.add(self.entry.collation.collation_list.get(collation_id=colInstance))
         self.collation.save()
         self.save()
+
+    def create_collation_desc(self):
+        not_included_items = [f"{i} istemiyorum." for i in self.collation.not_include_list(self.entry.collation)]
+        extra_items = [f"Ek olarak {i} istiyorum." for i in self.collation.extras_list(self.entry.collation)]
+        return "".join(not_included_items + extra_items)
 
     # todo burdan  sonrasını bağlamadım  price ye ekliyor bırakıyor aparatif form u hazırlayıp her aperatifi olan
     #  bucket entry icin eklemek lazım
     def calc_price(self):
         if self.collation is not None:
-            self.price = self.collation.calculate_extra_price(self.entry.collation), 0
+            self.price = self.collation.calculate_extra_price(self.entry.collation) or 0
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
@@ -543,6 +549,9 @@ class CollationList(models.Model):
     def get_extras(self):
         return self.collation_list.filter(is_already_added=False)
 
+    def get_includings(self):
+        return self.collation_list.filter(is_already_added=True)
+
     def get_status(self, col_ids: list):
         col_list = self.collation_list.filter(collation_id__in=col_ids)
         final_string = ""
@@ -558,9 +567,22 @@ class CollationList(models.Model):
 
 
 class BucketCollation(models.Model):
-    collation_list = models.ManyToManyField(CollationNode, verbose_name=_('Collation List'))
+    collation_list = models.ManyToManyField(CollationNode, blank=True, verbose_name=_('Collation List'))
+
+    def get_includings(self):
+        return self.collation_list.filter(is_already_added=True)
+
+    def get_extras(self, collation):
+        return collation.get_extras().filter(
+            collation_id__in=self.collation_list.filter(is_already_added=False).values_list('pk', flat=True))
+
+    def extras_list(self, collation):
+        return self.get_extras(collation).values_list('collation__name', flat=True)
+
+    def not_include_list(self, collation):
+        return collation.get_includings().exclude(
+            collation_id__in=self.collation_list.values_list('pk', flat=True)).values_list('collation__name', flat=True)
 
     def calculate_extra_price(self, collation):
-        return collation.get_extras().filter(
-            collation_id__in=self.collation_list.filter(is_already_added=True).values_list('pk', flat=True)).aggregate(
-            Sum('collation__price'))['collation__price__sum']
+        return self.get_extras(collation).aggregate(
+            Sum('collation__price'))['collation__price__sum'] or 0

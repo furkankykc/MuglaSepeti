@@ -12,7 +12,8 @@ from django.views.decorators.csrf import csrf_protect
 
 from muglaSepetiApp.forms import RegisterForm, ChangeUserForm, ChangeProfileForm, CreateAddressForm, ChangePasswordForm, \
     RatingForm
-from muglaSepetiApp.models import Bucket, Company, Menu, Entry, FoodCategory, Profile, SiteConfig, Annoucment
+from muglaSepetiApp.models import Bucket, Company, Menu, Entry, FoodCategory, Profile, SiteConfig, Annoucment, \
+    BucketEntry, BucketCollation, CollationNode
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.forms import PasswordChangeForm
 
@@ -106,6 +107,16 @@ def apply_cancel(request):
             cancel_note = request.POST['cancel_note']
             order_id = request.POST['id']
             print(f'cancel note is : {cancel_note}')
+
+
+def cart_apply_collation(request, bucket_entry_pk):
+    bucket_entry = BucketEntry.objects.get(pk=bucket_entry_pk)
+    if request.method == "POST":
+
+        for collation in bucket_entry.entry.collation.collation_list.all():
+            if str(collation.pk) in request.POST:
+                print(f"{collation.pk}:{request.POST[str(collation.pk)]}")
+                bucket_entry.set_collation(collation.pk)
 
 
 # todo minus add düzeltilip model ile ilgili olan işlemler modele alınacak, var olan add_entry fonksiyonu kullanılacak

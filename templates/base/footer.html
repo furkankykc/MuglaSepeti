@@ -70,10 +70,10 @@
                 {% if config.footer_logo or config.logo %}
                     <div class="col-md-3 col-sm-6 order-md-1">
                         {% if config.footer_logo %}
-                            <img src="{{ config.footer_logo.url }}" width="400" height="80" class="img-fluid" title="logo"
+                            <img src="{{ config.footer_logo.url }}" height="80" class="img-fluid" title="logo" style="max-width:400px;max-height: 56px;"
                                  alt="logo">
                         {% elif config.logo %}
-                            <img src="{{ config.logo.url }}" width="400" height="80" class="img-fluid" title="logo"
+                            <img src="{{ config.logo.url }}"  height="80" class="img-fluid" title="logo" style="max-width:400px;max-height: 56px;"
                                  alt="logo">
                         {% endif %}
                     </div>

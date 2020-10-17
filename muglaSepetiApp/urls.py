@@ -30,6 +30,7 @@ urlpatterns = [
     path('cart/delete/bucket/<int:bucket_pk>/list/<int:list_pk>', views.cart_delete, name='cart_delete'),
     path('cart/count/add/bucket/<int:bucket_pk>/list/<int:list_pk>', views.cart_count_add, name='cart_add'),
     path('cart/count/minus/bucket/<int:bucket_pk>/list/<int:list_pk>', views.cart_count_minus, name='cart_minus'),
+    path('cart/collation/<slug:bucket_entry_pk>', views.cart_apply_collation, name='collation'),
 
     path('profile/update/info', views.update_info, name='update_info'),
     path('profile/update/user', views.update_user, name='update_user'),
