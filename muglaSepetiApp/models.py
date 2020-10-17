@@ -1,3 +1,4 @@
+import math
 import os
 
 from django.contrib.auth.models import User
@@ -338,12 +339,12 @@ class BucketEntry(models.Model):
     count = models.IntegerField(default=1, verbose_name=_("Count"))
 
     def set_collation(self, colInstance):
-        print("collation updating")
         if self.collation is None:
             self.collation = BucketCollation()
             self.collation.save()
         self.collation.collation_list.add(self.entry.collation.collation_list.get(collation_id=colInstance))
         self.collation.save()
+        self.calc_price()
         self.save()
 
     def create_collation_desc(self):
@@ -356,6 +357,7 @@ class BucketEntry(models.Model):
     def calc_price(self):
         if self.collation is not None:
             self.price = self.collation.calculate_extra_price(self.entry.collation) or 0
+        return self.price or 0
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
@@ -453,6 +455,15 @@ class Bucket(models.Model):
             self.delivered_at = timezone.now()
             self.save()
 
+    def create_collation_description_for_entrys(self):
+        return "".join([f"{i}[{i.create_collation_desc()}]" for i in self.order_list.exclude(collation=None)])
+
+    def get_total_collation_price(self):
+        return math.fsum([i.calc_price() for i in self.order_list.exclude(collation=None)]) or 0
+
+    def get_description_with_collations(self):
+        return self.create_collation_description_for_entrys() + '\n' + self.delivery_note
+
     def add_entry(self, entry: Entry, count: int = 1):
         obj, _ = self.order_list.get_or_create(entry_id=entry.id)
 
@@ -474,8 +485,8 @@ class Bucket(models.Model):
 
     def get_borrow(self):
         item_sum = Sum(F('entry__price') * F('count') + F('price'), output_field=models.FloatField())
-        borrow = self.order_list.aggregate(amount=item_sum, ).get('amount', 0)
-        return borrow
+        borrow = self.order_list.aggregate(amount=item_sum, ).get('amount', 0) or 0
+        return borrow + self.get_total_collation_price()
 
     def get_payment_type(self):
         if self.payment_type:

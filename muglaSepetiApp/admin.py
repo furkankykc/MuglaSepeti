@@ -256,7 +256,7 @@ class BucketAdmin(admin.ModelAdmin, ListStyleAdminMixin):
     #            'deleted_at', 'on_the_way_at']
     list_display = (
         'get_products',
-        'delivery_note',
+        'get_collation_desc',
         'order_address',
         'order_phone',
         'get_payment_type',
@@ -268,12 +268,17 @@ class BucketAdmin(admin.ModelAdmin, ListStyleAdminMixin):
     actions = [make_check, make_on_the_way, make_delivered, make_cancel]
     change_list_template = 'admin/change_list_for_bucket.html'
 
+    def get_collation_desc(self, obj):
+        return obj.get_description_with_collations()
+
+
     def get_order_time(self, obj):
         return naturaltime(obj.ordered_at)
 
     def get_borrow(self, obj):
         return "{}₺".format(floatformat(obj.get_borrow()))
 
+    get_collation_desc.short_description = _("Delivery Note")
     get_order_time.short_description = _("Order time")
     get_borrow.short_description = _("Borrow")
 
@@ -289,6 +294,7 @@ class BucketAdmin(admin.ModelAdmin, ListStyleAdminMixin):
             return "orange"
 
         return 'yellow'
+
     # return mark_safe(
     #     """<form action="{}" method="POST">{}
     #             <label>
