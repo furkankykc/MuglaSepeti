@@ -126,7 +126,6 @@
     </style>
     <script>
         function apply_collations() {
-
             {% for i in user.profile.get_bucket.order_list.all %}
                 $('#collation{{ i.pk }}').ajaxSubmit();
                 {#$('#collation{{ i.pk }}').submit();#}
@@ -139,12 +138,12 @@
             var total_price = 0;
             for (let product of products) {
                 var extras = product.getElementsByClassName("extra");
-                console.log(extras);
+                {#console.log(extras);#}
                 var price = 0;
                 for (let i of extras) {
                     var s = i.getElementsByTagName("input");
                     let sval = s[0];
-                    console.log(sval);
+                    {#console.log(sval);#}
                     if (sval.checked) {
                         let spanprice = i.getElementsByClassName("extra-price");
                         if (spanprice.length > 0) {
@@ -178,7 +177,7 @@
                             </a></li>
                         <li class="nav-item" style="margin-left: auto;">
                             <a id="link_info" class="nav-link {% ifequal user.profile.get_bucket.order_list.count 0 %} disabled {% endifequal %}"
-                                    {% ifnotequal user.profile.get_bucket.order_list.count 0 %} href="#tab-info" {% endifnotequal %} data-toggle="tab"><span>2</span>{% trans 'ALIŞVERİŞ BİLGİLERİ' %}
+                                    {% ifnotequal user.profile.get_bucket.order_list.count 0 %} href="#tab-info" onclick="apply_collations();" {% endifnotequal %} data-toggle="tab"><span>2</span>{% trans 'ALIŞVERİŞ BİLGİLERİ' %}
                             </a></li>
                         {% if not  user.first_name and user.last_name %}
                             <script>
@@ -194,7 +193,7 @@
 
                                     {% if not user.first_name and user.last_name %}disabled {% else %} {% ifequal user.profile.get_bucket.order_list.count 0 %} disabled{% endifequal %} {% endif %}"
                                     {% if  user.first_name and user.last_name %}
-                                        {% ifnotequal user.profile.get_bucket.order_list.count 0 %} href="#tab-payment"
+                                        {% ifnotequal user.profile.get_bucket.order_list.count 0 %} href="#tab-payment" onclick="apply_collations()"
                                         {% endifnotequal %}{% endif %} data-toggle="tab"><span>3</span>{% trans 'ÖDEME' %}
                             </a></li>
                     </ul>
