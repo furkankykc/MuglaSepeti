@@ -112,7 +112,7 @@ def apply_cancel(request):
 def cart_apply_collation(request, bucket_entry_pk):
     bucket_entry = BucketEntry.objects.get(pk=bucket_entry_pk)
     if request.method == "POST":
-
+        print(f"{bucket_entry.pk} collation setted")
         for collation in bucket_entry.entry.collation.collation_list.all():
             if str(collation.pk) in request.POST:
                 print(f"{collation.pk}:{request.POST[str(collation.pk)]}")
@@ -225,7 +225,14 @@ def deliver(request, pk):
 
 
 def cancel(request, pk):
-    Bucket.objects.get(pk=pk).cancel_order()
+    bo = Bucket.objects.get(pk=pk)
+    if request.method == "post":
+        bo.cancel_note = request.POST["cancel_note"]
+
+    bo.cancel_note = request.POST["cancel_note"]
+    bo.cancel_order()
+    print(request.POST["cancel_note"])
+
     # redirect back to where it comes from
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 

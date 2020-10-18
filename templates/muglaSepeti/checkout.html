@@ -128,8 +128,8 @@
         function apply_collations() {
 
             {% for i in user.profile.get_bucket.order_list.all %}
-               $('#collation{{ i.pk }}').ajaxSubmit();
-               {#$('#collation{{ i.pk }}').submit();#}
+                $('#collation{{ i.pk }}').ajaxSubmit();
+                {#$('#collation{{ i.pk }}').submit();#}
             {% endfor %}
 
         }
@@ -210,13 +210,13 @@
                                     <div class="col-md-12 col-12">
                                         <!-- Box Start -->
                                         <div class="box">
-                                            <button type="button">
+                                            <button type="button" style="z-index: 2;">
                                                 <a class="anchor" href="{% url 'cart_delete' user.profile.get_bucket.pk item.pk %}"><i class="icofont icofont-close-line"></i></a>
                                             </button>
                                             <div class="image" style="padding-top: 3px;">
-
-                                                <img src="{{ item.entry.image.url }}" alt="image" title="image" width="130" height="130" style="object-fit: fill;">
-
+                                                {% if item.entry.image %}
+                                                    <img src="{{ item.entry.image.url }}" alt="image" title="image" width="130" height="130" style="object-fit: fill;">
+                                                {% endif %}
                                             </div>
 
                                             <div class="caption product">
@@ -275,6 +275,8 @@
                                         {% endifnotequal %}
                                         <div class="buttons float-left">
                                             <a href="
+
+
 
 
 

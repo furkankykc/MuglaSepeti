@@ -18,7 +18,22 @@
     <title>{% block title %}Home{% endblock %} - MUĞLA SEPETİ</title>
     <meta name="description"
           content="MuğlaSepeti - Yerel Restoran Sipariş Sistemi">
-
+    <link rel="apple-touch-icon" sizes="57x57" href="{% static 'iconpack/apple-icon-57x57.png' %}">
+    <link rel="apple-touch-icon" sizes="60x60" href="{% static 'iconpack/apple-icon-60x60.png' %}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{% static 'iconpack/apple-icon-72x72.png' %}">
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static 'iconpack/apple-icon-76x76.png' %}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{% static 'iconpack/apple-icon-114x114.png' %}">
+    <link rel="apple-touch-icon" sizes="120x120" href="{% static 'iconpack/apple-icon-120x120.png' %}">
+    <link rel="apple-touch-icon" sizes="144x144" href="{% static 'iconpack/apple-icon-144x144.png' %}">
+    <link rel="apple-touch-icon" sizes="152x152" href="{% static 'iconpack/apple-icon-152x152.png' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'iconpack/apple-icon-180x180.png' %}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{% static 'iconpack/android-icon-192x192.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'iconpack/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{% static 'iconpack/favicon-96x96.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'iconpack/favicon-16x16.png' %}">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
     <!-- Bootstrap stylesheet -->
     <link href="{% static 'assets/libs/bootstrap-4.5.0/css/bootstrap.min.css' %}" rel="stylesheet">
     <!-- icofont -->
@@ -37,6 +52,19 @@
     <!-- Switch Color Style css -->
     <link href="#" data-style="styles" rel="stylesheet">
 </head>
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function () {
+            navigator.serviceWorker.register('/service-worker.js').then(function (registration) {
+                // Registration was successful
+                console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            }, function (err) {
+                // registration failed :(
+                console.log('ServiceWorker registration failed: ', err);
+            });
+        });
+    }
+</script>
 <body class="">
 
 <div class="wrapper">
@@ -85,11 +113,12 @@
             .bread-crumb {
                 background: url({{ config.bread_crumb_background.url }}) no-repeat center center;
             }
+
             .floating-action-button {
-  position: relative;
-  top: 100px;
-  margin-left: 50px;
-}
+                position: relative;
+                top: 100px;
+                margin-left: 50px;
+            }
         </style>
     {% endblock %}
 
@@ -125,29 +154,29 @@
 
 </div>
 {% block script %}
-<!-- jquery -->
+    <!-- jquery -->
 
-<script src="{% static 'assets/libs/jquery/jquery.min.js' %}"></script>
-<!-- jquery Validate -->
-<script src="{% static 'assets/libs/jquery-validation/jquery.validate.min.js' %}"></script>
-<!-- popper js -->
-<script src="{% static 'assets/libs/popper/popper.min.js' %}"></script>
-<!-- bootstrap js -->
-<script src="{% static 'assets/libs/bootstrap-4.5.0/js/bootstrap.min.js' %}"></script>
-<!-- owlcarousel js -->
-<script src="{% static 'assets/libs/owlcarousel2/owl.carousel.min.js' %}"></script>
-<!--inview js code-->
-<script src="{% static 'assets/libs/jquery.inview/jquery.inview.min.js' %}"></script>
-<!--CountTo js code-->
-<script src="{% static 'assets/libs/jquery.countTo/jquery.countTo.js' %}"></script>
-<!-- mb.YTPlayer js code-->
-<script src="{% static 'assets/libs/mb.YTPlayer/jquery.mb.YTPlayer.min.js' %}"></script>
-<!-- Bootstrap Select js -->
-<script src="{% static 'assets/libs/bootstrap-select/bootstrap-select.js' %}"></script>
-<!-- Switch Style js -->
-{#<script src="{% static 'assets/switch-style/switch-style.js' %}"></script>#}
-<!--internal js-->
-<script src="{% static 'assets/js/internal.js' %}"></script>
+    <script src="{% static 'assets/libs/jquery/jquery.min.js' %}"></script>
+    <!-- jquery Validate -->
+    <script src="{% static 'assets/libs/jquery-validation/jquery.validate.min.js' %}"></script>
+    <!-- popper js -->
+    <script src="{% static 'assets/libs/popper/popper.min.js' %}"></script>
+    <!-- bootstrap js -->
+    <script src="{% static 'assets/libs/bootstrap-4.5.0/js/bootstrap.min.js' %}"></script>
+    <!-- owlcarousel js -->
+    <script src="{% static 'assets/libs/owlcarousel2/owl.carousel.min.js' %}"></script>
+    <!--inview js code-->
+    <script src="{% static 'assets/libs/jquery.inview/jquery.inview.min.js' %}"></script>
+    <!--CountTo js code-->
+    <script src="{% static 'assets/libs/jquery.countTo/jquery.countTo.js' %}"></script>
+    <!-- mb.YTPlayer js code-->
+    <script src="{% static 'assets/libs/mb.YTPlayer/jquery.mb.YTPlayer.min.js' %}"></script>
+    <!-- Bootstrap Select js -->
+    <script src="{% static 'assets/libs/bootstrap-select/bootstrap-select.js' %}"></script>
+    <!-- Switch Style js -->
+    {#<script src="{% static 'assets/switch-style/switch-style.js' %}"></script>#}
+    <!--internal js-->
+    <script src="{% static 'assets/js/internal.js' %}"></script>
 
 {% endblock %}
 </body>

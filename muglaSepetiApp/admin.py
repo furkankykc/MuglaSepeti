@@ -54,9 +54,9 @@ customAdminSite.register(User, UserAdmin)
 customAdminSite.register(Group, GroupAdmin)
 customAdminSite.register(Profile)
 customAdminSite.register(Comment)
-customAdminSite.register(Collation)
-customAdminSite.register(CollationNode)
-customAdminSite.register(CollationList)
+# customAdminSite.register(Collation)
+# customAdminSite.register(CollationNode)
+# customAdminSite.register(CollationList)
 admin.site = customAdminSite
 
 
@@ -84,7 +84,7 @@ class DefaultAdminModel(admin.ModelAdmin):
 
         if 'company' in form.base_fields:
             form.base_fields['company'].initial = 1
-            if Company.objects.filter(owner=request.user).count() <= 1:
+            if not request.user.is_superuser and Company.objects.filter(owner=request.user).count() <= 1:
                 form.base_fields['company'].disabled = True
                 form.base_fields['company'].help_text = _("This field is not editable")
 
@@ -114,6 +114,13 @@ class DefaultAdminModel(admin.ModelAdmin):
                 kwargs["queryset"] = Company.objects.filter(owner=request.user)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
+    def formfield_for_manytomany(self, db_field, request, **kwargs):
+        if not request.user.is_superuser:
+            # for extra security
+            if db_field.name == "company":
+                kwargs["queryset"] = Company.objects.filter(owner=request.user)
+        return super().formfield_for_manytomany(db_field, request, **kwargs)
+
     def get_queryset(self, request):
         qs = super(DefaultAdminModel, self).get_queryset(request)
         if request.user.is_superuser:
@@ -133,7 +140,8 @@ class ConfigAdmin(DefaultAdminModel):
 
 @admin.register(Company, site=customAdminSite)
 class CompanyAdmin(DefaultAdminModel):
-    list_display = ('name', 'active_menu', 'open_at', 'close_at', 'get_is_open', 'restaurant_url')
+    list_display = (
+        'name', 'active_menu', 'open_at', 'close_at', 'get_is_open', 'restaurant_url', 'monthly_income', 'total_income')
     prepopulated_fields = {'slug': ['name']}
 
     fields = (
@@ -158,6 +166,12 @@ class CompanyAdmin(DefaultAdminModel):
             '<a class="button" target="blank_" href="{}">{}</a>'.format(reverse('company_menu', args=[obj.slug]),
                                                                         obj.slug))
 
+    def monthly_income(self, obj):
+        return f"{obj.get_monthly_income():.2f} ₺"
+
+    def total_income(self, obj):
+        return f"{obj.get_total_income():.2f} ₺"
+
     def get_form(self, request, obj=None, **kwargs):
         form = super(CompanyAdmin, self).get_form(request, obj, **kwargs)
         if 'owner' in form.base_fields:
@@ -174,6 +188,9 @@ class CompanyAdmin(DefaultAdminModel):
         if request.user.is_superuser:
             return qs
         return qs.filter(owner=request.user)
+
+    monthly_income.short_description = "Aylık Gelir"
+    total_income.short_description = "Toplam Gelir"
 
 
 @admin.register(Menu, site=customAdminSite)
@@ -271,7 +288,6 @@ class BucketAdmin(admin.ModelAdmin, ListStyleAdminMixin):
     def get_collation_desc(self, obj):
         return obj.get_description_with_collations()
 
-
     def get_order_time(self, obj):
         return naturaltime(obj.ordered_at)
 
@@ -295,6 +311,11 @@ class BucketAdmin(admin.ModelAdmin, ListStyleAdminMixin):
 
         return 'yellow'
 
+    # '<a class="btn-chck button" title="{}" name="chck" href="{}">{}</a>'.format(
+    #     _('Mark this order as checked'), reverse('check', args=([obj.pk])), _('Check')))
+    # + mark_safe(
+    #     '<a class="button btn-cancel" title="{}" name="cncl" href="{}">{}</a>'.format(
+    #         _('Mark this order as Canceled'), reverse('cancel', args=([obj.pk])), _('Cancel')))
     # return mark_safe(
     #     """<form action="{}" method="POST">{}
     #             <label>
@@ -306,6 +327,9 @@ class BucketAdmin(admin.ModelAdmin, ListStyleAdminMixin):
     #     """.format(reverse('apply_cancel_note'), csrf_token,
     #                obj.pk,
     #                _('Apply a note for canceled order'), _('Apply Note')))
+    # '<form class="hidden" id="iptalack" "name="asd" action="{}" method="post">
+    # .format(
+    # reverse('cancel', args=([obj.pk]))))
     def status(self, obj):
         if obj.is_deleted:
             return _("Canceled")
@@ -313,8 +337,11 @@ class BucketAdmin(admin.ModelAdmin, ListStyleAdminMixin):
             return mark_safe(
                 '<a class="btn-chck button" title="{}" name="chck" href="{}">{}</a>'.format(
                     _('Mark this order as checked'), reverse('check', args=([obj.pk])), _('Check'))) + mark_safe(
-                '<a class="button btn-cancel" title="{}" name="cncl" href="{}">{}</a>'.format(
-                    _('Mark this order as Canceled'), reverse('cancel', args=([obj.pk])), _('Cancel')))
+                '<a class="button btn-cancel" title="{}" name="cncl" onclick="toggleme($(this).parent());">{}</a>'.format(
+                    _('Mark this order as Canceled'), _('Cancel'))) + mark_safe(
+                '<form> <input class="form-control hidden" type="text" placeholder="iptal açıklaması" style="width:95%;" name="cancel_note"><input type="submit" class="button btn-cancel hidden" formaction="{}" style="width:50%;display:inline-block;" name="cancel"> </form>'.format(
+                    reverse('cancel', args=([obj.pk])))) + mark_safe(
+                '<a class="button btn-back hidden" style="width:50%;display:inline-block;" name="cncl" onclick="toggleme($(this).parent());">Vazgeç</a>')
         elif not obj.is_on_the_way:
             return mark_safe(
                 '<a class="button btn-chck" title="{}" name="Print" onclick="{}">{}</a>'.format(
@@ -345,3 +372,39 @@ class BucketAdmin(admin.ModelAdmin, ListStyleAdminMixin):
         extra_context = {'title': "{}  |  {}".format(_("Muğla Sepeti"), _('Sipariş Paneli'))}
 
         return super(BucketAdmin, self).changelist_view(request, extra_context=extra_context)
+
+
+@admin.register(Collation, site=customAdminSite)
+class CollationAdmin(DefaultAdminModel):
+    list_display = ('name', 'price', 'company',)
+    ordering = ('name',)
+
+    # def formfield_for_foreignkey(self, db_field, request, **kwargs):
+    #     if not request.user.is_superuser:
+    #         if db_field.name == "collation":
+    #             kwargs["queryset"] = Collation.objects.filter(company__owner=request.user)
+    #     return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+
+@admin.register(CollationNode, site=customAdminSite)
+class CollationNodeAdmin(DefaultAdminModel):
+    list_display = ('collation', 'is_already_added', 'company',)
+    ordering = ('-collation__name', '-is_already_added')
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if not request.user.is_superuser:
+            if db_field.name == "collation":
+                kwargs["queryset"] = Collation.objects.filter(company__owner=request.user)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+
+@admin.register(CollationList, site=customAdminSite)
+class CollationListAdmin(DefaultAdminModel):
+    list_display = ('name', 'company')
+    filter_horizontal = ['collation_list']
+
+    def formfield_for_manytomany(self, db_field, request, **kwargs):
+        if not request.user.is_superuser:
+            if db_field.name == "collation_list":
+                kwargs["queryset"] = CollationNode.objects.filter(company__owner=request.user)
+        return super().formfield_for_manytomany(db_field, request, **kwargs)

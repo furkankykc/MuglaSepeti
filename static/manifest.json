@@ -1,8 +1,0 @@
-{
-  "short_name": "Muğla Sepeti",
-  "name": "Muğla Sepeti App",
-  "start_url": "http://localhost:8000/",
-  "background_color": "#ffff",
-  "Theme_color": "#ffff",
-  "display": "block"
-}

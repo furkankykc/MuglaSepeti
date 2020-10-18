@@ -1,7 +1,10 @@
 from django.urls import path
+from django.views.decorators.cache import cache_control
+from django.views.generic import TemplateView
 
 from muglaSepetiApp import views
 from django.contrib.auth import views as auth_views
+from django.views.decorators.csrf import csrf_exempt
 
 from muglaSepetiApp.forms import LoginForm
 
@@ -41,14 +44,18 @@ urlpatterns = [
     path('register', views.register, name='register'),
     path('profile', views.profile, name='profile'),
     path('logout', views.logout, name='logout'),
-    
+
     path('check/<int:pk>', views.check, name='check'),
     path('order/<int:pk>', views.order, name='order'),
     path('order/', views.order_food, name='order_food'),
     path('ontheway/<int:pk>', views.ontheway, name='on_the_way'),
     path('deliver/<int:pk>', views.deliver, name='deliver'),
-    path('cancel/<int:pk>', views.cancel, name='cancel'),
+    path('cancel/<int:pk>', csrf_exempt(views.cancel), name='cancel'),
     path('get_data/', views.get_more_tables, name='get_more_data'),
     path('restaurants/<slug:company_slug>', views.company_menu, name='company_menu'),
     path('restaurants/<slug:company_slug>/category/<int:category_id>', views.company_menu, name='company_category'),
+    path(r'service-worker.js', cache_control(max_age=2592000)(TemplateView.as_view(
+        template_name="service-worker.js",
+        content_type='application/javascript',
+    )), name='service-worker.js'),
 ]

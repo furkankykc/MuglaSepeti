@@ -1,5 +1,6 @@
 import math
 import os
+from datetime import date
 
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
@@ -246,6 +247,17 @@ class Company(models.Model):
     def get_packet_prices(self):
         return PacketPrice.objects.filter(company=self)
 
+    def get_monthly_income(self):
+        tznow = timezone.now()
+        if tznow.day < 20:
+            from dateutil.relativedelta import relativedelta
+            tznow -= relativedelta(months=1)
+        return math.fsum([i.get_borrow() for i in
+                          Bucket.objects.filter(is_delivered=True, company=self,
+                                                delivered_at__lte=date(tznow.year, tznow.month, 20))])
+    def get_total_income(self):
+        return math.fsum([i.get_borrow() for i in Bucket.objects.filter(is_delivered=True, company=self)])
+
     get_is_open.short_description = _("Şuanda Açık mı?")
 
     def __str__(self):
@@ -342,9 +354,12 @@ class BucketEntry(models.Model):
         if self.collation is None:
             self.collation = BucketCollation()
             self.collation.save()
+
         self.collation.collation_list.add(self.entry.collation.collation_list.get(collation_id=colInstance))
         self.collation.save()
         self.calc_price()
+        print(f"{self.pk}//{colInstance} collation setted new price is : {self.price}")
+
         self.save()
 
     def create_collation_desc(self):
@@ -356,7 +371,7 @@ class BucketEntry(models.Model):
     #  bucket entry icin eklemek lazım
     def calc_price(self):
         if self.collation is not None:
-            self.price = self.collation.calculate_extra_price(self.entry.collation) or 0
+            self.price = (self.count * self.collation.calculate_extra_price(self.entry.collation)) or 0
         return self.price or 0
 
     def save(self, force_insert=False, force_update=False, using=None,
@@ -393,6 +408,7 @@ class Bucket(models.Model):
     order_list = models.ManyToManyField(BucketEntry, blank=True, verbose_name=_("order list"))
     order_address = models.CharField(max_length=500, verbose_name=_("order address"))
     order_phone = models.CharField(max_length=500, verbose_name=_("orderer's phone"))
+    cancel_note = models.CharField(max_length=500, verbose_name=_("cancel note"), null=True, blank=True)
     checked_at = models.DateTimeField(blank=True, null=True, verbose_name=_("check time"))
     ordered_at = models.DateTimeField(blank=True, null=True, verbose_name=_("order time"))
     on_the_way_at = models.DateTimeField(blank=True, null=True, verbose_name=_("on the way time"))
@@ -484,9 +500,10 @@ class Bucket(models.Model):
         self.save()
 
     def get_borrow(self):
+        self.get_total_collation_price()
         item_sum = Sum(F('entry__price') * F('count') + F('price'), output_field=models.FloatField())
         borrow = self.order_list.aggregate(amount=item_sum, ).get('amount', 0) or 0
-        return borrow + self.get_total_collation_price()
+        return borrow
 
     def get_payment_type(self):
         if self.payment_type:
@@ -537,25 +554,38 @@ class Annoucment(models.Model):
 
 
 class Collation(models.Model):
+    class Meta:
+        unique_together = ('name', 'company')
+
     name = models.CharField(max_length=40, verbose_name=_('Name'))
     price = models.FloatField(verbose_name=_('Price'))
+    company = models.ForeignKey(Company, on_delete=models.SET_NULL, blank=True, null=True, verbose_name=_("company"))
 
     def __str__(self):
         return self.name
 
 
 class CollationNode(models.Model):
+    class Meta:
+        unique_together = ('collation', 'is_already_added', 'company')
+
     collation = models.ForeignKey(Collation, on_delete=models.CASCADE, verbose_name=_('Collation'))
     is_already_added = models.BooleanField(default=False,
                                            verbose_name=_('is this material already in your food menu price'))
+    company = models.ForeignKey(Company, on_delete=models.SET_NULL, blank=True, null=True, verbose_name=_("company"))
 
     def __str__(self):
-        return f'{self.collation.name} , {self.is_already_added}'
+        display_str = f"İçinde {self.collation.name} var." if self.is_already_added else f"Ekstra olarak {self.collation.name} eklenebilir."
+        return display_str
 
 
 class CollationList(models.Model):
+    class Meta:
+        unique_together = ('name', 'company')
+
     name = models.CharField(max_length=20, verbose_name=_('name'))
     collation_list = models.ManyToManyField(CollationNode, verbose_name=_('Collation List'))
+    company = models.ForeignKey(Company, on_delete=models.SET_NULL, blank=True, null=True, verbose_name=_("company"))
 
     def get_extras(self):
         return self.collation_list.filter(is_already_added=False)

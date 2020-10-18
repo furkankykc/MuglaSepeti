@@ -14,9 +14,10 @@ td, th {
     vertical-align: middle;
 }
 
-th.field-get_products{
+th.field-get_products {
     text-align: left;
 }
+
 a:link, a:visited {
     color: black;
 }
@@ -51,7 +52,7 @@ a.btn-chck {
     background: green;
 }
 
-a.btn-cancel {
+input.btn-cancel, a.btn-cancel {
     background: red;
 }
 
@@ -65,7 +66,7 @@ a.btn-delivered {
     background: saddlebrown;
 }
 
-a.button {
+input.button,a.button {
     padding: 5px 0px;
     margin: 5px 0px;
     text-transform: uppercase;
@@ -75,4 +76,8 @@ a.button {
     align-content: center;
     /*max-width: 150px;*/
 
+}
+
+input.hidden, a.hidden {
+    display: none !important;
 }

@@ -8,39 +8,45 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
     <script>
+        function toggleme(obj) {
+            $(obj).children().toggleClass("hidden");
+            {#element.toggleClass("hidden");#}
+            {#console.log(obj);#}
+        }
+
         var audio = new Audio('{% static 'sound/audio_file.wav' %}');
         audio.loop = true;
         var append_increment = 0;
         // Every 30 sec to control for new data
-        setInterval(function () {
-            $.ajax({
-                type: "GET",
-                url: '{% url 'admin:muglaSepetiApp_bucket_changelist' %}', // URL to your view that serves new info
-                data: {'append_increment': append_increment}
-            })
-                .done(function (response) {
-                    var success = $($.parseHTML(response)).find('#result_list');
-                    var paginator = $($.parseHTML(response)).find('.paginator');
-                    var counter = $($.parseHTML(response)).find('.action-counter');
-                    $('#result_list').replaceWith(success);
-                    $('.paginator').replaceWith(paginator);
-                    $('.counter').replaceWith(counter);
-                    append_increment += 10;
-                    console.log("data:", success.toString())
-                    //Check for checkbutton
-                    var is_check_appeared = document.getElementsByName("chck").length > 0;
-                    // if a check button appeared ring the bell bell
-                    if (is_check_appeared) {
-
-                        try {
-                            audio.play();
-                            console.log("playing sound");
-                        } catch (e) {
-                            print(e);
-                            audio.play();
-                        }
-                    }
-                });
-        }, 30000)
+        {#setInterval(function () {#}
+        {#    $.ajax({#}
+        {#        type: "GET",#}
+        {#        url: '{% url 'admin:muglaSepetiApp_bucket_changelist' %}', // URL to your view that serves new info#}
+        {#        data: {'append_increment': append_increment}#}
+        {#    })#}
+        {#        .done(function (response) {#}
+        {#            var success = $($.parseHTML(response)).find('#result_list');#}
+        {#            var paginator = $($.parseHTML(response)).find('.paginator');#}
+        {#            var counter = $($.parseHTML(response)).find('.action-counter');#}
+        {#            $('#result_list').replaceWith(success);#}
+        {#            $('.paginator').replaceWith(paginator);#}
+        {#            $('.counter').replaceWith(counter);#}
+        {#            append_increment += 10;#}
+        {#            console.log("data:", success.toString())#}
+        {#            //Check for checkbutton#}
+        {#            var is_check_appeared = document.getElementsByName("chck").length > 0;#}
+        {#            // if a check button appeared ring the bell bell#}
+        {#            if (is_check_appeared) {#}
+        {##}
+        {#                try {#}
+        {#                    audio.play();#}
+        {#                    console.log("playing sound");#}
+        {#                } catch (e) {#}
+        {#                    print(e);#}
+        {#                    audio.play();#}
+        {#                }#}
+        {#            }#}
+        {#        });#}
+        {#}, 30000)#}
     </script>
 {% endblock %}
