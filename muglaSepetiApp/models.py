@@ -225,7 +225,7 @@ class Company(models.Model):
     @classmethod
     def get_open_companies(cls):
 
-        return (x for x in cls.objects.all() if x.get_is_open)
+        return (x for x in cls.objects.all() if x.get_is_open())
 
     def get_is_open(self):
         current_time = timezone.localtime(timezone.now()).time()
@@ -249,7 +249,7 @@ class Company(models.Model):
 
     def get_monthly_income(self):
         tznow = timezone.now()
-        if tznow.day < 20:
+        if tznow.day > 20:
             from dateutil.relativedelta import relativedelta
             tznow -= relativedelta(months=1)
         return math.fsum([i.get_borrow() for i in
@@ -500,9 +500,10 @@ class Bucket(models.Model):
         self.save()
 
     def get_borrow(self):
-        self.get_total_collation_price()
+        print(self.get_total_collation_price())
         item_sum = Sum(F('entry__price') * F('count') + F('price'), output_field=models.FloatField())
         borrow = self.order_list.aggregate(amount=item_sum, ).get('amount', 0) or 0
+        # print(borrow)
         return borrow
 
     def get_payment_type(self):
@@ -548,6 +549,9 @@ class Comment(models.Model):
 
 
 class Annoucment(models.Model):
+    class Meta:
+        verbose_name = _("Duyuru")
+        verbose_name_plural = _("Duyurular")
     title = models.CharField(max_length=50, verbose_name=_("Title"))
     message = models.CharField(max_length=250, verbose_name=_("Message"))
     is_active = models.BooleanField(default=True, verbose_name=_("is annoucment active"))
@@ -555,6 +559,8 @@ class Annoucment(models.Model):
 
 class Collation(models.Model):
     class Meta:
+        verbose_name = _("Aperatif Ögesi")
+        verbose_name_plural = _("Aperatif Ögeleri")
         unique_together = ('name', 'company')
 
     name = models.CharField(max_length=40, verbose_name=_('Name'))
@@ -567,6 +573,8 @@ class Collation(models.Model):
 
 class CollationNode(models.Model):
     class Meta:
+        verbose_name = _("Aperatif")
+        verbose_name_plural = _("Aperatifler")
         unique_together = ('collation', 'is_already_added', 'company')
 
     collation = models.ForeignKey(Collation, on_delete=models.CASCADE, verbose_name=_('Collation'))
@@ -581,6 +589,8 @@ class CollationNode(models.Model):
 
 class CollationList(models.Model):
     class Meta:
+        verbose_name = _("Aperatif Listesi")
+        verbose_name_plural = _("Aperatif Listeleri")
         unique_together = ('name', 'company')
 
     name = models.CharField(max_length=20, verbose_name=_('name'))

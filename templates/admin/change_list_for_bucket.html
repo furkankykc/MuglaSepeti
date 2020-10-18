@@ -4,7 +4,92 @@
 {% endblock %}
 {% block extrastyle %}
     {{ block.super }}
+    <style>
 
+        table {
+            display: table;
+            width: 100%;
+            /*height: 400px; !* for demo only *!*/
+            /*border: 1px dotted blue;*/
+        }
+
+        td, th {
+            padding: 10px;
+            /*border: 1px dashed gray;*/
+            display: table-cell;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        th.field-get_products {
+            text-align: left;
+        }
+
+        a:link, a:visited {
+            color: black;
+        }
+
+
+        .green {
+            background: #CDEAC0;
+
+        }
+
+        .yellow {
+            background: #EFE9AE;
+
+        }
+
+        .orange {
+            background: #FEC3A6;
+        }
+
+
+        .red {
+            background: #FF928B;
+
+        }
+
+        .brown {
+            background: #FFAC81;
+        }
+
+        a.btn-chck {
+
+            background: green;
+        }
+
+        input.btn-cancel, a.btn-cancel {
+            background: red;
+        }
+
+        a.btn-prepare {
+            background: orangered;
+            justify-self: center;
+            margin: auto;
+        }
+
+        a.btn-delivered {
+            background: saddlebrown;
+        }
+
+        input.button, a.button {
+            padding: 5px 0px;
+            margin: 5px 0px;
+            text-transform: uppercase;
+            font-weight: bold;
+            display: block;
+            color: white;
+            align-content: center;
+            /*max-width: 150px;*/
+
+        }
+
+        input.hidden, a.hidden {
+            display: none !important;
+        }
+
+    </style>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
     <script>

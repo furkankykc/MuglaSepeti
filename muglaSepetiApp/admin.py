@@ -54,6 +54,7 @@ customAdminSite.register(User, UserAdmin)
 customAdminSite.register(Group, GroupAdmin)
 customAdminSite.register(Profile)
 customAdminSite.register(Comment)
+customAdminSite.register(Annoucment)
 # customAdminSite.register(Collation)
 # customAdminSite.register(CollationNode)
 # customAdminSite.register(CollationList)
@@ -84,7 +85,9 @@ class DefaultAdminModel(admin.ModelAdmin):
 
         if 'company' in form.base_fields:
             form.base_fields['company'].initial = 1
-            if not request.user.is_superuser and Company.objects.filter(owner=request.user).count() <= 1:
+            if Company.objects.filter(owner=request.user).count() <= 1:
+                form.base_fields['company'].initial = Company.objects.get(owner=request.user)
+
                 form.base_fields['company'].disabled = True
                 form.base_fields['company'].help_text = _("This field is not editable")
 
@@ -112,6 +115,7 @@ class DefaultAdminModel(admin.ModelAdmin):
             # for extra security
             if db_field.name == "company":
                 kwargs["queryset"] = Company.objects.filter(owner=request.user)
+
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
     def formfield_for_manytomany(self, db_field, request, **kwargs):
@@ -205,6 +209,12 @@ class MenuAdmin(DefaultAdminModel):
                 kwargs["queryset"] = Entry.objects.filter(company__owner=request.user)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
+    def formfield_for_manytomany(self, db_field, request, **kwargs):
+        if not request.user.is_superuser:
+            if db_field.name == "entry_list":
+                kwargs["queryset"] = Entry.objects.filter(company__owner=request.user)
+        return super().formfield_for_manytomany(db_field, request, **kwargs)
+
     def count_of_entries(self, obj):
         return obj.entry_list.count()
 
@@ -219,13 +229,27 @@ class FoodGroupAdmin(DefaultAdminModel):
 @admin.register(FoodCategory, site=customAdminSite)
 class FoodCategoryAdmin(DefaultAdminModel):
     list_display = ('name', 'group', 'company')
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if not request.user.is_superuser:
+            # for extra security
+            if db_field.name == "group":
+                kwargs["queryset"] = FoodGroup.objects.filter(company__owner=request.user)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
 @admin.register(Entry, site=customAdminSite)
 class EntryAdmin(DefaultAdminModel):
-    list_filter = ('company', 'category')
+    # list_filter = ('company', 'category')
     list_display = ('name', 'detail', 'price', 'company', 'category')
 
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if not request.user.is_superuser:
+            # for extra security
+            if db_field.name == "collation":
+                kwargs["queryset"] = CollationList.objects.filter(company__owner=request.user)
+            if db_field.name == "category":
+                kwargs["queryset"] = FoodCategory.objects.filter(company__owner=request.user)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 @admin.register(PacketPrice, site=customAdminSite)
 class PacketAdmin(DefaultAdminModel):
@@ -280,7 +304,7 @@ class BucketAdmin(admin.ModelAdmin, ListStyleAdminMixin):
         'get_borrow',
         'get_order_time',
         'status')
-    list_filter = ('company',)
+    # list_filter = ('company',)
     ordering = ['-ordered_at']
     actions = [make_check, make_on_the_way, make_delivered, make_cancel]
     change_list_template = 'admin/change_list_for_bucket.html'
@@ -361,6 +385,13 @@ class BucketAdmin(admin.ModelAdmin, ListStyleAdminMixin):
 
     get_products.short_description = _("Sipariş Edilen Ürünler")
 
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if not request.user.is_superuser:
+            # for extra security
+            if db_field.name == "company":
+                kwargs["queryset"] = Company.objects.filter(owner=request.user)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
     def get_queryset(self, request):
         qs = super(BucketAdmin, self).get_queryset(request)
         if request.user.is_superuser:
@@ -396,6 +427,7 @@ class CollationNodeAdmin(DefaultAdminModel):
             if db_field.name == "collation":
                 kwargs["queryset"] = Collation.objects.filter(company__owner=request.user)
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
 
 
 @admin.register(CollationList, site=customAdminSite)

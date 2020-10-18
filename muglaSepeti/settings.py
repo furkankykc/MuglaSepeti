@@ -116,7 +116,7 @@ ADMIN_REORDER = (
         'muglaSepetiApp.Company', 'muglaSepetiApp.FoodGroup', 'muglaSepetiApp.FoodCategory', 'muglaSepetiApp.Entry',
         'muglaSepetiApp.Menu', 'muglaSepetiApp.Comment', 'muglaSepetiApp.Profile', 'muglaSepetiApp.Address',
         'muglaSepetiApp.PacketPrice', 'muglaSepetiApp.SiteConfig', 'muglaSepetiApp.Config',
-        'muglaSepetiApp.CollationList'),
+        'muglaSepetiApp.CollationList','muglaSepetiApp.Annoucment'),
      'label': 'Muğla Sepeti | Düzenle'},
 
 )
