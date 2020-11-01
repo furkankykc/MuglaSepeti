@@ -21,13 +21,7 @@
                     <h2>{{ annoucment.title }}</h2>
                     <p>{{ annoucment.message }}</p>
                 {% empty %}
-                    {#                    <p>{% trans 'Buralarda hiç duyuru yok' %}</p>#}
-                    <h2>Yemekler Artık %30 indirimli</h2>
-                    <p>Yemeklere siz yiyin diye indirim yaptık</p>
-                    <h2>Yemekler Artık %30 indirimli</h2>
-                    <p>Yemeklere siz yiyin diye indirim yaptık</p>
-                    <h2>Yemekler Artık %30 indirimli</h2>
-                    <p>Yemeklere siz yiyin diye indirim yaptık</p>
+                    <p>{% trans 'Buralarda hiç duyuru yok' %}</p>
                 {% endfor %}
             </div>
 
@@ -38,7 +32,10 @@
     </div>
 </div>
 <script>
-    document.addEventListener("DOMContentLoaded", function(){
-    $('#myModal').modal('show');
-});
+
+    {% if annoucments %}
+        document.addEventListener("DOMContentLoaded", function () {
+            $('#myModal').modal('show');
+        });
+    {% endif %}
 </script>
