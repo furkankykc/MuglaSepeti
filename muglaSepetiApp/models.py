@@ -231,10 +231,13 @@ class Company(models.Model):
         current_time = timezone.localtime(timezone.now()).time()
         if self.is_open:
             if self.open_at > self.close_at:
-                if self.open_at.hour > 12:
-                    return self.open_at > current_time
-                else:
+                if self.open_at.hour >= 12:
                     return self.open_at < current_time
+                else:
+                    if self.close_at.hour >= 12:
+                        return self.close_at > current_time
+                    else:
+                        return self.close_at < current_time
             else:
                 return self.open_at < current_time < self.close_at
 
