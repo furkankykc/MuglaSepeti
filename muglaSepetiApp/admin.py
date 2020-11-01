@@ -76,20 +76,20 @@ class DefaultAdminModel(admin.ModelAdmin):
 
     def get_form(self, request, obj=None, **kwargs):
         form = super(DefaultAdminModel, self).get_form(request, obj, **kwargs)
-        if 'slug' in form.base_fields:
-            form.base_fields['slug'].disabled = True
-            form.base_fields['slug'].help_text = _("This field is not editable")
-        # if 'owner' in form.base_fields:
-        #     form.base_fields['owner'].disabled = True
-        #     form.base_fields['owner'].help_text = _("This field is not editable")
+        if not request.user.is_superuser:
+            if 'slug' in form.base_fields:
+                form.base_fields['slug'].disabled = True
+                form.base_fields['slug'].help_text = _("This field is not editable")
+            # if 'owner' in form.base_fields:
+            #     form.base_fields['owner'].disabled = True
+            #     form.base_fields['owner'].help_text = _("This field is not editable")
 
-        if 'company' in form.base_fields:
-            form.base_fields['company'].initial = 1
-            if Company.objects.filter(owner=request.user).count() <= 1:
-                form.base_fields['company'].initial = Company.objects.get(owner=request.user)
-
-                form.base_fields['company'].disabled = True
-                form.base_fields['company'].help_text = _("This field is not editable")
+            if 'company' in form.base_fields:
+                form.base_fields['company'].initial = 1
+                if Company.objects.filter(owner=request.user).count() <= 1:
+                    form.base_fields['company'].initial = Company.objects.get(owner=request.user)
+                    form.base_fields['company'].disabled = True
+                    form.base_fields['company'].help_text = _("This field is not editable")
 
         return form
 
@@ -120,7 +120,7 @@ class DefaultAdminModel(admin.ModelAdmin):
             if db_field.name =="owner":
                 print(db_field.name)
                 kwargs["queryset"] = User.objects.filter(is_staff=True)
-                
+
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
     def formfield_for_manytomany(self, db_field, request, **kwargs):
