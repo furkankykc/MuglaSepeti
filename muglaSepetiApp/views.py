@@ -332,13 +332,15 @@ def one_page_companies(request, company_id=0):
 def company_menu(request, company_slug, category_id=None):
     company = Company.objects.get(slug=company_slug)
     category_ids = []
+    entries = None
     if company.active_menu is not None:
         category_ids = company.active_menu.entry_list.values_list('category', flat=True).distinct()
+
+        if category_id:
+            entries = company.active_menu.entry_list.filter(category=category_id)
+        else:
+            entries = company.active_menu.entry_list.filter(is_disabled=False)
     categories = FoodCategory.objects.filter(id__in=category_ids)
-    if category_id:
-        entries = company.active_menu.entry_list.filter(category=category_id)
-    else:
-        entries = company.active_menu.entry_list.filter(is_disabled=False)
     context = {
         'company': company,
         'categories': categories,
