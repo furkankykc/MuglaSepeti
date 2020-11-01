@@ -374,7 +374,7 @@ class BucketAdmin(admin.ModelAdmin, ListStyleAdminMixin):
                     _('Mark this order as checked'), reverse('check', args=([obj.pk])), _('Check'))) + mark_safe(
                 '<a class="button btn-cancel" title="{}" name="cncl" onclick="toggleme($(this).parent());">{}</a>'.format(
                     _('Mark this order as Canceled'), _('Cancel'))) + mark_safe(
-                '<form> <input class="form-control hidden" type="text" placeholder="iptal açıklaması" style="width:95%;" name="cancel_note"><input type="submit" class="button btn-cancel hidden" formaction="{}" style="width:50%;display:inline-block;" name="cancel"> </form>'.format(
+                '<form> <input class="form-control hidden" type="text" placeholder="iptal açıklaması" style="width:95%;" name="cancel_note"><input type="submit" class="button btn-cancel hidden" formaction="{}" style="width:50%;display:inline-block;" name="cancel" value="İptal Et"> </form>'.format(
                     reverse('cancel', args=([obj.pk])))) + mark_safe(
                 '<a class="button btn-back hidden" style="width:50%;display:inline-block;" name="cncl" onclick="toggleme($(this).parent());">Vazgeç</a>')
         elif not obj.is_on_the_way:
