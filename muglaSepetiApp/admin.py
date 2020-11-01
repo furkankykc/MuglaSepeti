@@ -113,9 +113,14 @@ class DefaultAdminModel(admin.ModelAdmin):
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if not request.user.is_superuser:
             # for extra security
+
             if db_field.name == "company":
                 kwargs["queryset"] = Company.objects.filter(owner=request.user)
-
+        else:
+            if db_field.name =="owner":
+                print(db_field.name)
+                kwargs["queryset"] = User.objects.filter(is_staff=True)
+                
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
     def formfield_for_manytomany(self, db_field, request, **kwargs):
@@ -145,7 +150,7 @@ class ConfigAdmin(DefaultAdminModel):
 @admin.register(Company, site=customAdminSite)
 class CompanyAdmin(DefaultAdminModel):
     list_display = (
-        'name', 'active_menu', 'open_at', 'close_at', 'get_is_open', 'restaurant_url', 'monthly_income', 'total_income')
+        'name', 'active_menu', 'open_at', 'close_at', 'get_currently_is_open', 'restaurant_url', 'monthly_income', 'total_income')
     prepopulated_fields = {'slug': ['name']}
 
     fields = (
@@ -187,6 +192,11 @@ class CompanyAdmin(DefaultAdminModel):
                 form.base_fields['active_menu'].queryset = Menu.objects.filter(company__id=obj.id)
         return form
 
+    def get_currently_is_open(self,obj):
+        if obj.get_is_open():
+            return "Açık"
+        return "Kapalı"
+
     def get_queryset(self, request):
         qs = super(DefaultAdminModel, self).get_queryset(request)
         if request.user.is_superuser:
@@ -194,6 +204,7 @@ class CompanyAdmin(DefaultAdminModel):
         return qs.filter(owner=request.user)
 
     monthly_income.short_description = "Aylık Gelir"
+    get_currently_is_open.short_description = _("Şuanda Açık mı?")
     total_income.short_description = "Toplam Gelir"
 
 

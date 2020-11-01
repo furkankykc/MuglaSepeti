@@ -31,7 +31,7 @@ class Address(models.Model):
         verbose_name_plural = _("Addresses")
 
     name = models.CharField(max_length=30, verbose_name=_("name"))
-    location = models.CharField(max_length=500, verbose_name=_("location"))
+    location = models.CharField(max_length=1000, verbose_name=_("location"))
     owner = models.ForeignKey('Profile', on_delete=models.CASCADE, related_name='owner', verbose_name=_("owner"))
 
     def __str__(self):
@@ -231,7 +231,10 @@ class Company(models.Model):
         current_time = timezone.localtime(timezone.now()).time()
         if self.is_open:
             if self.open_at > self.close_at:
-                return self.open_at < current_time > self.close_at
+                if self.open_at.hour > 12:
+                    return self.open_at > current_time
+                else:
+                    return self.open_at < current_time
             else:
                 return self.open_at < current_time < self.close_at
 
@@ -367,8 +370,6 @@ class BucketEntry(models.Model):
         extra_items = [f"Ek olarak {i} istiyorum." for i in self.collation.extras_list(self.entry.collation)]
         return "".join(not_included_items + extra_items)
 
-    # todo burdan  sonrasını bağlamadım  price ye ekliyor bırakıyor aparatif form u hazırlayıp her aperatifi olan
-    #  bucket entry icin eklemek lazım
     def calc_price(self):
         if self.collation is not None:
             self.price = (self.count * self.collation.calculate_extra_price(self.entry.collation)) or 0

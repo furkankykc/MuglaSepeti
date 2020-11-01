@@ -443,13 +443,13 @@ msgstr ""
 
 #: muglaSepetiApp/models.py:209
 msgid "is Busy"
-msgstr ""
+msgstr "meşgul"
 
 #: muglaSepetiApp/models.py:210
 msgid ""
 "if this box is checked your company status will be changed to busy which "
 "mean you might not be able to send packet to buyer on right time"
-msgstr ""
+msgstr "Eğer bu kutu işaretliyse sistem şirketinizin kullanıcıları sipariş süresi içinde hizmet veremeyebileceğiniz hakkında bilgilendirir."
 
 #: muglaSepetiApp/models.py:212
 msgid "instagram address"
@@ -534,10 +534,9 @@ msgid "product image"
 msgstr "ürün resmi"
 
 #: muglaSepetiApp/models.py:308
-#, fuzzy
-#| msgid "Product"
+
 msgid "Hide product"
-msgstr "ürün"
+msgstr "Ürün Bitti"
 
 #: muglaSepetiApp/models.py:309
 msgid ""
