@@ -253,6 +253,21 @@ class Company(models.Model):
     def get_packet_prices(self):
         return PacketPrice.objects.filter(company=self)
 
+    def get_daily_income(self):
+        tznow = timezone.now()
+        from dateutil.relativedelta import relativedelta
+
+        tzOpen = timezone.datetime(hour=self.open_at.hour, minute=self.open_at.minute, second=self.open_at.second,
+                                   year=tznow.year, month=tznow.month, day=tznow.day, tzinfo=tznow.tzinfo)
+        if tzOpen > tznow:
+            tzOpen -= relativedelta(days=1)
+
+        tzClose = timezone.datetime(hour=self.close_at.hour, minute=self.close_at.minute, second=self.close_at.second,
+                                    year=tznow.year, month=tznow.month, day=tznow.day, tzinfo=tznow.tzinfo)
+        return math.fsum(
+            [i.get_borrow() for i in Bucket.objects.filter(is_delivered=True, company=self, delivered_at__gte=tzOpen
+                                                           )])
+
     def get_monthly_income(self):
         tznow = timezone.now()
         if tznow.day > 20:
@@ -261,6 +276,7 @@ class Company(models.Model):
         return math.fsum([i.get_borrow() for i in
                           Bucket.objects.filter(is_delivered=True, company=self,
                                                 delivered_at__lte=date(tznow.year, tznow.month, 20))])
+
     def get_total_income(self):
         return math.fsum([i.get_borrow() for i in Bucket.objects.filter(is_delivered=True, company=self)])
 
@@ -556,6 +572,7 @@ class Annoucment(models.Model):
     class Meta:
         verbose_name = _("Duyuru")
         verbose_name_plural = _("Duyurular")
+
     title = models.CharField(max_length=50, verbose_name=_("Title"))
     message = models.CharField(max_length=250, verbose_name=_("Message"))
     is_active = models.BooleanField(default=True, verbose_name=_("is annoucment active"))

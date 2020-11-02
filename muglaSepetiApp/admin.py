@@ -150,7 +150,7 @@ class ConfigAdmin(DefaultAdminModel):
 @admin.register(Company, site=customAdminSite)
 class CompanyAdmin(DefaultAdminModel):
     list_display = (
-        'name', 'active_menu', 'open_at', 'close_at', 'get_currently_is_open', 'restaurant_url', 'monthly_income', 'total_income')
+        'name', 'active_menu', 'open_at', 'close_at', 'get_currently_is_open', 'restaurant_url','daily_income', 'monthly_income', 'total_income')
     prepopulated_fields = {'slug': ['name']}
 
     fields = (
@@ -174,6 +174,9 @@ class CompanyAdmin(DefaultAdminModel):
         return mark_safe(
             '<a class="button" target="blank_" href="{}">{}</a>'.format(reverse('company_menu', args=[obj.slug]),
                                                                         obj.slug))
+
+    def daily_income(self, obj):
+        return f"{obj.get_daily_income():.2f} ₺"
 
     def monthly_income(self, obj):
         return f"{obj.get_monthly_income():.2f} ₺"
@@ -203,6 +206,7 @@ class CompanyAdmin(DefaultAdminModel):
             return qs
         return qs.filter(owner=request.user)
 
+    daily_income.short_description = "Günlük Gelir"
     monthly_income.short_description = "Aylık Gelir"
     get_currently_is_open.short_description = _("Şuanda Açık mı?")
     total_income.short_description = "Toplam Gelir"
@@ -383,11 +387,21 @@ class BucketAdmin(admin.ModelAdmin, ListStyleAdminMixin):
                     _('Print this order'), printit.format(reverse('print', args=([obj.pk]))), _('Print'))) + mark_safe(
                 '<a class="button btn-prepare" title="{}" name="index" href="{}">{}</a>'.format(
                     _('Mark this order as on the way'), reverse('on_the_way', args=([obj.pk])),
-                    _('On the way')))
+                    _('On the way')))+ mark_safe(
+                '<a class="button btn-cancel" title="{}" name="cncl" onclick="toggleme($(this).parent());">{}</a>'.format(
+                    _('Mark this order as Canceled'), _('Cancel'))) + mark_safe(
+                '<form> <input class="form-control hidden" type="text" placeholder="iptal açıklaması" style="width:95%;" name="cancel_note"><input type="submit" class="button btn-cancel hidden" formaction="{}" style="width:50%;display:inline-block;" name="cancel" value="İptal Et"> </form>'.format(
+                    reverse('cancel', args=([obj.pk])))) + mark_safe(
+                '<a class="button btn-back hidden" style="width:50%;display:inline-block;" name="cncl" onclick="toggleme($(this).parent());">Vazgeç</a>')
         elif not obj.is_delivered:
             return mark_safe(
                 '<a class="button btn-delivered" title="{}" name="index" href="{}">{}</a>'.format(
-                    _('Mark this order as delivered'), reverse('deliver', args=([obj.pk])), _('Delivered')))
+                    _('Mark this order as delivered'), reverse('deliver', args=([obj.pk])), _('Delivered')))+ mark_safe(
+                '<a class="button btn-cancel" title="{}" name="cncl" onclick="toggleme($(this).parent());">{}</a>'.format(
+                    _('Mark this order as Canceled'), _('Cancel'))) + mark_safe(
+                '<form> <input class="form-control hidden" type="text" placeholder="iptal açıklaması" style="width:95%;" name="cancel_note"><input type="submit" class="button btn-cancel hidden" formaction="{}" style="width:50%;display:inline-block;" name="cancel" value="İptal Et"> </form>'.format(
+                    reverse('cancel', args=([obj.pk])))) + mark_safe(
+                '<a class="button btn-back hidden" style="width:50%;display:inline-block;" name="cncl" onclick="toggleme($(this).parent());">Vazgeç</a>')
         return _("Delivered")
 
     def get_products(self, obj):
