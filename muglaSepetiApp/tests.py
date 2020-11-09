@@ -66,6 +66,8 @@ def get_is_open(open_at, close_at, current_time=timezone.localtime(timezone.now(
                 return close_at < current_time
     else:
         return open_at < current_time < close_at
+
+
 from colorama import Fore, Back, Style
 
 
@@ -80,8 +82,13 @@ def get_is_open3(open_at, close_at, current_day=None):
     if open_day > close_day:
         # print("open>close")
         close_day += timezone.timedelta(days=1)
-    print(
-        f"{Fore.WHITE}opening:{Fore.BLUE}{datetime.strftime(open_day, '%H:%M')}{Fore.WHITE}\tcurrent:{Fore.BLUE}{datetime.strftime(current_day, '%H:%M')}{Fore.WHITE}\tclosing:{Fore.BLUE}{datetime.strftime(close_day, '%H:%M')}\t{Fore.GREEN if open_day < current_day < close_day else Fore.RED }result:{open_day < current_day < close_day}")
+        if current_day.hour <= 12:
+            close_day -= timezone.timedelta(days=1)
+            open_day -= timezone.timedelta(days=1)
+        # print(
+        #     f"{Fore.WHITE}opening:{Fore.BLUE}{datetime.strftime(open_day, '%H:%M')}{Fore.WHITE}\tcurrent:{Fore.BLUE}{datetime.strftime(current_day, '%H:%M')}{Fore.WHITE}\tclosing:{Fore.BLUE}{datetime.strftime(close_day, '%H:%M')}\t{Fore.GREEN if open_day < current_day < close_day else Fore.RED }result:{open_day < current_day < close_day}")
+        print(
+            f"{Fore.WHITE}opening:{Fore.BLUE}{datetime.strftime(open_day, '%d|%H:%M')}{Fore.WHITE}\tcurrent:{Fore.BLUE}{datetime.strftime(current_day, '%d|%H:%M')}{Fore.WHITE}\tclosing:{Fore.BLUE}{datetime.strftime(close_day, '%d|%H:%M')}\t{Fore.GREEN if open_day < current_day < close_day else Fore.RED}result:{open_day < current_day < close_day}")
     return open_day < current_day < close_day
 
 
@@ -97,7 +104,7 @@ def test_get_is_open():
         open_at = timezone.localtime(timezone.now() + timezone.timedelta(hours=i)).time()
         for j in range(24):
 
-            close_at = timezone.localtime(timezone.now() + timezone.timedelta(hours=j,minutes=10)).time()
+            close_at = timezone.localtime(timezone.now() + timezone.timedelta(hours=j, minutes=10)).time()
             for k in range(24):
                 if i == k or i == j or i == k:
                     break

@@ -236,6 +236,9 @@ class Company(models.Model):
                                                                second=self.close_at.second)
         if open_day > close_day:
             close_day += timezone.timedelta(days=1)
+            if current_day.hour <= 12:
+                close_day -= timezone.timedelta(days=1)
+                open_day -= timezone.timedelta(days=1)
 
         return open_day < current_day < close_day
 
