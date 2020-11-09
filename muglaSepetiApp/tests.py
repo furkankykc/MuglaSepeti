@@ -8,6 +8,8 @@ import django
 django.setup()
 from django.utils import timezone
 
+from datetime import datetime
+
 
 # def is_open(location, now=None):
 #     """
@@ -64,6 +66,23 @@ def get_is_open(open_at, close_at, current_time=timezone.localtime(timezone.now(
                 return close_at < current_time
     else:
         return open_at < current_time < close_at
+from colorama import Fore, Back, Style
+
+
+def get_is_open3(open_at, close_at, current_day=None):
+    if current_day is None:
+        current_day = timezone.localtime(timezone.now())
+    open_day = timezone.localtime(timezone.now()).replace(hour=open_at.hour, minute=open_at.minute,
+                                                          second=open_at.second)
+    close_day = timezone.localtime(timezone.now()).replace(hour=close_at.hour, minute=close_at.minute,
+                                                           second=close_at.second)
+
+    if open_day > close_day:
+        # print("open>close")
+        close_day += timezone.timedelta(days=1)
+    print(
+        f"{Fore.WHITE}opening:{Fore.BLUE}{datetime.strftime(open_day, '%H:%M')}{Fore.WHITE}\tcurrent:{Fore.BLUE}{datetime.strftime(current_day, '%H:%M')}{Fore.WHITE}\tclosing:{Fore.BLUE}{datetime.strftime(close_day, '%H:%M')}\t{Fore.GREEN if open_day < current_day < close_day else Fore.RED }result:{open_day < current_day < close_day}")
+    return open_day < current_day < close_day
 
 
 def get_is_open2(open_at: timezone.datetime.time, close_at: timezone.datetime.time):
@@ -75,15 +94,20 @@ def get_is_open2(open_at: timezone.datetime.time, close_at: timezone.datetime.ti
 
 def test_get_is_open():
     for i in range(24):
-        open_at = timezone.localtime(timezone.now() - timezone.timedelta(hours=i)).time()
-
+        open_at = timezone.localtime(timezone.now() + timezone.timedelta(hours=i)).time()
         for j in range(24):
 
-            close_at = timezone.localtime(timezone.now() + timezone.timedelta(hours=j)).time()
+            close_at = timezone.localtime(timezone.now() + timezone.timedelta(hours=j,minutes=10)).time()
             for k in range(24):
-                current_time = timezone.localtime(timezone.now() + timezone.timedelta(hours=k)).time()
-                print(
-                    f"opening:{open_at}|closing:{close_at}|current:{current_time}|result:{get_is_open(open_at, close_at, current_time)}")
+                if i == k or i == j or i == k:
+                    break
+                current_time = timezone.localtime(timezone.now() + timezone.timedelta(hours=k))
+                get_is_open3(open_at, close_at, current_time)
+                # print(
+                #     f"opening:{open_at.hour}:{open_at.minute}|closing:{close_at.hour}:{close_at.minute}|current:{datetime.strftime(current_time, '%H:%M')}|result:{get_is_open3(open_at, close_at, current_time)}")
+            #
+            # print(f"SUM = {sum}", i, j,
+            #       'SUCCESS' if sum == abs(open_at.hour - close_at.hour) else 'FAIL')
 
 
 test_get_is_open()

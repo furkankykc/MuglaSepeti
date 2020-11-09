@@ -227,18 +227,50 @@ class Company(models.Model):
 
         return (x for x in cls.objects.all() if x.get_is_open())
 
-    def get_is_open(self):
-        current_time = timezone.localtime(timezone.now()).time()
+    def get_is_open(self, current_day=None):
+        if current_day is None:
+            current_day = timezone.localtime(timezone.now())
+        open_day = timezone.localtime(timezone.now()).replace(hour=self.open_at.hour, minute=self.open_at.minute,
+                                                              second=self.open_at.second)
+        close_day = timezone.localtime(timezone.now()).replace(hour=self.close_at.hour, minute=self.close_at.minute,
+                                                               second=self.close_at.second)
+        if open_day > close_day:
+            close_day += timezone.timedelta(days=1)
+
+        return open_day < current_day < close_day
+
+    def get_is_open2(self, current_time=None):
+        if current_time is None:
+            current_time = timezone.localtime(timezone.now()).time()
         if self.is_open:
             if self.open_at > self.close_at:
+                print(f"şuan açılış saatim kapanış saatimden sonra")
                 if self.open_at.hour >= 12:
-                    return self.open_at < current_time
-                else:
                     if self.close_at.hour >= 12:
+                        print(
+                            f"ve açılış saatim 12 den sonra o yüzden şuan {self.open_at < current_time}|{current_time.hour}:{current_time.minute}")
+                        return self.open_at < current_time
+                    else:
+                        print(
+                            f"ve kapanıs saatim 12 den sonra o yüzden şuan {self.open_at > current_time}|{current_time.hour}:{current_time.minute}")
+                        return self.open_at > current_time
+
+                else:
+                    print(f"şuan açılış saatim kapanış saatimden önce")
+                    if self.close_at.hour >= 12:
+                        print(
+                            f"ve kapanış saatim 12 yi geçiyor bu yüzden şuan {self.close_at > current_time}|{current_time.hour}:{current_time.minute}")
+
                         return self.close_at > current_time
                     else:
+                        print(
+                            f"ve kapanış saatim den önce bu yüzden şuan {self.close_at > current_time}|{current_time.hour}:{current_time.minute}")
+
                         return self.close_at < current_time
             else:
+
+                print(
+                    f"şuan açılış saatim kapanış saatimden önce o yüzden {self.open_at < current_time < self.close_at}")
                 return self.open_at < current_time < self.close_at
 
         return False
@@ -520,7 +552,7 @@ class Bucket(models.Model):
         self.save()
 
     def get_borrow(self):
-        print(self.get_total_collation_price())
+        # print(self.get_total_collation_price())
         item_sum = Sum(F('entry__price') * F('count') + F('price'), output_field=models.FloatField())
         borrow = self.order_list.aggregate(amount=item_sum, ).get('amount', 0) or 0
         # print(borrow)

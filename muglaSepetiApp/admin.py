@@ -118,7 +118,7 @@ class DefaultAdminModel(admin.ModelAdmin):
                 kwargs["queryset"] = Company.objects.filter(owner=request.user)
         else:
             if db_field.name =="owner":
-                print(db_field.name)
+                # print(db_field.name)
                 kwargs["queryset"] = User.objects.filter(is_staff=True)
 
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
